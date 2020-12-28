@@ -1,0 +1,20 @@
+<nb-card>
+  <div class="calendar-container">
+    <span class="subtitle">
+      Selected date: {{ date | date }}
+    </span>
+    <!-- <nb-calendar [(date)]="date" [boundingMonth]="true" showWeekNumber></nb-calendar> -->
+    <nb-calendar [(date)]="date" [boundingMonth]="true" ></nb-calendar>
+  </div>
+
+  <!-- <div class="calendar-container">
+    <span class="subtitle">
+      Selected date: {{ date2 | date }}
+    </span>
+    <nb-calendar
+      [(date)]="date2"
+      [dayCellComponent]="dayCellComponent"
+    ></nb-calendar>
+  </div> -->
+
+</nb-card>

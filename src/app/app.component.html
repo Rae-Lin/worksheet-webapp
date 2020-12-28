@@ -1,0 +1,19 @@
+<nb-layout>
+  <!-- Header -->
+  <nb-layout-header fixed>
+    <app-header></app-header>
+  </nb-layout-header>
+  <!------------>
+
+  <!-- 左邊選單 -->
+  <nb-sidebar>
+    <app-sidebar-menu></app-sidebar-menu>
+  </nb-sidebar>
+  <!------------>
+
+  <!-- 右邊內容 -->
+  <nb-layout-column>
+    <router-outlet></router-outlet>
+  </nb-layout-column>
+  <!------------>
+</nb-layout>

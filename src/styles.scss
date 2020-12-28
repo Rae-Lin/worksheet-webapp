@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+// @import '~@nebular/theme/styles/prebuilt/default.css'; // or cosmic.css
+// @import '~bootstrap/dist/css/bootstrap.css';
+
+// this is our just created themes.scss file, make sure the path to the file is correct
+@import 'themes';
+@import '../node_modules/@nebular/theme/styles/globals'; // or cosmic.css
+@import '../node_modules/bootstrap/dist/css/bootstrap.css';
+
+// install the framework styles
+@include nb-install() {
+  @include nb-theme-global();
+};
+
+*{
+  text-indent: 0.1rem;
+}
+
+.days-container {
+  .cell-content {
+    justify-content: left !important;
+    align-items: flex-start !important;
+    padding: 3px 8px;
+  }
+}
+

@@ -1,0 +1,50 @@
+
+.personal {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    margin-bottom: 0;
+    color: white;
+  }
+  .personal-info {
+    display: flex;
+    > div {
+      padding: 0px 15px;
+      line-height: 35px;
+      & + div {
+        // border-left: 0.5px solid white;
+        position: relative;
+        &::before {
+          content: "";
+          width: 0.5px;
+          height: 20px;
+          background-color: #fff;
+          position: absolute;
+          left: 0;
+          top: 7.5px;
+        }
+      }
+    }
+    span + span {
+      margin-left: 10px;
+    }
+  }
+  .personal-lastname {
+    width: 35px;
+    height: 35px;
+    background-color: #fff;
+    border-radius: 50%;
+    // border: 1px solid #3e2494;
+    color: #3e2494;
+    display: inline-block;
+    line-height: 35px;
+    text-align: center;
+    padding: 0;
+    font-size: 1.25rem;
+  }
+  .personal-detail {
+    font-weight: 600;
+  }
+}
