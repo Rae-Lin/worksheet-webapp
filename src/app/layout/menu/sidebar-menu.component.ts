@@ -8,5 +8,22 @@ import { NbMenuItem } from '@nebular/theme';
   styleUrls: ['./sidebar-menu.component.scss']
 })
 export class SidebarMenuComponent {
-
+  items: NbMenuItem[] = [
+    {
+      title: '首頁',
+      link: 'Home',
+    },
+    {
+      title: '報表',
+      link: 'Report',
+    },
+    {
+      title: '權限管理',
+      link: 'Management' ,
+    },
+    {
+      title: '主檔設定',
+      link: 'Master',
+    },
+  ];
 }
