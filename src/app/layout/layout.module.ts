@@ -7,10 +7,30 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SidebarMenuComponent } from './menu/sidebar-menu.component';
 
+import {
+  NbSidebarModule,
+  NbCardModule,
+  NbThemeModule,
+  NbMenuModule,
+  NbCalendarModule,
+  NbLayoutModule,
+  NbTabsetModule,
+  NbCalendarRangeModule,
+} from '@nebular/theme';
+
 @NgModule({
   declarations: [LayoutComponent, HeaderComponent, FooterComponent, SidebarMenuComponent],
   imports: [
-    CommonModule, LayoutRoutingModule,
+    CommonModule,
+    LayoutRoutingModule,
+    NbThemeModule.forRoot(),
+    NbMenuModule.forRoot(),
+    NbSidebarModule.forRoot(),
+    NbTabsetModule,
+    NbCardModule,
+    NbLayoutModule,
+    NbCalendarModule,
+    NbCalendarRangeModule,
   ],
   exports: [
     HeaderComponent, SidebarMenuComponent, FooterComponent

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WorktimeDetailComponent } from './worktime-detail.component';
+import { LatestNewsComponent } from './latest-news.component';
 
-describe('WorktimeDetailComponent', () => {
-  let component: WorktimeDetailComponent;
-  let fixture: ComponentFixture<WorktimeDetailComponent>;
+describe('LatestNewsComponent', () => {
+  let component: LatestNewsComponent;
+  let fixture: ComponentFixture<LatestNewsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WorktimeDetailComponent ]
+      declarations: [ LatestNewsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WorktimeDetailComponent);
+    fixture = TestBed.createComponent(LatestNewsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

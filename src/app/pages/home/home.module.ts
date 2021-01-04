@@ -14,6 +14,7 @@ import {
 } from '@nebular/theme';
 
 import { SharedModule } from 'src/app/shared/shared.module';
+import { HomeRoutingModule } from './home-routing.module';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -28,9 +29,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NbMenuModule,
     NbTabsetModule,
     SharedModule,
+    HomeRoutingModule,
   ],
   exports: [
-    // CalendarRangeComponent
+    HomeComponent
   ]
 })
 export class HomeModule { }

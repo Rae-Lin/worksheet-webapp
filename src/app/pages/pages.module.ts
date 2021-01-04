@@ -14,19 +14,14 @@ import {
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
-import { HomeComponent } from './home/home.component';
-import { ManagementComponent } from './management/management.component';
-import { MasterComponent } from './master/master.component';
-import { ReportComponent } from './report/report.component';
-// import { ThemeModule } from '../@theme/theme.module';
+import { HomeModule } from './home/home.module';
+import { ReportModule } from './report/report.module';
+import { MasterModule } from './master/master.module';
+import { ManagementModule } from './management/management.module';
 
 @NgModule({
   declarations: [
     PagesComponent,
-    HomeComponent,
-    ManagementComponent,
-    MasterComponent,
-    ReportComponent,
   ],
   imports: [
     PagesRoutingModule,
@@ -39,13 +34,10 @@ import { ReportComponent } from './report/report.component';
     NbLayoutModule,
     NbCalendarModule,
     NbCalendarRangeModule,
-  ],
-  exports: [
-    PagesComponent,
-    HomeComponent,
-    ManagementComponent,
-    MasterComponent,
-    ReportComponent,
-  ],
+    HomeModule,
+    ReportModule,
+    ManagementModule,
+    MasterModule
+  ]
 })
 export class PagesModule {}
