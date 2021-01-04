@@ -12,9 +12,6 @@ import {
   NbTabsetModule,
   NbCalendarRangeModule,
   NbDatepickerModule,
-  NbOverlay,
-  NbOverlayContainer,
-  NbDialogModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
