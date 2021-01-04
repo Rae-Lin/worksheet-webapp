@@ -1,4 +1,4 @@
-import {  ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 
 @Component({
@@ -23,7 +23,14 @@ export class SidebarMenuComponent {
     },
     {
       title: '主檔設定',
-      link: 'pages/master',
+      expanded: true,
+      // link: 'pages/master',
+      children: [
+        {
+          title: '最新消息',
+          link: 'pages/master/latest-news',
+        }
+      ],
     },
   ];
 }

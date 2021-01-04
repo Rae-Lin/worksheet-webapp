@@ -18,17 +18,21 @@ $nb-themes: nb-register-theme(
     text-disabled-color: color-basic-600,
 
     // header
-    header-background-color:  #5a37b8,
+    header-background-color: color-primary-700,
     header-text-color: white,
 
     // sidebar
     sidebar-padding: 1.25rem 0,
 
     // calendar
-    calendar-width: 75%,
-    calendar-weekday-height: 2.5rem,
-    calendar-day-cell-width: 100%,
-    calendar-day-cell-height: 5rem,
+    // calendar-width: 75%,
+    // calendar-weekday-height: 2.5rem,
+    // calendar-day-cell-width: 100%,
+    // calendar-day-cell-height: 5rem,
+
+    // card
+    card-header-success-background-color: #cecece,
+    card-header-success-text-color: color-basic-800,
   ),
   default,
   default

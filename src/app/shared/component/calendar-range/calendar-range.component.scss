@@ -1,0 +1,15 @@
+// import Nebular Theme System and the default theme
+@import "~@nebular/theme/styles/theming";
+@import "~@nebular/theme/styles/themes/default";
+
+$nb-themes: nb-register-theme(
+  (
+    // calendar
+    calendar-width: 75%,
+    calendar-weekday-height: 2.5rem,
+    calendar-day-cell-width: 100%,
+    calendar-day-cell-height: 5rem,
+  ),
+  default,
+  default
+);
