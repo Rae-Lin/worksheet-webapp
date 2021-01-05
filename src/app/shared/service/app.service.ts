@@ -7,7 +7,6 @@ import { catchError, retry } from 'rxjs/operators';
 export class AppService {
   constructor(
     private http: HttpClient,
-    // private url = 'http://10.2.6.108/ptc-worksheet-api/swagger/v1/swagger.json';
     private url: string
   ) {}
 
@@ -26,48 +25,41 @@ export class AppService {
         errorMessage = '異常錯誤';
         break;
     }
-
-    return of({ errorMessage: errorMessage });
+    return of({ errorMessage });
   }
 
-  // tslint:disable-next-line: typedef
-  getData(id) {
-    return this.http.get(`${this.url}/${id}`).pipe(
+  getData(id): any {
+    return this.http.get<any>(`${this.url}/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
-  // tslint:disable-next-line: typedef
-  getAll() {
-    return this.http.get(`${this.url}`).pipe(
+  getAll(): any {
+    return this.http.get<any>(`${this.url}`).pipe(
       catchError(this.handleError)
     );
   }
 
-  // tslint:disable-next-line: typedef
-  postData(data) {
-    return this.http.post(this.url, data).pipe(
+  postData(data): any  {
+    return this.http.post<any>(this.url, data).pipe(
       catchError(this.handleError)
     );
   }
 
-  // tslint:disable-next-line: typedef
-  updateData(id, data) {
-    return this.http.patch(`${this.url}/${id}`, data).pipe(
+  updateData(id, data): any  {
+    return this.http.patch<any>(`${this.url}/${id}`, data).pipe(
       catchError(this.handleError)
     );
   }
 
-  // tslint:disable-next-line: typedef
-  updateAll(id, data) {
-    return this.http.put(`${this.url}/${id}`, data).pipe(
+  updateAll(id, data): any  {
+    return this.http.put<any>(`${this.url}/${id}`, data).pipe(
       catchError(this.handleError)
     );
   }
 
-  // tslint:disable-next-line: typedef
-  deleteData(id) {
-    return this.http.delete(`${this.url}/${id}`).pipe(
+  deleteData(id): any  {
+    return this.http.delete<any>(`${this.url}/${id}`).pipe(
       catchError(this.handleError)
     );
   }

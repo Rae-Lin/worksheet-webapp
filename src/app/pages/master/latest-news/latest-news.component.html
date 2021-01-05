@@ -28,7 +28,7 @@
           <p><textarea name="" id="" cols="10" rows="3" maxlength="1000" class="form-control"></textarea></p>
         </div>
         <div class="col-4">
-         <p><button type="button" class="btn btn-primary btn-sm">確認</button></p>
+         <p><button type="button" class="btn btn-primary btn-sm" (click)="getAll()">確認</button></p>
         </div>
       </div>
       <div class="row">
@@ -45,12 +45,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>休假通知</td>
-              <td>休假通知內容</td>
-              <td>2020-11-11</td>
-              <td>2020-22-20</td>
+            <tr *ngFor="let news of newsList; index as i">
+              <th scope="col">{{ i + 1}}</th>
+              <td>{{ news.subject }}</td>
+              <td>{{ news.content }}</td>
+              <td>{{ news.startAt }}</td>
+              <td>{{ news.endAt }}</td>
               <td><nb-icon icon="edit-outline"></nb-icon></td>
               <td><nb-icon icon="trash-2-outline"></nb-icon></td>
             </tr>

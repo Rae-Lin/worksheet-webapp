@@ -10,7 +10,10 @@ const routes: Routes = [{
   children: [
     {
       path: 'latest-news',
-      component: LatestNewsComponent
+      component: LatestNewsComponent,
+      data: {
+        preload: true
+      }
     },
   ],
 }];
