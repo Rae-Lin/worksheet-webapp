@@ -27,15 +27,14 @@ export class AppService {
     }
     return of({ errorMessage });
   }
-
-  getData(id): any {
-    return this.http.get<any>(`${this.url}/${id}`).pipe(
+  getAll(): any {
+    return this.http.get<any>(`${this.url}`).pipe(
       catchError(this.handleError)
     );
   }
 
-  getAll(): any {
-    return this.http.get<any>(`${this.url}`).pipe(
+  getData(id): any {
+    return this.http.get<any>(`${this.url}/${id}`).pipe(
       catchError(this.handleError)
     );
   }

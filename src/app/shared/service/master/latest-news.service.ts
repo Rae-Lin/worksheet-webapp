@@ -22,8 +22,8 @@ export class LatestNewsService extends AppService {
   constructor(
     http: HttpClient
   ) {
-    super(http, 'http://10.2.6.108/ptc-worksheet-api/Bulletin?AllData=true');
-    // super(http, 'https://jsonplaceholder.typicode.com/todos');
+    // super(http, 'http://10.2.6.108/ptc-worksheet-api/Bulletin?AllData=true');
+    super(http, 'https://next.json-generator.com/api/json/get/EkIOdDp6t');
   }
 }
 

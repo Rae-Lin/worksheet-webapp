@@ -9,25 +9,22 @@ import { LatestNews, LatestNewsService } from './../../../shared/service/master/
   selector: 'app-latest-news',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './latest-news.component.html',
-  // providers: [LatestNewsService],
   styleUrls: ['./latest-news.component.scss']
 })
 export class LatestNewsComponent implements OnInit {
   formControl = new FormControl(new Date());
   ngModelDate = new Date();
 
-  newsList: Observable<any>;
+  newsList$: Observable<any[]>;
   latestNews: LatestNews;
 
-  constructor(
-    private service: LatestNewsService
-  ) { }
+  constructor(private service: LatestNewsService) { }
 
   getAll(): void {
     this.service.getAll()
       .subscribe(res => {
-        this.newsList = res.data.list;
-        console.log(this.newsList);
+        this.newsList$ = res.data.list;
+        console.log(this.newsList$);
         if (res.errorMessage) {
           alert(res.errorMessage);
         }
@@ -40,14 +37,7 @@ export class LatestNewsComponent implements OnInit {
     //   {id: 2, subject: 'test', content: '最新消息測試', startAt: '2020-01-01T00:00:00', endAt: '2022-01-01T00:00:00'},
     // ];
     // console.log(this.newsList);
-    // this.service.getAll()
-    //   .subscribe(res => {
-    //     this.newsList = res.data.list;
-    //     console.log(this.newsList);
-    //     if (res.errorMessage) {
-    //       alert(res.errorMessage);
-    //     }
-    //   });
+    this.getAll();
     // this.service.postData({ title: '123'})
     //   .subscribe(res => {
     //     console.log(res);
