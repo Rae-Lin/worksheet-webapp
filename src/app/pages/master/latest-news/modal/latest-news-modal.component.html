@@ -1,9 +1,31 @@
-<ng-template let-data let-ref="dialogRef">
-  <nb-card>
-    <nb-card-header>Template Dialog</nb-card-header>
-    <nb-card-body>{{ data }}</nb-card-body>
-    <nb-card-footer>
-      <button nbButton (click)="ref.close()">Close Dialog</button>
+  <nb-card class="model-full">
+    <nb-card-body>
+      <div>
+        <div class="model-col">
+          <p>主旨</p>
+          <p><input type="text" name="" id="" class="form-control" placeholder="請輸入主旨"></p>
+        </div>
+        <div class="model-col">
+            <p>開始時間</p>
+            <p>
+              <input nbInput placeholder="請選擇日期" [nbDatepicker]="formcontrol" [formControl]="formControl" class="form-control" size="small">
+              <nb-datepicker #formcontrol></nb-datepicker>
+            </p>
+        </div>
+        <div class="model-col">
+          <p>結束時間</p>
+          <p>
+            <input nbInput placeholder="請選擇日期" [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate" class="form-control" >
+            <nb-datepicker #ngmodel></nb-datepicker>
+          </p>
+        </div>
+        <div class="model-col mb-2">
+          <p>消息內容</p>
+          <p><textarea name="" id="" cols="10" rows="3" maxlength="1000" class="form-control"></textarea></p>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer class="text-right">
+      <button type="button" class="btn btn-primary btn-sm" nbButton (click)="cancel()">取消</button>
     </nb-card-footer>
   </nb-card>
-</ng-template>

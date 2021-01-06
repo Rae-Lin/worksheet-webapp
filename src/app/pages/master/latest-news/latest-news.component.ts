@@ -1,12 +1,10 @@
 import { Observable } from 'rxjs';
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { LatestNews, LatestNewsService } from './../../../shared/service/master/latest-news.service';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { APIdata } from 'src/app/shared/service/app.service';
-import { HttpResponse } from '@angular/common/http';
-
-
+import { LatestNewsModalComponent } from './modal/latest-news-modal.component';
 
 @Component({
   selector: 'app-latest-news',
@@ -17,6 +15,7 @@ import { HttpResponse } from '@angular/common/http';
 export class LatestNewsComponent implements OnInit{
   formControl = new FormControl(new Date());
   ngModelDate = new Date();
+  private dialogRef: NbDialogRef<any>;
 
   apidata: APIdata;
   newsList$: Observable<APIdata>;
@@ -26,8 +25,20 @@ export class LatestNewsComponent implements OnInit{
     private dialogService: NbDialogService
   ) { }
 
-  open(dialog: TemplateRef<any>): void {
-    this.dialogService.open(dialog);
+  // open(dialog: TemplateRef<any>): void {
+  //   this.dialogService.open(dialog, {
+  //     context: {
+  //     }, dialogClass: 'model-full'
+  //   });
+  // }
+  open(): void {
+    this.dialogRef = this.dialogService.open(LatestNewsModalComponent, { dialogClass: 'model-full' });
+  }
+
+  closeDialog(): void {
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    }
   }
 
   ngOnInit(): void {

@@ -34,5 +34,6 @@ import { LatestNewsModalComponent } from './latest-news/modal/latest-news-modal.
     ReactiveFormsModule,
   ],
   exports: [MasterComponent, LatestNewsComponent],
+  entryComponents: [LatestNewsModalComponent],
 })
 export class MasterModule {}

@@ -1,42 +1,6 @@
-<!-- <app-latest-news-modal #dialog></app-latest-news-modal> -->
 <ng-template #dialog let-data let-ref="dialogRef">
-  <nb-card>
-    <nb-card-header>新增最新消息</nb-card-header>
-    <nb-card-body>
-      <div class="container-fluid">
-        <div>
-          <p>主旨</p>
-          <p><input type="text" name="" id="" class="form-control" placeholder="請輸入主旨"></p>
-        </div>
-        <div>
-            <p>開始時間</p>
-            <p>
-              <input nbInput placeholder="請選擇日期" [nbDatepicker]="formcontrol" [formControl]="formControl" class="form-control" >
-              <nb-datepicker #formcontrol></nb-datepicker>
-            </p>
-        </div>
-        <div>
-          <p>結束時間</p>
-          <p>
-            <input nbInput placeholder="請選擇日期" [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate" class="form-control" >
-            <nb-datepicker #ngmodel></nb-datepicker>
-          </p>
-        </div>
-        <div class="col mb-5">
-          <p>消息內容</p>
-          <p><textarea name="" id="" cols="10" rows="3" maxlength="1000" class="form-control"></textarea></p>
-        </div>
-        <div>
-          <!-- <p><button type="button" class="btn btn-primary btn-sm" (click)="getAll()">確認</button></p> -->
-        </div>
-      </div>
-    </nb-card-body>
-    <nb-card-footer>
-      <button nbButton (click)="ref.close()">取消</button>
-    </nb-card-footer>
-  </nb-card>
+  <app-latest-news-modal></app-latest-news-modal>
 </ng-template>
-
 
 <nb-card status="success">
   <nb-card-header>最新消息</nb-card-header>
@@ -58,8 +22,8 @@
               <th scope="col"></th>
             </tr>
           </thead>
-          <tbody>
-            <tr *ngFor="let news of newsList$.list | async; index as i">
+          <!-- <tbody>
+            <tr *ngFor="let news of newsList$ | async; index as i">
               <th scope="col">{{ i + 1}}</th>
               <td>{{ news.subject }}</td>
               <td>{{ news.content }}</td>
@@ -68,7 +32,7 @@
               <td><nb-icon icon="edit-outline"></nb-icon></td>
               <td><nb-icon icon="trash-2-outline"></nb-icon></td>
             </tr>
-          </tbody>
+          </tbody> -->
         </table>
       </div>
     </div>
