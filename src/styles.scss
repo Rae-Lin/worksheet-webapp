@@ -45,5 +45,8 @@
     .model-col{
       margin-bottom: 1.25rem;
     }
+    button + button{
+      margin-left: 10px;
+    }
   }
 }

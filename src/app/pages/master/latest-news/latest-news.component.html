@@ -1,5 +1,5 @@
 <ng-template #dialog let-data let-ref="dialogRef">
-  <app-latest-news-modal></app-latest-news-modal>
+  <app-latest-news-modal (add)="addNews($event)"></app-latest-news-modal>
 </ng-template>
 
 <nb-card status="success">
@@ -7,7 +7,7 @@
   <nb-card-body>
     <div class="container-fluid">
       <div class="row">
-        <p><button type="button" class="btn btn-primary btn-sm" (click)="open(dialog)">新增</button></p>
+        <p><button type="button" class="btn btn-primary btn-sm" (click)="open()">新增</button></p>
       </div>
       <div class="row">
         <table class="table">
@@ -33,6 +33,17 @@
               <td><nb-icon icon="trash-2-outline"></nb-icon></td>
             </tr>
           </tbody> -->
+          <tbody>
+            <tr *ngFor="let news of newsList; index as i">
+              <th scope="col">{{ i + 1}}</th>
+              <td>{{ news.subject }}</td>
+              <td>{{ news.content }}</td>
+              <td>{{ news.startAt }}</td>
+              <td>{{ news.endAt }}</td>
+              <td><nb-icon icon="edit-outline"></nb-icon></td>
+              <td><nb-icon icon="trash-2-outline"></nb-icon></td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>

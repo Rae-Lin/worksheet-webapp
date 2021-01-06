@@ -6,6 +6,14 @@ import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { APIdata } from 'src/app/shared/service/app.service';
 import { LatestNewsModalComponent } from './modal/latest-news-modal.component';
 
+export interface News {
+  id: number;
+  subject: string;
+  content: string;
+  startAt: string;
+  endAt: string;
+}
+
 @Component({
   selector: 'app-latest-news',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,6 +27,7 @@ export class LatestNewsComponent implements OnInit{
 
   apidata: APIdata;
   newsList$: Observable<APIdata>;
+  newsList: [];
 
   constructor(
     private service: LatestNewsService,
@@ -35,11 +44,18 @@ export class LatestNewsComponent implements OnInit{
     this.dialogRef = this.dialogService.open(LatestNewsModalComponent, { dialogClass: 'model-full' });
   }
 
-  closeDialog(): void {
-    if (this.dialogRef) {
-      this.dialogRef.close();
-    }
+  addNews(data: []): void {
+    console.log('data');
+    console.log(data);
+    // console.log(this.data);
   }
+
+  // closeDialog(): void {
+  //   if (this.dialogRef) {
+  //     // this.dialogRef.close();
+  //     console.log('yy')
+  //   }
+  // }
 
   ngOnInit(): void {
     this.newsList$ = this.service.getAll();
