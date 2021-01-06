@@ -1,9 +1,17 @@
 import { Observable } from 'rxjs';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef } from '@angular/core';
 import { LatestNews, LatestNewsService } from './../../../shared/service/master/latest-news.service';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { APIdata } from 'src/app/shared/service/app.service';
+import { LatestNewsModalComponent } from './modal/latest-news-modal.component';
 
-
+export interface News {
+  id: number;
+  subject: string;
+  content: string;
+  startAt: string;
+  endAt: string;
+}
 
 @Component({
   selector: 'app-latest-news',
@@ -11,33 +19,50 @@ import { LatestNews, LatestNewsService } from './../../../shared/service/master/
   templateUrl: './latest-news.component.html',
   styleUrls: ['./latest-news.component.scss']
 })
-export class LatestNewsComponent implements OnInit {
-  formControl = new FormControl(new Date());
-  ngModelDate = new Date();
+export class LatestNewsComponent implements OnInit{
+  private dialogRef: NbDialogRef<any>;
 
-  newsList$: Observable<any[]>;
-  latestNews: LatestNews;
+  apidata: APIdata;
+  newsList$: Observable<APIdata>;
+  newsList: string[] = [];
+  inputData = '123';
 
-  constructor(private service: LatestNewsService) { }
+  constructor(
+    private service: LatestNewsService,
+    private dialogService: NbDialogService
+  ) { }
 
-  getAll(): void {
-    this.service.getAll()
-      .subscribe(res => {
-        this.newsList$ = res.data.list;
-        console.log(this.newsList$);
-        if (res.errorMessage) {
-          alert(res.errorMessage);
-        }
-      });
+  // open(dialog: TemplateRef<any>): void {
+  //   this.dialogService.open(dialog, {
+  //     context: {
+  //     }, dialogClass: 'model-full'
+  //   });
+  // }
+  open(): void {
+    // this.dialogRef = this.dialogService.open(LatestNewsModalComponent, {
+    this.dialogService.open(LatestNewsModalComponent, {
+      dialogClass: 'model-full' })
+      .onClose.subscribe(news => news && this.newsList.push(news));
   }
 
+  // addNews(data: []): void {
+  create(){
+    console.log('data');
+    // console.log(data);
+    // console.log(this.data);
+  }
+
+  // closeDialog(): void {
+  //   if (this.dialogRef) {
+  //     // this.dialogRef.close();
+  //     console.log('yy')
+  //   }
+  // }
+
   ngOnInit(): void {
-    // this.newsList = [
-    //   {id: 2, subject: 'test', content: '最新消息測試', startAt: '2020-01-01T00:00:00', endAt: '2022-01-01T00:00:00'},
-    //   {id: 2, subject: 'test', content: '最新消息測試', startAt: '2020-01-01T00:00:00', endAt: '2022-01-01T00:00:00'},
-    // ];
-    // console.log(this.newsList);
-    this.getAll();
+    this.newsList$ = this.service.getAll();
+    console.log(this.newsList$);
+
     // this.service.postData({ title: '123'})
     //   .subscribe(res => {
     //     console.log(res);
@@ -51,11 +76,6 @@ export class LatestNewsComponent implements OnInit {
     //     console.log(res);
     //   });
   }
-
-  // // tslint:disable-next-line: use-lifecycle-interface
-  // ngAfterViewInit(): void{
-  //   this.getAll();
-  // }
 
   // error: any;
   // headers: string[];
@@ -73,4 +93,9 @@ export class LatestNewsComponent implements OnInit {
   //       endAt: data.endAt,
   //     });
   // }
+
+  // ngAfterViewInit(): void {
+  //   this.getAll();
+  // }
 }
+

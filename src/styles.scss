@@ -14,6 +14,9 @@
 
 *{
   text-indent: 0.1rem;
+  p{
+    margin-bottom: 0.35rem;
+  }
 }
 
 .btn-primary {
@@ -30,3 +33,20 @@
   }
 }
 
+.model-full {
+  min-width: 600px !important;
+
+  .cdk-visually-hidden {
+    width: 99% !important;
+  }
+
+  nb-dialog-container {
+    width: 100% !important;
+    .model-col{
+      margin-bottom: 1.25rem;
+    }
+    button + button{
+      margin-left: 10px;
+    }
+  }
+}

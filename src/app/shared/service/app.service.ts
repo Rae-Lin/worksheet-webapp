@@ -3,7 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError, delay, map, retry } from 'rxjs/operators';
+
+export interface APIdata {
+  data: any;
+  page: number;
+  start: number;
+  end: number;
+  totalCount: number;
+  totalPages: number;
+  list: any[];
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+}
+
 export class AppService {
   constructor(
     private http: HttpClient,
@@ -27,15 +40,17 @@ export class AppService {
     }
     return of({ errorMessage });
   }
-  getAll(): any {
-    return this.http.get<any>(`${this.url}`).pipe(
-      catchError(this.handleError)
+
+  getAll(): Observable<APIdata> {
+    return this.http.get<APIdata>(`${this.url}`).pipe(
+      map(res => res.data),
+      catchError(this.handleError),
     );
   }
 
   getData(id): any {
     return this.http.get<any>(`${this.url}/${id}`).pipe(
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 

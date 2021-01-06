@@ -9,14 +9,17 @@ import {
   NbCalendarModule,
   NbCardModule,
   NbDatepickerModule,
+  NbDialogModule,
   NbIconModule,
   NbLayoutModule,
   NbThemeModule,
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LatestNewsModalComponent } from './latest-news/modal/latest-news-modal.component';
+import { TestComponent } from './latest-news/test/test.component';
 
 @NgModule({
-  declarations: [MasterComponent, LatestNewsComponent],
+  declarations: [MasterComponent, LatestNewsComponent, LatestNewsModalComponent, TestComponent],
   imports: [
     CommonModule,
     MasterRoutingModule,
@@ -27,9 +30,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbDatepickerModule,
     NbIconModule,
     NbCalendarModule,
+    NbDialogModule.forChild(),
     FormsModule,
     ReactiveFormsModule,
   ],
-  exports: [MasterComponent, LatestNewsComponent],
+  exports: [MasterComponent, LatestNewsComponent, LatestNewsModalComponent],
+  entryComponents: [LatestNewsModalComponent],
 })
 export class MasterModule {}
