@@ -12,6 +12,7 @@ import {
   NbTabsetModule,
   NbCalendarRangeModule,
   NbDatepickerModule,
+  NbDialogModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
@@ -34,6 +35,7 @@ import { SharedModule } from './shared/shared.module';
     NbMenuModule.forRoot(),
     NbSidebarModule.forRoot(),
     NbDatepickerModule.forRoot(),
+    NbDialogModule.forRoot(),
     NbTabsetModule,
     NbCardModule,
     NbCalendarModule,

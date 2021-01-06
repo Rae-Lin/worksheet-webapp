@@ -11,7 +11,6 @@ export class SidebarMenuComponent {
   items: NbMenuItem[] = [
     {
       title: '首頁',
-<<<<<<< HEAD
       link: 'pages/home',
     },
     {
@@ -32,21 +31,6 @@ export class SidebarMenuComponent {
           link: 'pages/master/latest-news',
         }
       ],
-=======
-      link: 'Home',
-    },
-    {
-      title: '報表',
-      link: 'Report',
-    },
-    {
-      title: '權限管理',
-      link: 'Management' ,
-    },
-    {
-      title: '主檔設定',
-      link: 'Master',
->>>>>>> 623a0c73c310567c57750837fe079925043f66cc
     },
   ];
 }
