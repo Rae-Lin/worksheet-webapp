@@ -19,6 +19,6 @@ export interface LatestNews {
 })
 export class LatestNewsService extends AppService {
   constructor(http: HttpClient) {
-    super(http, 'http://10.2.6.108/ptc-worksheet-api/Bulletin?AllData=true');
+    super(http, 'http://10.2.6.108/ptc-worksheet-api/Bulletin');
   }
 }

@@ -14,8 +14,20 @@
 
 *{
   text-indent: 0.1rem;
+  .nb-theme-default{
+    h1, .h1{ font-size: 2rem;}
+    h2, .h2{ font-size: 1.4rem;}
+    h3, .h3{ font-size: 1.3rem;}
+    h4, .h4{ font-size: 1.2rem;}
+    h5, .h5{ font-size: 1.1rem;}
+    h6, .h6{ font-size: 1.05rem;}
+    .subtitle{ font-size: 1rem;}
+    table nb-icon.operate{
+      cursor: pointer;
+    }
+  }
   p{
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.3rem;
   }
 }
 
@@ -50,3 +62,4 @@
     }
   }
 }
+

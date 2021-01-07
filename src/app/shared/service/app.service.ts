@@ -27,11 +27,11 @@ export class AppService {
     let errorMessage: string;
     switch (err.status) {
       case 400:
-        errorMessage = '參數錯誤';
+        errorMessage = '400 參數錯誤';
         break;
 
       case 404:
-        errorMessage = '內容不存在';
+        errorMessage = '404 內容不存在';
         break;
 
       default:
@@ -41,9 +41,16 @@ export class AppService {
     return of({ errorMessage });
   }
 
-  getAll(): Observable<APIdata> {
-    return this.http.get<APIdata>(`${this.url}`).pipe(
-      map(res => res.data),
+  // getAll(): Observable<APIdata> {
+  //   return this.http.get<APIdata>(`${this.url}`).pipe(
+  //     map(res => res.data.list),
+  //     catchError(this.handleError),
+  //   );
+  // }
+
+  getAll(): any {
+    return this.http.get<any>(`${this.url}`).pipe(
+      map(res => res.data.list),
       catchError(this.handleError),
     );
   }

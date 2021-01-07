@@ -15,11 +15,14 @@ import {
   NbThemeModule,
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LatestNewsModalComponent } from './latest-news/modal/latest-news-modal.component';
-import { TestComponent } from './latest-news/test/test.component';
+import { LatestNewsModalComponent } from './latest-news/create/latest-news-modal.component';
 
 @NgModule({
-  declarations: [MasterComponent, LatestNewsComponent, LatestNewsModalComponent, TestComponent],
+  declarations: [
+    MasterComponent,
+    LatestNewsComponent,
+    LatestNewsModalComponent
+  ],
   imports: [
     CommonModule,
     MasterRoutingModule,
@@ -32,7 +35,7 @@ import { TestComponent } from './latest-news/test/test.component';
     NbCalendarModule,
     NbDialogModule.forChild(),
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   exports: [MasterComponent, LatestNewsComponent, LatestNewsModalComponent],
   entryComponents: [LatestNewsModalComponent],

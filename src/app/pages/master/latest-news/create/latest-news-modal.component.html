@@ -2,26 +2,26 @@
     <nb-card-body>
       <div>
         <div class="model-col">
-          <p>主旨{{ data }}</p>
+          <p class="subtitle">主旨</p>
           <p><input type="text" name="subject" [(ngModel)]="subject" class="form-control" placeholder="請輸入主旨"></p>
         </div>
         <div class="model-col">
-            <p>開始時間</p>
+          <p class="subtitle">開始時間</p>
             <p>
               <input nbInput [nbDatepicker]="formcontrol" [formControl]="formControl" class="form-control">
-              <nb-datepicker #formcontrol></nb-datepicker>
+              <nb-datepicker #formcontrol [min]="min"></nb-datepicker>
             </p>
         </div>
         <div class="model-col">
-          <p>結束時間</p>
+          <p class="subtitle">結束時間</p>
           <p>
             <input nbInput [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate" class="form-control" >
             <nb-datepicker #ngmodel></nb-datepicker>
           </p>
         </div>
         <div class="model-col mb-2">
-          <p>消息內容</p>
-          <p><textarea name="content" [(ngModel)]="content" cols="10" rows="3" maxlength="1000" class="form-control"></textarea></p>
+          <p class="subtitle">消息內容</p>
+          <p><textarea name="content" [(ngModel)]="content" cols="10" rows="3" maxlength="2 00" class="form-control"></textarea></p>
         </div>
       </div>
     </nb-card-body>
