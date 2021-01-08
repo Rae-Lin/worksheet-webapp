@@ -48,6 +48,12 @@ export class AppService {
   //   );
   // }
 
+  getAllData(): any {
+    return this.http.get<any>(`${this.url}`).pipe(
+      catchError(this.handleError),
+    );
+  }
+
   getAll(): any {
     return this.http.get<any>(`${this.url}`).pipe(
       map(res => res.data.list),
@@ -68,12 +74,6 @@ export class AppService {
   }
 
   updateData(id, data): any  {
-    return this.http.patch<any>(`${this.url}/${id}`, data).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  updateAll(id, data): any  {
     return this.http.put<any>(`${this.url}/${id}`, data).pipe(
       catchError(this.handleError)
     );
@@ -84,4 +84,10 @@ export class AppService {
       catchError(this.handleError)
     );
   }
+
+  // updateData(id, data): any  {
+  //   return this.http.patch<any>(`${this.url}/${id}`, data).pipe(
+  //     catchError(this.handleError)
+  //   );
+  // }
 }

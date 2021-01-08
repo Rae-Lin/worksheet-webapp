@@ -1,4 +1,3 @@
-<!-- <p>modify-news works!</p>
 <nb-card class="model-full">
   <nb-card-body>
     <div>
@@ -9,20 +8,20 @@
       <div class="model-col">
         <p class="subtitle">開始時間</p>
           <p>
-            <input nbInput [nbDatepicker]="formcontrol" [formControl]="formControl" class="form-control">
+            <input nbInput [nbDatepicker]="formcontrol" [(ngModel)]="formControl" class="form-control">
             <nb-datepicker #formcontrol [min]="min"></nb-datepicker>
           </p>
       </div>
       <div class="model-col">
         <p class="subtitle">結束時間</p>
         <p>
-          <input nbInput [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate" class="form-control" >
-          <nb-datepicker #ngmodel></nb-datepicker>
+          <input nbInput [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate" class="form-control">
+          <nb-datepicker #ngmodel [min]="formControl"></nb-datepicker>
         </p>
       </div>
       <div class="model-col mb-2">
         <p class="subtitle">消息內容</p>
-        <p><textarea name="content" [(ngModel)]="content" cols="10" rows="3" maxlength="2 00" class="form-control"></textarea></p>
+        <p><textarea name="content" [(ngModel)]="content" cols="10" rows="3" maxlength="200" class="form-control"></textarea></p>
       </div>
     </div>
   </nb-card-body>
@@ -30,4 +29,4 @@
     <button type="button" class="btn btn-primary btn-sm" nbButton (click)="cancel()">取消</button>
     <button type="button" class="btn btn-primary btn-sm" nbButton (click)="submit()">確認</button>
   </nb-card-footer>
-</nb-card> -->
+</nb-card>

@@ -18,18 +18,18 @@
               <th scope="col">消息內容</th>
               <th scope="col">開始時間</th>
               <th scope="col">結束時間</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
+              <th scope="col" class="text-center">修改</th>
+              <th scope="col" class="text-center">刪除</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let news of newsList$ | async; index as i">
               <td><span class="subject">{{ news.subject }}</span></td>
               <td><span class="content">{{ news.content }}</span></td>
-              <td>{{ news.startAt | date:'yyyy-MM-dd' }}</td>
+              <td i18n>{{ news.startAt | date:'yyyy-MM-dd' }}</td>
               <td>{{ news.endAt | date:'yyyy-MM-dd' }}</td>
-              <td><nb-icon class="operate" icon="edit-outline" (click)="openModify(news.id)"></nb-icon></td>
-              <td><nb-icon class="operate" icon="trash-2-outline" (click)="deleteNews(news.id)"></nb-icon></td>
+              <td class="text-center"><nb-icon class="operate" icon="edit-outline" (click)="openModify(news.id)"></nb-icon></td>
+              <td class="text-center"><nb-icon class="operate" icon="trash-2-outline" (click)="deleteNews(news.id)"></nb-icon></td>
             </tr>
           </tbody>
         </table>

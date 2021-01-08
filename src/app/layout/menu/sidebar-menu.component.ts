@@ -11,15 +11,15 @@ export class SidebarMenuComponent {
   items: NbMenuItem[] = [
     {
       title: '首頁',
-      link: 'pages/home',
+      link: 'home',
     },
     {
       title: '報表',
-      link: 'pages/report',
+      link: 'report',
     },
     {
       title: '權限管理',
-      link: 'pages/management',
+      link: 'management',
     },
     {
       title: '主檔設定',
@@ -28,7 +28,7 @@ export class SidebarMenuComponent {
       children: [
         {
           title: '最新消息',
-          link: 'pages/master/latest-news',
+          link: 'master/latest-news',
         }
       ],
     },

@@ -16,12 +16,12 @@
           <p class="subtitle">結束時間</p>
           <p>
             <input nbInput [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate" class="form-control" >
-            <nb-datepicker #ngmodel></nb-datepicker>
+            <nb-datepicker #ngmodel [min]="formControl.value"></nb-datepicker>
           </p>
         </div>
         <div class="model-col mb-2">
           <p class="subtitle">消息內容</p>
-          <p><textarea name="content" [(ngModel)]="content" cols="10" rows="3" maxlength="2 00" class="form-control"></textarea></p>
+          <p><textarea name="content" [(ngModel)]="content" cols="10" rows="3" maxlength="200" class="form-control"></textarea></p>
         </div>
       </div>
     </nb-card-body>

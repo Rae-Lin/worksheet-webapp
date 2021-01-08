@@ -5,7 +5,7 @@ import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'Home', pathMatch: 'full'},
-  { path: 'pages',
+  { path: '',
     loadChildren: './pages/pages.module#PagesModule',
     data: {
       preload: true

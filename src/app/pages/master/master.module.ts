@@ -16,12 +16,14 @@ import {
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LatestNewsModalComponent } from './latest-news/create/latest-news-modal.component';
+import { LatestNewsModifyComponent } from './latest-news/modify/latest-news-modify.component';
 
 @NgModule({
   declarations: [
     MasterComponent,
     LatestNewsComponent,
-    LatestNewsModalComponent
+    LatestNewsModalComponent,
+    LatestNewsModifyComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,7 @@ import { LatestNewsModalComponent } from './latest-news/create/latest-news-modal
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [MasterComponent, LatestNewsComponent, LatestNewsModalComponent],
+  exports: [MasterComponent, LatestNewsComponent, LatestNewsModalComponent, LatestNewsModifyComponent],
   entryComponents: [LatestNewsModalComponent],
 })
 export class MasterModule {}

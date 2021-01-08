@@ -1,10 +1,13 @@
 import { Observable } from 'rxjs';
-import { ChangeDetectionStrategy, Component, OnInit, TemplateRef } from '@angular/core';
-import { LatestNews, LatestNewsService } from './../../../shared/service/master/latest-news.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  LatestNews,
+  LatestNewsService,
+} from './../../../shared/service/master/latest-news.service';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { APIdata } from 'src/app/shared/service/app.service';
 import { LatestNewsModalComponent } from './create/latest-news-modal.component';
-import { ModifyNewsComponent } from './modify/modify-news.component';
+import { LatestNewsModifyComponent } from './modify/latest-news-modify.component';
 
 export interface News {
   id: number;
@@ -18,9 +21,9 @@ export interface News {
   selector: 'app-latest-news',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './latest-news.component.html',
-  styleUrls: ['./latest-news.component.scss']
+  styleUrls: ['./latest-news.component.scss'],
 })
-export class LatestNewsComponent implements OnInit{
+export class LatestNewsComponent implements OnInit {
   // private dialogRef: NbDialogRef<any>;
   private newsItem: {
     subject: string;
@@ -31,81 +34,92 @@ export class LatestNewsComponent implements OnInit{
 
   apidata: APIdata;
   // newsList$: Observable<APIdata>;
-  newsList$: Observable<any>;
+  newsList$: Observable<any[]>;
   constructor(
     private service: LatestNewsService,
     private dialogService: NbDialogService
-  ) { }
+  ) {}
 
+  // 開啟新增modal
   openCreate(): void {
-    // this.dialogRef = this.dialogService.open(LatestNewsModalComponent, {
-    this.dialogService.open(LatestNewsModalComponent, {
-      dialogClass: 'model-full'})
-      .onClose.subscribe(item => {
+    this.dialogService
+      .open(LatestNewsModalComponent, { dialogClass: 'model-full' })
+      .onClose.subscribe((item) => {
         if (item) {
-              console.log('回傳');
-              this.newsItem = {
+          this.newsItem = {
+            subject: item.subject,
+            content: item.content,
+            startAt: item.startAt,
+            endAt: item.endAt,
+          };
+          this.createNews();
+        }
+      });
+  }
+
+  // 開啟新增modal - 執行新增
+  createNews(): void {
+    this.service.postData(this.newsItem).subscribe((res) => {
+      if (res.errorMessage) {
+        alert(res.errorMessage);
+      }
+    });
+    this.newsList$.subscribe();
+  }
+
+  // 刪除
+  deleteNews(idNo: number): void {
+    this.service.deleteData(idNo).subscribe((res) => {
+      if (res.errorMessage) {
+        alert(res.errorMessage);
+      }
+    });
+  }
+
+  // 開啟編輯modal
+  openModify(idNo: number): void {
+    this.service.getData(idNo).subscribe((res) => {
+      if (res.errorMessage) {
+        alert(res.errorMessage);
+      } else {
+        this.dialogService
+          .open(LatestNewsModifyComponent, {
+            dialogClass: 'model-full',
+            context: {
+              subject: res.data.subject,
+              content: res.data.content,
+              formControl: new Date(res.data.startAt),
+              ngModelDate: new Date(res.data.endAt),
+            },
+          })
+          .onClose.subscribe((item) => {
+            if (item) {
+              const Newsitem = {
+                id: idNo,
                 subject: item.subject,
                 content: item.content,
                 startAt: item.startAt,
                 endAt: item.endAt,
               };
-              this.submit();
-        }
-      });
-  }
-
-  submit(): void {
-      this.service.postData(this.newsItem)
-      .subscribe(res => {
-        console.log('準備存囉');
-        if (res.errorMessage) { alert(res.errorMessage); }
-        console.log('存完囉');
-      });
-  }
-
-  deleteNews(id: number): void {
-    this.service.deleteData(id)
-    .subscribe(res => {
-      console.log('準備刪囉');
-      if (res.errorMessage) { alert(res.errorMessage); }
-      console.log('刪完囉');
+              this.modifyNews(idNo, Newsitem);
+            }
+          });
+      }
     });
-    // this.service.getAll().subscribe(res => {
-    //   this.newsList$ = res;
-    //   if (res.errorMessage) { alert(res.errorMessage); }
-    // });
   }
 
-  openModify(id: number): void {
-    this.service.getData(id)
-      .subscribe(res => {
-        if (res.errorMessage) { alert(res.errorMessage); }
-
-      });
-    console.log(id);
-    this.dialogService.open(ModifyNewsComponent, {
-      context: {
-        subject: 'show please',
-        content: '',
-        startat: new Date(),
-        endat: new Date(),
-      },
-      dialogClass: 'model-full'})
-      .onClose.subscribe(item => {
-        console.log('回傳');
-        this.newsItem = {
-          subject: item.subject,
-          content: item.content,
-          startAt: item.startAt,
-          endAt: item.endAt,
-        };
-      });
+  // 開啟編輯modal - 執行編輯
+  modifyNews(idNo: number, Newsitem: object): void {
+    this.service.updateData(idNo, Newsitem).subscribe((res) => {
+      if (res.errorMessage) {
+        alert(res.errorMessage);
+      }
+    });
   }
 
   ngOnInit(): void {
     this.newsList$ = this.service.getAll();
-    console.log(this.newsList$);
+    // console.log(this.newsList$);
     // this.newsList$.subscribe((res) => {
     //   console.log(res.data.list);
     //   this.newsList = res.data.list;
@@ -146,4 +160,3 @@ export class LatestNewsComponent implements OnInit{
   //   this.getAll();
   // }
 }
-

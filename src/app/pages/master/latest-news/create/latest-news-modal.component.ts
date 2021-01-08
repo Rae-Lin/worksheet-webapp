@@ -43,6 +43,10 @@ export class LatestNewsModalComponent implements OnInit {
       alert('皆為必填');
       return;
     }
+    if (this.formControl.value > this.ngModelDate) {
+      alert('結束時間需晚於開始時間');
+      return;
+    }
     this.news = {
       subject: this.subject,
       content: this.content,
