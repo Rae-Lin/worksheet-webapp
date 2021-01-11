@@ -18,6 +18,7 @@ import { HomeModule } from './home/home.module';
 import { ReportModule } from './report/report.module';
 import { MasterModule } from './master/master.module';
 import { ManagementModule } from './management/management.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ManagementModule } from './management/management.module';
     HomeModule,
     ReportModule,
     ManagementModule,
-    MasterModule
+    MasterModule,
+    SharedModule
   ]
 })
 export class PagesModule {}

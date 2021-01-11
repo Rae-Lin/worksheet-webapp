@@ -5,7 +5,10 @@
 // this is our just created themes.scss file, make sure the path to the file is correct
 @import 'themes';
 @import '../node_modules/@nebular/theme/styles/globals'; // or cosmic.css
-@import '../node_modules/bootstrap/dist/css/bootstrap.css';
+
+@import "./custom.scss";
+// @import '../node_modules/bootstrap/dist/css/bootstrap.css';
+@import "../node_modules/bootstrap/scss/bootstrap";
 
 // install the framework styles
 @include nb-install() {
@@ -29,12 +32,9 @@
   p{
     margin-bottom: 0.3rem;
   }
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: #5a37b8 !important;
-  border-color: #5a37b8 !important;
+  .btn{
+    font-weight: 600;
+  }
 }
 
 .days-container {
@@ -63,3 +63,6 @@
   }
 }
 
+.table-edit-icon{
+  width: 65px !important;
+}

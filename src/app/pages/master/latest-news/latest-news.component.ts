@@ -4,10 +4,11 @@ import {
   LatestNews,
   LatestNewsService,
 } from './../../../shared/service/master/latest-news.service';
-import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { NbDialogService } from '@nebular/theme';
 import { APIdata } from 'src/app/shared/service/app.service';
 import { LatestNewsModalComponent } from './create/latest-news-modal.component';
 import { LatestNewsModifyComponent } from './modify/latest-news-modify.component';
+import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
 
 export interface News {
   id: number;
@@ -24,7 +25,6 @@ export interface News {
   styleUrls: ['./latest-news.component.scss'],
 })
 export class LatestNewsComponent implements OnInit {
-  // private dialogRef: NbDialogRef<any>;
   private newsItem: {
     subject: string;
     content: string;
@@ -37,7 +37,8 @@ export class LatestNewsComponent implements OnInit {
   newsList$: Observable<any[]>;
   constructor(
     private service: LatestNewsService,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private toastr: ToastrService,
   ) {}
 
   // 開啟新增modal
@@ -59,9 +60,11 @@ export class LatestNewsComponent implements OnInit {
 
   // 開啟新增modal - 執行新增
   createNews(): void {
-    this.service.postData(this.newsItem).subscribe((res) => {
+    this.service.postData(this.newsItem).subscribe((res: any) => {
       if (res.errorMessage) {
-        alert(res.errorMessage);
+        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+      }else{
+        this.toastr.showToast('', 'top-right', '新增成功', 'success');
       }
     });
     this.newsList$.subscribe();
@@ -69,18 +72,20 @@ export class LatestNewsComponent implements OnInit {
 
   // 刪除
   deleteNews(idNo: number): void {
-    this.service.deleteData(idNo).subscribe((res) => {
+    this.service.deleteData(idNo).subscribe((res: any) => {
       if (res.errorMessage) {
-        alert(res.errorMessage);
+        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+      }else{
+        this.toastr.showToast('', 'top-right', '刪除成功', 'success');
       }
     });
   }
 
   // 開啟編輯modal
   openModify(idNo: number): void {
-    this.service.getData(idNo).subscribe((res) => {
+    this.service.getData(idNo).subscribe((res: any) => {
       if (res.errorMessage) {
-        alert(res.errorMessage);
+        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
       } else {
         this.dialogService
           .open(LatestNewsModifyComponent, {
@@ -110,9 +115,11 @@ export class LatestNewsComponent implements OnInit {
 
   // 開啟編輯modal - 執行編輯
   modifyNews(idNo: number, Newsitem: object): void {
-    this.service.updateData(idNo, Newsitem).subscribe((res) => {
+    this.service.updateData(idNo, Newsitem).subscribe((res: any) => {
       if (res.errorMessage) {
-        alert(res.errorMessage);
+        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+      }else{
+        this.toastr.showToast('', 'top-right', '修改成功', 'success');
       }
     });
   }

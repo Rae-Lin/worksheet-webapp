@@ -1,6 +1,10 @@
-<div class="personal">
-  <h1><a routerLink="/home">{{ title }}</a></h1>
-  <div class="personal-info">
+<div class="header-container">
+  <div class="title-container">
+    <nb-icon icon="menu-outline" (click)="toggle()"></nb-icon>
+    <!-- <button nbButton status="success" size="tiny" (click)="toggle()">Toggle</button> -->
+    <h1><a routerLink="/home">{{ title }}</a></h1>
+  </div>
+  <div class="personal-container">
     <div><span>登出</span></div>
     <div>
       <span class="personal-lastname">陳</span>

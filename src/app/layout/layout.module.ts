@@ -16,6 +16,7 @@ import {
   NbLayoutModule,
   NbTabsetModule,
   NbCalendarRangeModule,
+  NbIconModule,
 } from '@nebular/theme';
 
 @NgModule({
@@ -31,6 +32,7 @@ import {
     NbLayoutModule,
     NbCalendarModule,
     NbCalendarRangeModule,
+    NbIconModule
   ],
   exports: [
     HeaderComponent, SidebarMenuComponent, FooterComponent

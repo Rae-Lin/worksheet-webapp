@@ -10,7 +10,7 @@ $nb-themes: nb-register-theme(
     color-primary-300: #d5bfff,
     color-primary-400: #b18aff,
     color-primary-500: #a16eff,
-    color-primary-600: #7b51db,
+    color-primary-600: #7A42FE,
     color-primary-700: #5a37b8,
     color-primary-800: #3e2494,
     color-primary-900: #29157a,
@@ -18,11 +18,13 @@ $nb-themes: nb-register-theme(
     text-disabled-color: color-basic-600,
 
     // header
-    header-background-color: color-primary-700,
+    header-background-color: color-primary-600,
     header-text-color: white,
 
     // sidebar
     sidebar-padding: 1.25rem 0,
+    menu-text-font-size: 0.95rem,
+    menu-item-padding: 1rem,
 
     // layout
     layout-padding: 1.1rem 1.1rem 0.75rem,

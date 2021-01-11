@@ -18,8 +18,6 @@ import { LatestNewsComponent } from '../latest-news.component';
 // }
 
 export class LatestNewsModalComponent implements OnInit {
-  @Input() title: string;
-
   subject = '';
   content = '';
   formControl = new FormControl(new Date());

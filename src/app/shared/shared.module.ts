@@ -24,7 +24,7 @@ import { CalendarComponent } from './component/calendar/calendar.component';
   exports: [
     SharedComponent,
     CalendarComponent,
-    CalendarRangeComponent,
+    CalendarRangeComponent
   ]
 })
 export class SharedModule { }
