@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
         if (fetchInfo.start.getFullYear() == 2021) {
             if (fetchInfo.start.getMonth() == 0) {
               events.push(
-                  { title: '工作時數: 8', date: '2021-01-05' },
+                  { title: '工作時數: 8', date: '2021-01-05'  },
                   { title: '工作時數: 10', date: '2021-01-06' },
                   { title: '工作時數: 7.5', date: '2021-01-07' },
                   { title: '工作時數: 4', date: '2021-01-08' }
