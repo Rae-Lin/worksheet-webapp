@@ -7,14 +7,20 @@ import {
   NbCardModule,
   NbThemeModule,
   NbMenuModule,
-  NbCalendarModule,
   NbLayoutModule,
   NbTabsetModule,
-  NbCalendarRangeModule,
 } from '@nebular/theme';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
+
+import { FullCalendarModule } from '@fullcalendar/angular'; 
+import dayGridPlugin from '@fullcalendar/daygrid'; 
+import interactionPlugin from '@fullcalendar/interaction'; 
+FullCalendarModule.registerPlugins([ 
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 @NgModule({
   declarations: [HomeComponent],
@@ -23,13 +29,12 @@ import { HomeRoutingModule } from './home-routing.module';
     NbCardModule,
     NbLayoutModule,
     NbThemeModule,
-    NbCalendarModule,
-    NbCalendarRangeModule,
     NbSidebarModule,
     NbMenuModule,
     NbTabsetModule,
     SharedModule,
     HomeRoutingModule,
+    FullCalendarModule,
   ],
   exports: [
     HomeComponent
