@@ -24,37 +24,34 @@ export class ProjectGroupsComponent implements OnInit {
   itemList$: Observable<any[]>;
 
   settings = {
-    pager: {
-      display: true,
-      // perPage: 9,
-    },
-    mode: 'external', // 編輯以跳窗開啟
+    pager: {display: true},
+    mode: 'external',
     hideSubHeader: true ,
+    noDataMessage: '查無資料',
     actions: {
       columnTitle: '',
       position: 'right',
       add: false,
     },
-    edit: { editButtonContent: '<img src="../../../../assets/img/icon-edit.svg">'},
-    delete: { deleteButtonContent: '<img src="../../../../assets/img/icon-delete.svg">'},
-    attr: {
-      class: 'table thead-light table-hover table-cus'
-    },
+    edit: {editButtonContent: '<img src="../../../../assets/img/icon-edit.svg">'},
+    delete: {deleteButtonContent: '<img src="../../../../assets/img/icon-delete.svg">'},
+    attr: {class: 'table thead-light table-hover'},
     columns: {
       sn: {
         title: '代號',
         type: 'string',
         width: '220px',
-        class: 'subject',
         valuePrepareFunction: (cell) => {
           return `【${cell}】`;
         }
       },
       name: {
         title: '專案群組名稱',
-        type: 'string',
+        type: 'html',
         width: '75%',
-        class: 'content',
+        // valuePrepareFunction: (cell) => {
+        //   return `<span class="subject">${cell}</span>`;
+        // }
       },
     },
   };
@@ -163,7 +160,6 @@ export class ProjectGroupsComponent implements OnInit {
       this.source.setFilter([]);
     } else {
       this.source.setFilter([
-        // fields we want to include in the search
         {
           field: 'sn',
           search: query
@@ -173,9 +169,6 @@ export class ProjectGroupsComponent implements OnInit {
           search: query
         }
       ], false);
-      // second parameter specifying whether to perform 'AND' or 'OR' search
-      // (meaning all columns should contain search query or at least one)
-      // 'AND' by default, so changing to 'OR' by setting false here
     }
   }
 

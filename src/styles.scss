@@ -7,8 +7,9 @@
 @import '../node_modules/@nebular/theme/styles/globals'; // or cosmic.css
 
 @import "./custom.scss";
-// @import '../node_modules/bootstrap/dist/css/bootstrap.css';
 @import "../node_modules/bootstrap/scss/bootstrap";
+// @import '../node_modules/bootstrap/dist/css/bootstrap.css';
+
 
 // install the framework styles
 @include nb-install() {
@@ -75,9 +76,4 @@
 .ng2-smart-actions img{
   width: 20px;
   height: 20px;
-}
-
-.table-cus thead th{
-    background-color: #f2eff8;
-    border-bottom: 1px solid rgb(200, 200, 200) !important;
 }

@@ -38,34 +38,34 @@ export class LatestNewsComponent implements OnInit {
 
   // table Data
   settings = {
-    pager: {
-      display: true,
-      perPage: 10,
+    pager: {display: true}, // 設定分頁
+    mode: 'external',     // 新增、編輯以跳窗開啟
+    hideSubHeader: true , // 不顯示新增資料欄位
+    actions: {            // 操作欄位
+      columnTitle: '',    // 標題名稱
+      position: 'right',  // 表格最後
+      add: false,         // 不在表格內開放新增
     },
-    mode: 'external', // 編輯以跳窗開啟
-    hideSubHeader: true ,
-    actions: {
-      columnTitle: '',
-      position: 'right',
-      add: false,
-    },
-    edit: { editButtonContent: '<img src="../../../../assets/img/icon-edit.svg">'},
-    delete: { deleteButtonContent: '<img src="../../../../assets/img/icon-delete.svg">'},
-    attr: {
-      class: 'table thead-light table-hover table-cus'
-    },
+    noDataMessage: '查無資料',  // no data found Message
+    edit: {editButtonContent: '<img src="../../../../assets/img/icon-edit.svg">'},
+    delete: {deleteButtonContent: '<img src="../../../../assets/img/icon-delete.svg">'},
+    attr: {class: 'table thead-light table-hover'},  // 表格添加class
     columns: {
       subject: {
         title: '主旨',
-        type: 'string',
+        type: 'html',
         width: '40%',
-        class: 'subject',
+        valuePrepareFunction: (cell) => {
+          return `<span class="subject">${cell}</span>`;
+        }
       },
       content: {
         title: '消息內容',
-        type: 'string',
+        type: 'html',
         width: '30%',
-        class: 'content',
+        valuePrepareFunction: (cell) => {
+          return `<span class="content">${cell}</span>`;
+        }
       },
       startAt: {
         title: '開始時間',
