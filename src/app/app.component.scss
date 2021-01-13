@@ -21,20 +21,20 @@ app-header{
   width: 100%;
 }
 
-.model-full {
-  width: 100% !important;
-  height: 100% !important;
+// .model-full {
+//   width: 100% !important;
+//   height: 100% !important;
 
-  .cdk-visually-hidden {
-    width: 99% !important;
-    height: 99% !important;
-  }
+//   .cdk-visually-hidden {
+//     width: 99% !important;
+//     height: 99% !important;
+//   }
 
-  nb-dialog-container {
-    width: 100% !important;
-    height: 100% !important;
-  }
-}
+//   nb-dialog-container {
+//     width: 100% !important;
+//     height: 100% !important;
+//   }
+// }
 
 nb-sidebar{
   transition: all 0.5s;

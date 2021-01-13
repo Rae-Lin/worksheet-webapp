@@ -15,6 +15,7 @@ import { LocalDataSource } from 'ng2-smart-table';
   styleUrls: ['./project-groups.component.scss'],
 })
 export class ProjectGroupsComponent implements OnInit {
+  private query = '?AllData=true';
   private group: {
     sn: string;
     name: string;
@@ -64,7 +65,7 @@ export class ProjectGroupsComponent implements OnInit {
     private toastr: ToastrService,
   ) {
     this.source = new LocalDataSource();
-    this.service.getAll().subscribe((data) => {
+    this.service.getAll(this.query).subscribe((data) => {
       this.source.load(data);
     });
   }
@@ -150,7 +151,7 @@ export class ProjectGroupsComponent implements OnInit {
   }
 
   refreshTable(): any {
-    this.service.getAll().subscribe((data) => {
+    this.service.getAll(this.query).subscribe((data) => {
       this.source.load(data);
     });
   }
@@ -173,6 +174,6 @@ export class ProjectGroupsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.itemList$ = this.service.getAll();
+    // this.itemList$ = this.service.getAll();
   }
 }

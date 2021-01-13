@@ -9,13 +9,13 @@ import { LatestNewsModifyComponent } from './modify/latest-news-modify.component
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
 import { LocalDataSource } from 'ng2-smart-table';
 
-export interface News {
-  id: number;
-  subject: string;
-  content: string;
-  startAt: string;
-  endAt: string;
-}
+// export interface News {
+//   id: number;
+//   subject: string;
+//   content: string;
+//   startAt: string;
+//   endAt: string;
+// }
 
 @Component({
   selector: 'app-latest-news',
@@ -25,6 +25,7 @@ export interface News {
   providers: [DatePipe],
 })
 export class LatestNewsComponent implements OnInit {
+  private query = '?AllData=true';
   private newsItem: {
     subject: string;
     content: string;
@@ -95,7 +96,7 @@ export class LatestNewsComponent implements OnInit {
     private datePipe: DatePipe
   ) {
     this.source = new LocalDataSource(); // create the source
-    this.service.getAll().subscribe((data) => {
+    this.service.getAll(this.query).subscribe((data) => {
       this.source.load(data);
     });
   }
@@ -124,20 +125,21 @@ export class LatestNewsComponent implements OnInit {
         this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
       }else{
         this.toastr.showToast('', 'top-right', '新增成功', 'success');
-        this.refreshTable();
+        this.refreshTable(this.query);
       }
     });
   }
 
   // 刪除
   deleteNews(event): void {
+    console.log(event.data.id);
     const idNo = event.data.id;
     this.service.deleteData(idNo).subscribe((res: any) => {
       if (res.errorMessage) {
         this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
       }else{
         this.toastr.showToast('', 'top-right', '刪除成功', 'success');
-        this.refreshTable();
+        this.refreshTable(this.query);
       }
     });
   }
@@ -182,13 +184,13 @@ export class LatestNewsComponent implements OnInit {
         this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
       }else{
         this.toastr.showToast('', 'top-right', '修改成功', 'success');
-        this.refreshTable();
+        this.refreshTable(this.query);
       }
     });
   }
 
-  refreshTable(): any {
-    this.service.getAll().subscribe((data) => {
+  refreshTable(query): any {
+    this.service.getAll(this.query).subscribe((data) => {
       this.source.load(data);
     });
   }

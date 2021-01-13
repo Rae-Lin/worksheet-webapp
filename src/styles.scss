@@ -53,6 +53,7 @@
 
 .model-full {
   min-width: 600px !important;
+  max-height: 90vh !important;
 
   .cdk-visually-hidden {
     width: 99% !important;
@@ -76,4 +77,8 @@
 .ng2-smart-actions img{
   width: 20px;
   height: 20px;
+}
+
+.select-custom{
+  display: block !important;
 }

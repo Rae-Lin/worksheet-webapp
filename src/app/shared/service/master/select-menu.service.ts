@@ -5,10 +5,9 @@ import { AppService } from '../app.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectGroupsService extends AppService {
+export class SelectMenuService extends AppService {
 
   constructor(http: HttpClient) {
-    super(http, 'http://10.2.6.108/ptc-worksheet-api/ProjectGroup');
-    // super(http, 'https://next.json-generator.com/api/json/get/4kQHmrwRF');
+    super(http, 'http://10.2.6.108/ptc-worksheet-api/selectmenu');
   }
 }

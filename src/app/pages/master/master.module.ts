@@ -9,6 +9,7 @@ import {
   NbDialogModule,
   NbIconModule,
   NbLayoutModule,
+  NbSelectModule,
   NbThemeModule,
 } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -27,6 +28,8 @@ import { ProjectSettingsComponent } from './project-settings/project-settings.co
 import { CalendarSettingsComponent } from './calendar-settings/calendar-settings.component';
 import { ProjectGroupsCreateComponent } from './project-groups/create/project-groups-create.component';
 import { ProjectGroupsModifyComponent } from './project-groups/modify/project-groups-modify.component';
+import { ProjectManagementCreateComponent } from './project-management/create/project-management-create.component';
+import { ProjectManagementModifyComponent } from './project-management/modify/project-management-modify.component';
 
 @NgModule({
   declarations: [
@@ -34,16 +37,18 @@ import { ProjectGroupsModifyComponent } from './project-groups/modify/project-gr
     LatestNewsComponent,
     LatestNewsModalComponent,
     LatestNewsModifyComponent,
+    ProjectGroupsComponent,
+    ProjectGroupsCreateComponent,
+    ProjectGroupsModifyComponent,
+    ProjectManagementComponent,
+    ProjectManagementCreateComponent,
+    ProjectManagementModifyComponent,
     StaffMembersComponent,
     DepartmentsComponent,
-    ProjectGroupsComponent,
-    ProjectManagementComponent,
     ProjectSessionComponent,
     ProjectMemberComponent,
     ProjectSettingsComponent,
     CalendarSettingsComponent,
-    ProjectGroupsCreateComponent,
-    ProjectGroupsModifyComponent
   ],
   imports: [
     CommonModule,
@@ -57,10 +62,11 @@ import { ProjectGroupsModifyComponent } from './project-groups/modify/project-gr
     NbIconModule,
     NbCalendarModule,
     NbDialogModule.forChild(),
+    NbSelectModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [MasterComponent, LatestNewsComponent, LatestNewsModalComponent, LatestNewsModifyComponent],
+  exports: [MasterComponent],
   entryComponents: [LatestNewsModalComponent],
 })
 export class MasterModule {}
