@@ -37,7 +37,7 @@ export class LatestNewsModalComponent implements OnInit {
   }
 
   submit(): void {
-    if (!this.subject.trim() || !this.content.trim() || !this.formControl || !this.ngModelDate) {
+    if (!this.subject.trim() || !this.content.trim() || !this.formControl.value || !this.ngModelDate) {
       this.toastr.showToast('', 'top-right', '必填欄位未填寫' , 'danger');
       return;
     }

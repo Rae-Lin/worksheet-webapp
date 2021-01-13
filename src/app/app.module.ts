@@ -14,6 +14,7 @@ import {
   NbDatepickerModule,
   NbDialogModule,
   NbToastrModule,
+  NbSelectModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -48,6 +49,7 @@ import { FormsModule } from '@angular/forms';
     NbCalendarRangeModule,
     NbLayoutModule,
     NbEvaIconsModule,
+    NbSelectModule,
     LayoutModule,
     PagesModule,
     SharedModule,
