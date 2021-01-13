@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MasterRoutingModule } from './master-routing.module';
-
-import { MasterComponent } from './master.component';
-import { LatestNewsComponent } from './latest-news/latest-news.component';
-import { SharedModule } from 'src/app/shared/shared.module';
 import {
   NbCalendarModule,
   NbCardModule,
@@ -14,7 +11,10 @@ import {
   NbLayoutModule,
   NbThemeModule,
 } from '@nebular/theme';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { MasterComponent } from './master.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { LatestNewsComponent } from './latest-news/latest-news.component';
 import { LatestNewsModalComponent } from './latest-news/create/latest-news-modal.component';
 import { LatestNewsModifyComponent } from './latest-news/modify/latest-news-modify.component';
 import { StaffMembersComponent } from './staff-members/staff-members.component';
@@ -47,6 +47,7 @@ import { ProjectGroupsModifyComponent } from './project-groups/modify/project-gr
   ],
   imports: [
     CommonModule,
+    Ng2SmartTableModule,
     MasterRoutingModule,
     SharedModule,
     NbCardModule,

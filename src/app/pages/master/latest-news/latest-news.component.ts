@@ -1,14 +1,13 @@
 import { Observable } from 'rxjs';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import {
-  LatestNews,
-  LatestNewsService,
-} from './../../../shared/service/master/latest-news.service';
+import { DatePipe } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { LatestNewsService } from './../../../shared/service/master/latest-news.service';
 import { NbDialogService } from '@nebular/theme';
-import { APIdata } from 'src/app/shared/service/app.service';
+// import { APIdata } from 'src/app/shared/service/app.service';
 import { LatestNewsModalComponent } from './create/latest-news-modal.component';
 import { LatestNewsModifyComponent } from './modify/latest-news-modify.component';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
+import { LocalDataSource } from 'ng2-smart-table';
 
 export interface News {
   id: number;
@@ -20,9 +19,10 @@ export interface News {
 
 @Component({
   selector: 'app-latest-news',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './latest-news.component.html',
   styleUrls: ['./latest-news.component.scss'],
+  providers: [DatePipe],
 })
 export class LatestNewsComponent implements OnInit {
   private newsItem: {
@@ -32,14 +32,73 @@ export class LatestNewsComponent implements OnInit {
     endAt: Date;
   };
 
-  apidata: APIdata;
+  // apidata: APIdata;
   // newsList$: Observable<APIdata>;
-  newsList$: Observable<any[]>;
+  // newsList$: Observable<any[]>;
+
+  // table Data
+  settings = {
+    pager: {
+      display: true,
+      perPage: 10,
+    },
+    mode: 'external', // 編輯以跳窗開啟
+    hideSubHeader: true ,
+    actions: {
+      columnTitle: '',
+      position: 'right',
+      add: false,
+    },
+    edit: { editButtonContent: '<img src="../../../../assets/img/icon-edit.svg">'},
+    delete: { deleteButtonContent: '<img src="../../../../assets/img/icon-delete.svg">'},
+    attr: {
+      class: 'table thead-light table-hover table-cus'
+    },
+    columns: {
+      subject: {
+        title: '主旨',
+        type: 'string',
+        width: '40%',
+        class: 'subject',
+      },
+      content: {
+        title: '消息內容',
+        type: 'string',
+        width: '30%',
+        class: 'content',
+      },
+      startAt: {
+        title: '開始時間',
+        type: 'Date',
+        width: '120px',
+        valuePrepareFunction: (created) => {
+          return this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
+        }
+      },
+      endAt: {
+        title: '結束時間',
+        type: 'Date',
+        width: '120px',
+        valuePrepareFunction: (created) => {
+          return this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
+        }
+      },
+    },
+  };
+
+  source: LocalDataSource; // add a property to the component
+
   constructor(
     private service: LatestNewsService,
     private dialogService: NbDialogService,
     private toastr: ToastrService,
-  ) {}
+    private datePipe: DatePipe
+  ) {
+    this.source = new LocalDataSource(); // create the source
+    this.service.getAll().subscribe((data) => {
+      this.source.load(data);
+    });
+  }
 
   // 開啟新增modal
   openCreate(): void {
@@ -65,24 +124,27 @@ export class LatestNewsComponent implements OnInit {
         this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
       }else{
         this.toastr.showToast('', 'top-right', '新增成功', 'success');
+        this.refreshTable();
       }
     });
-    this.newsList$.subscribe();
   }
 
   // 刪除
-  deleteNews(idNo: number): void {
+  deleteNews(event): void {
+    const idNo = event.data.id;
     this.service.deleteData(idNo).subscribe((res: any) => {
       if (res.errorMessage) {
         this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
       }else{
         this.toastr.showToast('', 'top-right', '刪除成功', 'success');
+        this.refreshTable();
       }
     });
   }
 
   // 開啟編輯modal
-  openModify(idNo: number): void {
+  openModify(event): void {
+    const idNo = event.data.id;
     this.service.getData(idNo).subscribe((res: any) => {
       if (res.errorMessage) {
         this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
@@ -120,12 +182,19 @@ export class LatestNewsComponent implements OnInit {
         this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
       }else{
         this.toastr.showToast('', 'top-right', '修改成功', 'success');
+        this.refreshTable();
       }
     });
   }
 
+  refreshTable(): any {
+    this.service.getAll().subscribe((data) => {
+      this.source.load(data);
+    });
+  }
+
   ngOnInit(): void {
-    this.newsList$ = this.service.getAll();
+    // this.newsList$ = this.service.getAll();
     // console.log(this.newsList$);
     // this.newsList$.subscribe((res) => {
     //   console.log(res.data.list);

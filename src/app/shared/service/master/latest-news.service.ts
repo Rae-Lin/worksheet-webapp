@@ -19,6 +19,7 @@ export interface LatestNews {
 })
 export class LatestNewsService extends AppService {
   constructor(http: HttpClient) {
+    // super(http, 'https://next.json-generator.com/api/json/get/Vk5yYXURF');
     super(http, 'http://10.2.6.108/ptc-worksheet-api/Bulletin');
   }
 }

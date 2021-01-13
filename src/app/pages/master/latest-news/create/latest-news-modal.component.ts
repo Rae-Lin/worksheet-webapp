@@ -1,8 +1,7 @@
-import { Subject } from 'rxjs';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NbDateService, NbDialogRef } from '@nebular/theme';
-import { LatestNewsComponent } from '../latest-news.component';
+import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
 
 @Component({
   selector: 'app-latest-news-modal',
@@ -27,7 +26,8 @@ export class LatestNewsModalComponent implements OnInit {
 
   constructor(
     private dialogRef: NbDialogRef<LatestNewsModalComponent>,
-    protected dateService: NbDateService<Date>
+    protected dateService: NbDateService<Date>,
+    private toastr: ToastrService,
   ) {
     this.min = this.dateService.addDay(this.dateService.today(), 0);
   }
@@ -38,11 +38,11 @@ export class LatestNewsModalComponent implements OnInit {
 
   submit(): void {
     if (!this.subject.trim() || !this.content.trim() || !this.formControl || !this.ngModelDate) {
-      alert('皆為必填');
+      this.toastr.showToast('', 'top-right', '必填欄位未填寫' , 'danger');
       return;
     }
     if (this.formControl.value > this.ngModelDate) {
-      alert('結束時間需晚於開始時間');
+      this.toastr.showToast('', 'top-right', '結束時間需晚於開始時間' , 'danger');
       return;
     }
     this.news = {

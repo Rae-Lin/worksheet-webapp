@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { NbDateService, NbDialogRef } from '@nebular/theme';
+import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
 
 @Component({
   selector: 'app-latest-news-modify',
@@ -18,7 +18,8 @@ export class LatestNewsModifyComponent implements OnInit {
 
   constructor(
     private dialogRef: NbDialogRef<LatestNewsModifyComponent>,
-    protected dateService: NbDateService<Date>
+    protected dateService: NbDateService<Date>,
+    private toastr: ToastrService,
   ) {
     this.min = this.dateService.addDay(this.dateService.today(), 0);
   }
@@ -29,11 +30,11 @@ export class LatestNewsModifyComponent implements OnInit {
 
   submit(): void {
     if (!this.subject.trim() || !this.content.trim() || !this.formControl || !this.ngModelDate) {
-      alert('皆為必填');
+      this.toastr.showToast('', 'top-right', '必填欄位未填寫' , 'danger');
       return;
     }
     if (this.formControl > this.ngModelDate) {
-      alert('結束時間需晚於開始時間');
+      this.toastr.showToast('', 'top-right', '結束時間需晚於開始時間' , 'danger');
       return;
     }
     this.news = {
