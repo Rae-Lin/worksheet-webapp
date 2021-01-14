@@ -1,7 +1,8 @@
 ::ng-deep {
   .search-container {
-    input[type="text"] {
+    input {
       width: 400px;
+      margin-right: 5px;
     }
     .searchbtn {
       vertical-align: baseline;

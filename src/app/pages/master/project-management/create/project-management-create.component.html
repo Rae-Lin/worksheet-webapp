@@ -17,9 +17,10 @@
       </div>
       <div class="model-col">
         <label class="subtitle" for="sn">專案項目編號</label>
-        <p><input type="text" id="sn" name="sn" [(ngModel)]="sn" #ItemSn="ngModel" class="form-control" placeholder="請輸入專案項目編號" required></p>
+        <p><input type="text" id="sn" name="sn" [(ngModel)]="sn" #ItemSn="ngModel" class="form-control" placeholder="請輸入專案項目編號" required  pattern="^[a-zA-Z0-9]*$"></p>
         <p *ngIf="ItemSn.invalid && (ItemSn.dirty || ItemSn.touched)" class="text-danger">
           <span *ngIf="ItemSn.errors.required">此為必填欄位</span>
+          <span *ngIf="ItemSn.errors.pattern">此欄位僅能輸入英文及數字</span>
         </p>
       </div>
       <div class="model-col">

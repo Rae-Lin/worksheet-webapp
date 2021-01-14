@@ -36,7 +36,7 @@
       </div>
     </div> -->
     <div class="mb-4 search-container">
-      <input #search class="search" type="text" placeholder="請輸入關鍵字" (keydown.enter)="onSearch(search.value)" class="form-control  d-inline-block" >
+      <input #search type="text" placeholder="請輸入關鍵字" (keydown.enter)="onSearch(search.value)" class="search form-control  d-inline-block" >
       <button type="button" class="btn btn-outline-primary btn-sm d-inline-block ml-4 searchbtn" (click)="onSearch(search.value)">搜尋</button>
     </div>
     <ng2-smart-table [settings]="settings" [source]="source" (edit)="openModify($event)" (delete)="deleteNews($event)">
