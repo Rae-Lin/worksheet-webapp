@@ -1,7 +1,9 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import {
   NbSidebarModule,
   NbCardModule,
@@ -19,12 +21,17 @@ import {
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
 import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
-import { FormsModule } from '@angular/forms';
+
+import zhHant from '@angular/common/locales/zh-Hant';
+import { NbMomentDateModule } from '@nebular/moment';
+import { NbDateFnsDateModule } from '@nebular/date-fns';
+registerLocaleData(zhHant, 'zh-Hant');
 
 @NgModule({
   declarations: [
@@ -50,12 +57,14 @@ import { FormsModule } from '@angular/forms';
     NbLayoutModule,
     NbEvaIconsModule,
     NbSelectModule,
+    NbMomentDateModule,
+    NbDateFnsDateModule.forRoot({ format: 'yyyy-MM-dd' }),
     LayoutModule,
     PagesModule,
     SharedModule,
   ],
   providers: [
-    // { provide: LOCALE_ID, useValue: 'zh-Hant' }
+    { provide: LOCALE_ID, useValue: 'zh-Hant' }
   ],
   bootstrap: [AppComponent],
 })

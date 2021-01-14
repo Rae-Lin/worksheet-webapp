@@ -30,6 +30,8 @@ import { ProjectGroupsCreateComponent } from './project-groups/create/project-gr
 import { ProjectGroupsModifyComponent } from './project-groups/modify/project-groups-modify.component';
 import { ProjectManagementCreateComponent } from './project-management/create/project-management-create.component';
 import { ProjectManagementModifyComponent } from './project-management/modify/project-management-modify.component';
+import { NbMomentDateModule } from '@nebular/moment';
+import { NbDateFnsDateModule } from '@nebular/date-fns';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,8 @@ import { ProjectManagementModifyComponent } from './project-management/modify/pr
     NbCalendarModule,
     NbDialogModule.forChild(),
     NbSelectModule,
+    NbMomentDateModule,
+    NbDateFnsDateModule,
     FormsModule,
     ReactiveFormsModule
   ],

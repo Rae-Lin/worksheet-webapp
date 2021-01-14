@@ -55,7 +55,6 @@ export class LatestNewsComponent implements OnInit {
       subject: {
         title: '主旨',
         type: 'html',
-        width: '40%',
         valuePrepareFunction: (cell) => {
           return `<span class="subject">${cell}</span>`;
         }
@@ -63,7 +62,6 @@ export class LatestNewsComponent implements OnInit {
       content: {
         title: '消息內容',
         type: 'html',
-        width: '30%',
         valuePrepareFunction: (cell) => {
           return `<span class="content">${cell}</span>`;
         }
@@ -71,7 +69,7 @@ export class LatestNewsComponent implements OnInit {
       startAt: {
         title: '開始時間',
         type: 'Date',
-        width: '120px',
+        width: '105px',
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
         }
@@ -79,7 +77,7 @@ export class LatestNewsComponent implements OnInit {
       endAt: {
         title: '結束時間',
         type: 'Date',
-        width: '120px',
+        width: '105px',
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
         }
@@ -104,7 +102,7 @@ export class LatestNewsComponent implements OnInit {
   // 開啟新增modal
   openCreate(): void {
     this.dialogService
-      .open(LatestNewsModalComponent, { dialogClass: 'model-full' })
+      .open(LatestNewsModalComponent, { dialogClass: 'model-full', autoFocus: false, hasScroll: true}, )
       .onClose.subscribe((item) => {
         if (item) {
           this.newsItem = {
@@ -153,7 +151,7 @@ export class LatestNewsComponent implements OnInit {
       } else {
         this.dialogService
           .open(LatestNewsModifyComponent, {
-            dialogClass: 'model-full',
+            dialogClass: 'model-full', autoFocus: false, hasScroll: true,
             context: {
               subject: res.data.subject,
               content: res.data.content,

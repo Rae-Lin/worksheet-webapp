@@ -52,6 +52,7 @@ export class ProjectManagementModifyComponent implements OnInit {
       endAt: this.ngModelDate,
       status: this.status,
     };
+    console.log(this.projects);
     this.dialogRef.close(this.projects);
   }
 

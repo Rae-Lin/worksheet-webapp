@@ -1,4 +1,7 @@
 <nb-card class="model-full">
+  <nb-card-header class="text-right">
+    <button type="button" class="btn btn-cancle" nbButton (click)="cancel()"><nb-icon icon="close-outline"></nb-icon></button>
+  </nb-card-header>
   <nb-card-body>
     <div>
       <div class="model-col">
@@ -45,7 +48,7 @@
             <nb-datepicker #formcontrol [min]="min"></nb-datepicker>
           </p>
       </div>
-      <div class="model-col mb-2">
+      <div class="model-col-last">
         <label class="subtitle" for="endAt">結束時間</label>
         <p>
           <input nbInput [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate" id="endAt" #newsEndAt="ngModel" class="form-control" id="endAt" required>
@@ -59,7 +62,6 @@
     </div>
   </nb-card-body>
   <nb-card-footer class="text-right">
-    <button type="button" class="btn btn-primary btn-sm" nbButton (click)="cancel()">取消</button>
     <button type="button" class="btn btn-primary btn-sm" nbButton (click)="submit()">確認</button>
   </nb-card-footer>
 </nb-card>

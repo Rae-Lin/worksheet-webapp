@@ -20,19 +20,14 @@
   text-indent: 0.1rem;
   .nb-theme-default{
     h1, .h1{ font-size: 2rem;}
-    h2, .h2{ font-size: 1.4rem;}
-    h3, .h3{ font-size: 1.3rem;}
-    h4, .h4{ font-size: 1.2rem;}
-    h5, .h5{ font-size: 1.1rem;}
-    h6, .h6{ font-size: 1.05rem;}
+    h2, .h2{ font-size: 1.2rem;}
+    h3, .h3{ font-size: 1.15rem;}
+    h4, .h4{ font-size: 1.1rem;}
+    h5, .h5{ font-size: 1.05rem;}
+    h6, .h6{ font-size: 1rem;}
     .subtitle{ font-size: 1rem;}
-    table {
-      nb-icon.operate{
-        cursor: pointer;
-      }
-      tbody > tr.ng2-smart-row.selected {
-        background: unset !important;
-      }
+    table tbody > tr.ng2-smart-row.selected {
+      background: unset !important;
     }
   }
   p{
@@ -51,6 +46,7 @@
   }
 }
 
+// 跳窗樣式設置
 .model-full {
   min-width: 600px !important;
   max-height: 90vh !important;
@@ -58,14 +54,34 @@
   .cdk-visually-hidden {
     width: 99% !important;
   }
+  nb-card-header{
+    padding: 0.2rem 0.35rem 0;
+    border-bottom: unset;
+  }
+
+  nb-card-footer{
+    border-top: unset;
+  }
 
   nb-dialog-container {
     width: 100% !important;
     .model-col{
       margin-bottom: 1.25rem;
     }
+    .model-col-last{
+      margin-bottom: 4rem;
+    }
     button + button{
       margin-left: 10px;
+    }
+  }
+
+  .btn-cancle{
+    padding: 0.25rem;
+    transition: all 0.3s;
+    &:hover{
+      transform:rotate(45deg);
+      // transition: all 0.3s;
     }
   }
 }
@@ -81,4 +97,19 @@
 
 .select-custom{
   display: block !important;
+}
+
+
+// 主檔部分表格樣式
+.nb-theme-default ng2-smart-table table tr th,
+.nb-theme-default ng2-smart-table table tr td{
+  padding: 0.875rem 0.75rem !important;
+}
+
+.nb-theme-default ng2-smart-table table tr.ng2-smart-titles th{
+  padding: 0.875rem 1rem !important;
+}
+
+.nb-theme-default .btn-cancle nb-icon{
+  font-size: 2rem !important;
 }

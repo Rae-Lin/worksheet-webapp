@@ -18,11 +18,6 @@ export class ProjectGroupsCreateComponent implements OnInit {
   }
 
   submit(): void {
-    if (!this.sn.trim() || !this.name.trim()) {
-      alert('皆為必填');
-      return;
-    }
-
     this.group = {
       sn: this.sn,
       name: this.name,

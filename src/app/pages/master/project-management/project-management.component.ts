@@ -44,7 +44,6 @@ export class ProjectManagementComponent implements OnInit {
       groupSn: {
         title: '專案群組代號',
         type: 'string',
-        width: '120px',
         valuePrepareFunction: (cell) => {
           return `【${cell}】`;
         },
@@ -52,25 +51,28 @@ export class ProjectManagementComponent implements OnInit {
       groupName: {
         title: '專案群組名稱',
         type: 'html',
-        // width: '30%',
+        valuePrepareFunction: (cell) => {
+          return `<span class="groupName">${cell}</span>`;
+        }
       },
       sn: {
         title: '專案項目編號',
         type: 'string',
-        width: '120px',
         valuePrepareFunction: (cell) => {
           return `【${cell}】`;
         },
       },
       name: {
         title: '專案項目名稱',
-        type: 'string',
-        // width: '120px',
+        type: 'html',
+        valuePrepareFunction: (cell) => {
+          return `<span class="name">${cell}</span>`;
+        }
       },
       status: {
         title: '狀態',
         type: 'html',
-        // width: '120px',
+        width: '70px',
         valuePrepareFunction: (cell) => {
           return (cell ? `<span class="onStatus">啟動</span>` : '結束');
         }
@@ -78,7 +80,7 @@ export class ProjectManagementComponent implements OnInit {
       startAt: {
         title: '開始時間',
         type: 'Date',
-        width: '120px',
+        width: '105px',
         valuePrepareFunction: (created) => {
           return (created === '' ? '' : this.datePipe.transform(new Date(created), 'yyyy-MM-dd'));
         }
@@ -86,7 +88,7 @@ export class ProjectManagementComponent implements OnInit {
       endAt: {
         title: '結束時間',
         type: 'Date',
-        width: '120px',
+        width: '105px',
         valuePrepareFunction: (created) => {
           return (created === '' ? '' : this.datePipe.transform(new Date(created), 'yyyy-MM-dd'));
         }
@@ -111,7 +113,7 @@ export class ProjectManagementComponent implements OnInit {
   // 開啟新增modal
   openCreate(): void {
     this.dialogService
-      .open(ProjectManagementCreateComponent, { dialogClass: 'model-full' })
+      .open(ProjectManagementCreateComponent, { dialogClass: 'model-full', autoFocus: false, hasScroll: true, })
       .onClose.subscribe((item) => {
         if (item) {
           this.groupItem = {
@@ -149,7 +151,7 @@ openModify(event): void {
     } else {
       this.dialogService
         .open(ProjectManagementModifyComponent, {
-          dialogClass: 'model-full',
+          dialogClass: 'model-full', autoFocus: false, hasScroll: true,
           context: {
             groupSn: res.data.groupSn,
             groupName: res.data.groupName,
@@ -165,12 +167,13 @@ openModify(event): void {
             const ProjectItem = {
               sn: snNo,
               groupSn: item.groupSn,
-              groupName: item.groupName,
+              // groupName: item.groupName,
               name: item.name,
               status: item.status,
               startAt: item.startAt,
               endAt: item.endAt,
             };
+            console.log(ProjectItem);
             this.modifyNews(snNo, ProjectItem);
           }
         });

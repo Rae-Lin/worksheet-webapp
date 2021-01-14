@@ -36,7 +36,7 @@ app-header{
 //   }
 // }
 
-nb-sidebar{
+nb-sidebar, nb-layout-column{
   transition: all 0.5s;
 }
 
@@ -47,9 +47,9 @@ nb-sidebar{
     font-weight: 600 !important;
   }
   a:hover {
-    color: color-primary-800 !important; // white
+    color: color-primary-800 !important;
   }
   a:visited {
-    color: color-primary-800 !important; // white
+    color: color-primary-800 !important;
   }
 }

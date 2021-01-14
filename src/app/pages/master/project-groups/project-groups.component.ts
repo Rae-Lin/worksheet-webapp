@@ -41,7 +41,6 @@ export class ProjectGroupsComponent implements OnInit {
       sn: {
         title: '代號',
         type: 'string',
-        width: '220px',
         valuePrepareFunction: (cell) => {
           return `【${cell}】`;
         }
@@ -49,10 +48,9 @@ export class ProjectGroupsComponent implements OnInit {
       name: {
         title: '專案群組名稱',
         type: 'html',
-        width: '75%',
-        // valuePrepareFunction: (cell) => {
-        //   return `<span class="subject">${cell}</span>`;
-        // }
+        valuePrepareFunction: (cell) => {
+          return `<span class="name">${cell}</span>`;
+        }
       },
     },
   };
@@ -73,7 +71,7 @@ export class ProjectGroupsComponent implements OnInit {
   // 開啟新增modal
   openCreate(): void {
     this.dialogService
-      .open(ProjectGroupsCreateComponent, { dialogClass: 'model-full' })
+      .open(ProjectGroupsCreateComponent, { dialogClass: 'model-full', autoFocus: false, hasScroll: true, })
       .onClose.subscribe((item) => {
         if (item) {
           this.group = {
@@ -119,7 +117,7 @@ export class ProjectGroupsComponent implements OnInit {
       } else {
         this.dialogService
           .open(ProjectGroupsModifyComponent, {
-            dialogClass: 'model-full',
+            dialogClass: 'model-full', autoFocus: false, hasScroll: true,
             context: {
               sn: res.data.sn,
               name: res.data.name,
