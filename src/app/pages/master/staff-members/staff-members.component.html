@@ -10,7 +10,7 @@
     <div class="mt-2 mb-4">
       <p><button type="button" class="btn btn-primary btn-sm" (click)="openCreate()">新增人員</button></p>
     </div>
-    <div class="mb-4 search-container d-flex justify-content-around align-items-end">
+    <div class="mb-4 search-container d-flex justify-content-start align-items-end">
       <div class="search-container-rule">
         <p class="subtitle">關鍵字搜尋</p>
         <input #search type="text" placeholder="請輸入關鍵字(員編、姓名、單位、帳號、Email)" (keydown.enter)="onSearch(search.value)" class="search form-control d-inline-block">
@@ -25,7 +25,7 @@
         <input nbInput [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate" #newsEndAt="ngModel" id="endAt" name="endAt" required class="search form-control d-inline-block">
         <nb-datepicker #ngmodel [min]="formControl.value" format="yyyy-MM-dd"></nb-datepicker>
       </div>
-      <button type="button" class="btn btn-outline-primary btn-sm d-inline-block ml-4 searchbtn" (click)="onSearch(search.value)">搜尋</button>
+      <button type="button" class="btn btn-outline-primary btn-sm search-btn" (click)="onSearch(search.value)">搜尋</button>
     </div>
 
     <ng2-smart-table [settings]="settings" [source]="source" (edit)="openModify($event)" (delete)="deleteNews($event)">

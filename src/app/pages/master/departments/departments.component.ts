@@ -30,8 +30,8 @@ export class DepartmentsComponent implements OnInit {
       add: false,           // 不在表格內開放新增
     },
     noDataMessage: '查無資料',  // no data found Message
-    edit: {editButtonContent: '<img src="../../../../assets/img/icon-edit.svg">'},
-    delete: {deleteButtonContent: '<img src="../../../../assets/img/icon-delete.svg">'},
+    edit: {editButtonContent: '<img src="./assets/img/icon-edit.svg">'},
+    delete: {deleteButtonContent: '<img src="./assets/img/icon-delete.svg">'},
     attr: {class: 'table thead-light table-hover'},  // 表格添加class
     columns: {
       sn: {
@@ -62,29 +62,25 @@ export class DepartmentsComponent implements OnInit {
   // 開啟新增modal
   openCreate(): void {
     this.dialogService
-      .open(DepartmentsCreateComponent, { dialogClass: 'model-full', autoFocus: false, hasScroll: true}, )
-      .onClose.subscribe((item) => {
-        if (item) {
-          this.department = {
-            sn: item.sn,
-            name: item.name,
-          };
-          this.createNews();
+      .open(DepartmentsCreateComponent, { autoFocus: false, hasScroll: true}, )
+      .onClose.subscribe((result) => {
+        if (result) {
+          this.refreshTable(this.query);
         }
       });
   }
 
   // 開啟新增modal - 執行新增
-  createNews(): void {
-    this.service.postData(this.department).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-      }else{
-        this.toastr.showToast('', 'top-right', '新增成功', 'success');
-        this.refreshTable(this.query);
-      }
-    });
-  }
+  // createNews(): void {
+  //   this.service.postData(this.department).subscribe((res: any) => {
+  //     if (res.errorMessage) {
+  //       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+  //     }else{
+  //       this.toastr.showToast('', 'top-right', '新增成功', 'success');
+  //       this.refreshTable(this.query);
+  //     }
+  //   });
+  // }
 
   // 刪除
   deleteNews(event): void {
@@ -108,19 +104,15 @@ export class DepartmentsComponent implements OnInit {
       } else {
         this.dialogService
           .open(DepartmentsModifyComponent, {
-            dialogClass: 'model-full', autoFocus: false, hasScroll: true,
+            autoFocus: false, hasScroll: true,
             context: {
               sn: res.data.sn,
               name: res.data.name,
             },
           })
-          .onClose.subscribe((item) => {
-            if (item) {
-              const Newsitem = {
-                sn: snNo,
-                name: item.name,
-              };
-              this.modifyNews(snNo, Newsitem);
+          .onClose.subscribe((result) => {
+            if (result) {
+              this.refreshTable(this.query);
             }
           });
       }
@@ -128,16 +120,16 @@ export class DepartmentsComponent implements OnInit {
   }
 
   // 開啟編輯modal - 執行編輯
-  modifyNews(snNo: number, Newsitem: object): void {
-    this.service.updateData(snNo, Newsitem).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-      }else{
-        this.toastr.showToast('', 'top-right', '修改成功', 'success');
-        this.refreshTable(this.query);
-      }
-    });
-  }
+  // modifyNews(snNo: number, Newsitem: object): void {
+  //   this.service.updateData(snNo, Newsitem).subscribe((res: any) => {
+  //     if (res.errorMessage) {
+  //       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+  //     }else{
+  //       this.toastr.showToast('', 'top-right', '修改成功', 'success');
+  //       this.refreshTable(this.query);
+  //     }
+  //   });
+  // }
 
   refreshTable(query): any {
     this.service.getAll(this.query).subscribe((data) => {

@@ -21,6 +21,8 @@ import { LatestNewsComponent } from './latest-news/latest-news.component';
 import { LatestNewsModalComponent } from './latest-news/create/latest-news-modal.component';
 import { LatestNewsModifyComponent } from './latest-news/modify/latest-news-modify.component';
 import { StaffMembersComponent } from './staff-members/staff-members.component';
+import { StaffMembersCreateComponent } from './staff-members/create/staff-members-create.component';
+import { StaffMembersModifyComponent } from './staff-members/modify/staff-members-modify.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { DepartmentsCreateComponent } from './departments/create/departments-create.component';
 import { DepartmentsModifyComponent } from './departments/modify/departments-modify.component';
@@ -48,6 +50,8 @@ import { CalendarSettingsComponent } from './calendar-settings/calendar-settings
     ProjectManagementCreateComponent,
     ProjectManagementModifyComponent,
     StaffMembersComponent,
+    StaffMembersCreateComponent,
+    StaffMembersModifyComponent,
     DepartmentsComponent,
     DepartmentsCreateComponent,
     DepartmentsModifyComponent,

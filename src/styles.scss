@@ -4,10 +4,10 @@
 
 // this is our just created themes.scss file, make sure the path to the file is correct
 @import 'themes';
-@import '../node_modules/@nebular/theme/styles/globals'; // or cosmic.css
+@import '@nebular/theme/styles/globals'; // or cosmic.css
 
 @import "./custom.scss";
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 // @import '../node_modules/bootstrap/dist/css/bootstrap.css';
 
 
@@ -38,6 +38,11 @@
   }
 }
 
+// sidebar
+.nb-theme-default nb-sidebar nb-menu{
+  margin: 0 !important;
+}
+
 .days-container {
   .cell-content {
     justify-content: left !important;
@@ -46,10 +51,30 @@
   }
 }
 
-// 跳窗樣式設置
-.model-full {
-  min-width: 600px !important;
-  max-height: 90vh !important;
+// 主檔跳窗樣式設置
+.model-custom {
+
+  &.model-lg{
+    width: 80vw !important;
+    max-height: 90vh !important;
+    form{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .model-col{
+      width: 32.4%;
+      &:nth-child(3n+2),
+      &:nth-child(3n+3){
+        margin-left: calc((100% - 32.4%*3) / 2);
+      }
+    }
+  }
+
+  &.model-md{
+    min-width: 600px !important;
+    max-height: 90vh !important;
+  }
 
   .cdk-visually-hidden {
     width: 99% !important;
@@ -63,16 +88,10 @@
     border-top: unset;
   }
 
-  nb-dialog-container {
-    width: 100% !important;
-    .model-col{
-      margin-bottom: 1.25rem;
-    }
-    .model-col-last{
+  .model-col{
+    margin-bottom: 1.25rem;
+    &:last-child{
       margin-bottom: 4rem;
-    }
-    button + button{
-      margin-left: 10px;
     }
   }
 

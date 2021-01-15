@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NbDateService, NbDialogRef } from '@nebular/theme';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
+import { LatestNewsService } from 'src/app/shared/service/master/latest-news.service';
 
 @Component({
   selector: 'app-latest-news-modal',
@@ -26,6 +27,7 @@ export class LatestNewsModalComponent implements OnInit {
 
   constructor(
     private dialogRef: NbDialogRef<LatestNewsModalComponent>,
+    private service: LatestNewsService,
     protected dateService: NbDateService<Date>,
     private toastr: ToastrService,
   ) {
@@ -51,7 +53,19 @@ export class LatestNewsModalComponent implements OnInit {
       startAt: this.formControl.value,
       endAt: this.ngModelDate,
     };
-    this.dialogRef.close(this.news);
+    this.doCreate(this.news);
+  }
+
+  doCreate(data): void {
+    this.service.postData(data).subscribe((res: any) => {
+      if (res.errorMessage) {
+        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+        return false;
+      }else{
+        this.toastr.showToast('', 'top-right', '新增成功', 'success');
+        this.dialogRef.close(true);
+      }
+    });
   }
 
   ngOnInit(): void {

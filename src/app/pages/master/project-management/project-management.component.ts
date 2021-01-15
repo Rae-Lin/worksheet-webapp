@@ -37,8 +37,8 @@ export class ProjectManagementComponent implements OnInit {
       add: false,         // 不在表格內開放新增
     },
     noDataMessage: '查無資料',  // no data found Message
-    edit: {editButtonContent: '<img src="../../../../assets/img/icon-edit.svg">'},
-    delete: {deleteButtonContent: '<img src="../../../../assets/img/icon-delete.svg">'},
+    edit: {editButtonContent: '<img src="./assets/img/icon-edit.svg">'},
+    delete: {deleteButtonContent: '<img src="./assets/img/icon-delete.svg">'},
     attr: {class: 'table thead-light table-hover'},  // 表格添加class
     columns: {
       groupSn: {
@@ -113,34 +113,39 @@ export class ProjectManagementComponent implements OnInit {
   // 開啟新增modal
   openCreate(): void {
     this.dialogService
-      .open(ProjectManagementCreateComponent, { dialogClass: 'model-full', autoFocus: false, hasScroll: true, })
-      .onClose.subscribe((item) => {
-        if (item) {
-          this.groupItem = {
-            groupSn: item.groupSn,
-            groupName: item.groupName,
-            sn: item.sn,
-            name: item.name,
-            startAt: item.startAt,
-            endAt: item.endAt,
-            status: item.status
-          };
-          this.createNews();
+      .open(ProjectManagementCreateComponent, { autoFocus: false, hasScroll: true, })
+      .onClose.subscribe((result) => {
+        if (result) {
+          this.refreshTable(this.query);
         }
       });
+      // .onClose.subscribe((item) => {
+      //   if (item) {
+      //     this.groupItem = {
+      //       groupSn: item.groupSn,
+      //       groupName: item.groupName,
+      //       sn: item.sn,
+      //       name: item.name,
+      //       startAt: item.startAt,
+      //       endAt: item.endAt,
+      //       status: item.status
+      //     };
+      //     this.createNews();
+      //   }
+      // });
   }
 
   // 開啟新增modal - 執行新增
-  createNews(): void {
-    this.service.postData(this.groupItem).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-      }else{
-        this.toastr.showToast('', 'top-right', '新增成功', 'success');
-        this.refreshTable(this.query);
-      }
-    });
-  }
+  // createNews(): void {
+  //   this.service.postData(this.groupItem).subscribe((res: any) => {
+  //     if (res.errorMessage) {
+  //       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+  //     }else{
+  //       this.toastr.showToast('', 'top-right', '新增成功', 'success');
+  //       this.refreshTable(this.query);
+  //     }
+  //   });
+  // }
 
 // 開啟編輯modal
 openModify(event): void {
@@ -151,7 +156,7 @@ openModify(event): void {
     } else {
       this.dialogService
         .open(ProjectManagementModifyComponent, {
-          dialogClass: 'model-full', autoFocus: false, hasScroll: true,
+          autoFocus: false, hasScroll: true,
           context: {
             groupSn: res.data.groupSn,
             groupName: res.data.groupName,
@@ -162,36 +167,40 @@ openModify(event): void {
             ngModelDate: new Date(res.data.endAt),
           },
         })
-        .onClose.subscribe((item) => {
-          if (item) {
-            const ProjectItem = {
-              sn: snNo,
-              groupSn: item.groupSn,
-              // groupName: item.groupName,
-              name: item.name,
-              status: item.status,
-              startAt: item.startAt,
-              endAt: item.endAt,
-            };
-            console.log(ProjectItem);
-            this.modifyNews(snNo, ProjectItem);
+        .onClose.subscribe((result) => {
+          if (result) {
+            this.refreshTable(this.query);
           }
         });
+        // .onClose.subscribe((item) => {
+        //   if (item) {
+        //     const ProjectItem = {
+        //       sn: snNo,
+        //       groupSn: item.groupSn,
+        //       // groupName: item.groupName,
+        //       name: item.name,
+        //       status: item.status,
+        //       startAt: item.startAt,
+        //       endAt: item.endAt,
+        //     };
+        //     this.modifyNews(snNo, ProjectItem);
+        //   }
+        // });
     }
   });
 }
 
 // 開啟編輯modal - 執行編輯
-modifyNews(snNo: number, ProjectItem: object): void {
-  this.service.updateData(snNo, ProjectItem).subscribe((res: any) => {
-    if (res.errorMessage) {
-      this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-    }else{
-      this.toastr.showToast('', 'top-right', '修改成功', 'success');
-      this.refreshTable(this.query);
-    }
-  });
-}
+// modifyNews(snNo: number, ProjectItem: object): void {
+//   this.service.updateData(snNo, ProjectItem).subscribe((res: any) => {
+//     if (res.errorMessage) {
+//       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+//     }else{
+//       this.toastr.showToast('', 'top-right', '修改成功', 'success');
+//       this.refreshTable(this.query);
+//     }
+//   });
+// }
 
 
   // 刪除

@@ -13,7 +13,7 @@
       <!--<div class="row mb-4">
         <p>
           <input type="text" name="search" [(ngModel)]="search" class="form-control d-inline-block" placeholder="請輸入關鍵字">
-          <button type="button" class="btn btn-outline-primary btn-sm d-inline-block ml-4 searchbtn">搜尋</button>
+          <button type="button" class="btn btn-outline-primary btn-sm d-inline-block ml-4 search-btn">搜尋</button>
         </p>
       </div>
       <div class="row">
@@ -37,7 +37,7 @@
     </div> -->
     <div class="mb-4 search-container">
       <input #search type="text" placeholder="請輸入關鍵字" (keydown.enter)="onSearch(search.value)" class="search form-control  d-inline-block" >
-      <button type="button" class="btn btn-outline-primary btn-sm d-inline-block ml-4 searchbtn" (click)="onSearch(search.value)">搜尋</button>
+      <button type="button" class="btn btn-outline-primary btn-sm search-btn" (click)="onSearch(search.value)">搜尋</button>
     </div>
     <ng2-smart-table [settings]="settings" [source]="source" (edit)="openModify($event)" (delete)="deleteNews($event)">
     </ng2-smart-table>

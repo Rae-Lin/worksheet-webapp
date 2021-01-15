@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
+import { DepartmentService } from 'src/app/shared/service/master/department.service';
 
 @Component({
   selector: 'app-departments-create',
@@ -14,6 +15,7 @@ export class DepartmentsCreateComponent implements OnInit {
 
   constructor(
     private dialogRef: NbDialogRef<DepartmentsCreateComponent>,
+    private service: DepartmentService,
     private toastr: ToastrService,
   ) { }
 
@@ -22,15 +24,23 @@ export class DepartmentsCreateComponent implements OnInit {
   }
 
   submit(): void {
-    // if (!this.subject.trim() || !this.content.trim() || !this.formControl.value || !this.ngModelDate) {
-    //   this.toastr.showToast('', 'top-right', '必填欄位未填寫' , 'danger');
-    //   return;
-    // }
     this.department = {
       sn: this.sn,
       name: this.name,
     };
-    this.dialogRef.close(this.department);
+    this.doCreate(this.department);
+  }
+
+  doCreate(data): any {
+    this.service.postData(data).subscribe((res: any) => {
+      if (res.errorMessage) {
+        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+        return false;
+      }else{
+        this.toastr.showToast('', 'top-right', '新增成功', 'success');
+        this.dialogRef.close(true);
+      }
+    });
   }
 
   ngOnInit(): void {

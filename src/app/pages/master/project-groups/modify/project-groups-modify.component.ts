@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
+import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
+import { ProjectGroupsService } from 'src/app/shared/service/master/project-groups.service';
 
 @Component({
   selector: 'app-project-groups-modify',
@@ -12,7 +14,11 @@ export class ProjectGroupsModifyComponent implements OnInit {
 
   groups = {};
 
-  constructor(private dialogRef: NbDialogRef<ProjectGroupsModifyComponent>) { }
+  constructor(
+    private dialogRef: NbDialogRef<ProjectGroupsModifyComponent>,
+    private service: ProjectGroupsService,
+    private toastr: ToastrService,
+  ) { }
 
   cancel(): void {
     this.dialogRef.close();
@@ -24,10 +30,22 @@ export class ProjectGroupsModifyComponent implements OnInit {
       return;
     }
     this.groups = {
+      sn: this.sn,
       name: this.name
     };
-    console.log(this.groups);
-    this.dialogRef.close(this.groups);
+    this.doModify(this.sn, this.groups);
+  }
+
+  doModify(sn, data): any {
+    this.service.updateData(sn, data).subscribe((res: any) => {
+      if (res.errorMessage) {
+        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+        return false;
+      }else{
+        this.toastr.showToast('', 'top-right', '修改成功', 'success');
+        this.dialogRef.close(true);
+      }
+    });
   }
 
   ngOnInit(): void {

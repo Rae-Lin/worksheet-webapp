@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { LatestNewsService } from './../../../shared/service/master/latest-news.service';
+import { LatestNewsService } from 'src/app/shared/service/master/latest-news.service';
 import { NbDialogService } from '@nebular/theme';
 // import { APIdata } from 'src/app/shared/service/app.service';
 import { LatestNewsModalComponent } from './create/latest-news-modal.component';
@@ -48,8 +48,8 @@ export class LatestNewsComponent implements OnInit {
       add: false,         // 不在表格內開放新增
     },
     noDataMessage: '查無資料',  // no data found Message
-    edit: {editButtonContent: '<img src="../../../../assets/img/icon-edit.svg">'},
-    delete: {deleteButtonContent: '<img src="../../../../assets/img/icon-delete.svg">'},
+    edit: {editButtonContent: '<img src="./assets/img/icon-edit.svg">'},
+    delete: {deleteButtonContent: '<img src="./assets/img/icon-delete.svg">'},
     attr: {class: 'table thead-light table-hover'},  // 表格添加class
     columns: {
       subject: {
@@ -102,31 +102,25 @@ export class LatestNewsComponent implements OnInit {
   // 開啟新增modal
   openCreate(): void {
     this.dialogService
-      .open(LatestNewsModalComponent, { dialogClass: 'model-full', autoFocus: false, hasScroll: true}, )
-      .onClose.subscribe((item) => {
-        if (item) {
-          this.newsItem = {
-            subject: item.subject,
-            content: item.content,
-            startAt: item.startAt,
-            endAt: item.endAt,
-          };
-          this.createNews();
+      .open(LatestNewsModalComponent, { autoFocus: false, hasScroll: true}, )
+      .onClose.subscribe((result) => {
+        if (result) {
+          this.refreshTable(this.query);
         }
       });
   }
 
   // 開啟新增modal - 執行新增
-  createNews(): void {
-    this.service.postData(this.newsItem).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-      }else{
-        this.toastr.showToast('', 'top-right', '新增成功', 'success');
-        this.refreshTable(this.query);
-      }
-    });
-  }
+  // createNews(): void {
+  //   this.service.postData(this.newsItem).subscribe((res: any) => {
+  //     if (res.errorMessage) {
+  //       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+  //     }else{
+  //       this.toastr.showToast('', 'top-right', '新增成功', 'success');
+  //       this.refreshTable(this.query);
+  //     }
+  //   });
+  // }
 
   // 刪除
   deleteNews(event): void {
@@ -151,24 +145,18 @@ export class LatestNewsComponent implements OnInit {
       } else {
         this.dialogService
           .open(LatestNewsModifyComponent, {
-            dialogClass: 'model-full', autoFocus: false, hasScroll: true,
+            autoFocus: false, hasScroll: true,
             context: {
+              id: idNo,
               subject: res.data.subject,
               content: res.data.content,
               formControl: new Date(res.data.startAt),
               ngModelDate: new Date(res.data.endAt),
             },
           })
-          .onClose.subscribe((item) => {
-            if (item) {
-              const Newsitem = {
-                id: idNo,
-                subject: item.subject,
-                content: item.content,
-                startAt: item.startAt,
-                endAt: item.endAt,
-              };
-              this.modifyNews(idNo, Newsitem);
+          .onClose.subscribe((result) => {
+            if (result) {
+              this.refreshTable(this.query);
             }
           });
       }
@@ -176,16 +164,16 @@ export class LatestNewsComponent implements OnInit {
   }
 
   // 開啟編輯modal - 執行編輯
-  modifyNews(idNo: number, Newsitem: object): void {
-    this.service.updateData(idNo, Newsitem).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-      }else{
-        this.toastr.showToast('', 'top-right', '修改成功', 'success');
-        this.refreshTable(this.query);
-      }
-    });
-  }
+  // modifyNews(idNo: number, Newsitem: object): void {
+  //   this.service.updateData(idNo, Newsitem).subscribe((res: any) => {
+  //     if (res.errorMessage) {
+  //       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+  //     }else{
+  //       this.toastr.showToast('', 'top-right', '修改成功', 'success');
+  //       this.refreshTable(this.query);
+  //     }
+  //   });
+  // }
 
   refreshTable(query): any {
     this.service.getAll(this.query).subscribe((data) => {

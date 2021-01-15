@@ -1,11 +1,15 @@
 ::ng-deep {
   .search-container {
-    input {
-      width: 400px;
+    input.search {
+      width: 50%;
       margin-right: 5px;
+      display: inline-block;
     }
-    .searchbtn {
+    .search-btn {
       vertical-align: baseline;
+      margin-left: 1rem;
+      display: inline-block;
+      height: calc(1.5em + 0.75rem + 2px);
     }
   }
 }

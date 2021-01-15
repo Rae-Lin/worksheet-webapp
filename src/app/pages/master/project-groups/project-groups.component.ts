@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NbDialogService } from '@nebular/theme';
 
-import { ProjectGroupsService } from './../../../shared/service/master/project-groups.service';
+import { ProjectGroupsService } from 'src/app/shared/service/master/project-groups.service';
 import { ProjectGroupsCreateComponent } from './create/project-groups-create.component';
 import { ProjectGroupsModifyComponent } from './modify/project-groups-modify.component';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
@@ -34,8 +34,8 @@ export class ProjectGroupsComponent implements OnInit {
       position: 'right',
       add: false,
     },
-    edit: {editButtonContent: '<img src="../../../../assets/img/icon-edit.svg">'},
-    delete: {deleteButtonContent: '<img src="../../../../assets/img/icon-delete.svg">'},
+    edit: {editButtonContent: '<img src="./assets/img/icon-edit.svg">'},
+    delete: {deleteButtonContent: '<img src="./assets/img/icon-delete.svg">'},
     attr: {class: 'table thead-light table-hover'},
     columns: {
       sn: {
@@ -71,29 +71,25 @@ export class ProjectGroupsComponent implements OnInit {
   // 開啟新增modal
   openCreate(): void {
     this.dialogService
-      .open(ProjectGroupsCreateComponent, { dialogClass: 'model-full', autoFocus: false, hasScroll: true, })
-      .onClose.subscribe((item) => {
-        if (item) {
-          this.group = {
-            sn: item.sn,
-            name: item.name,
-          };
-          this.createGroup();
+      .open(ProjectGroupsCreateComponent, { autoFocus: false, hasScroll: true, })
+      .onClose.subscribe((result) => {
+        if (result) {
+          this.refreshTable(this.query);
         }
       });
   }
 
   // 開啟新增modal - 執行新增
-  createGroup(): void {
-    this.service.postData(this.group).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-      }else{
-        this.toastr.showToast('', 'top-right', '新增成功', 'success');
-        this.refreshTable();
-      }
-    });
-  }
+  // createGroup(): void {
+  //   this.service.postData(this.group).subscribe((res: any) => {
+  //     if (res.errorMessage) {
+  //       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+  //     }else{
+  //       this.toastr.showToast('', 'top-right', '新增成功', 'success');
+  //       this.refreshTable(this.query);
+  //     }
+  //   });
+  // }
 
   // 刪除
   deleteNews(event): void {
@@ -103,7 +99,7 @@ export class ProjectGroupsComponent implements OnInit {
         this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
       }else{
         this.toastr.showToast('', 'top-right', '刪除成功', 'success');
-        this.refreshTable();
+        this.refreshTable(this.query);
       }
     });
   }
@@ -117,19 +113,15 @@ export class ProjectGroupsComponent implements OnInit {
       } else {
         this.dialogService
           .open(ProjectGroupsModifyComponent, {
-            dialogClass: 'model-full', autoFocus: false, hasScroll: true,
+            autoFocus: false, hasScroll: true,
             context: {
               sn: res.data.sn,
               name: res.data.name,
             },
           })
-          .onClose.subscribe((item) => {
-            if (item) {
-              const groupItem = {
-                sn: snNo,
-                name: item.name,
-              };
-              this.modifyGroup(snNo, groupItem);
+          .onClose.subscribe((result) => {
+            if (result) {
+              this.refreshTable(this.query);
             }
           });
       }
@@ -137,19 +129,19 @@ export class ProjectGroupsComponent implements OnInit {
   }
 
   // 開啟編輯modal - 執行編輯
-  modifyGroup(snNo: string, groupItem: object): void {
-    this.service.updateData(snNo, groupItem).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-      }else{
-        this.toastr.showToast('', 'top-right', '修改成功', 'success');
-        this.refreshTable();
-      }
-    });
-  }
+  // modifyGroup(snNo: string, groupItem: object): void {
+  //   this.service.updateData(snNo, groupItem).subscribe((res: any) => {
+  //     if (res.errorMessage) {
+  //       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+  //     }else{
+  //       this.toastr.showToast('', 'top-right', '修改成功', 'success');
+  //       this.refreshTable(this.query);
+  //     }
+  //   });
+  // }
 
-  refreshTable(): any {
-    this.service.getAll(this.query).subscribe((data) => {
+  refreshTable(query): any {
+    this.service.getAll(query).subscribe((data) => {
       this.source.load(data);
     });
   }

@@ -1,8 +1,9 @@
-import { SelectMenuService } from './../../../../shared/service/master/select-menu.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NbDateService, NbDialogRef } from '@nebular/theme';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
+import { ProjectManagementService } from 'src/app/shared/service/master/project-management.service';
+import { SelectMenuService } from 'src/app/shared/service/master/select-menu.service';
 
 @Component({
   selector: 'app-project-management-create',
@@ -26,6 +27,7 @@ export class ProjectManagementCreateComponent implements OnInit {
     protected dateService: NbDateService<Date>,
     private toastr: ToastrService,
     private selectMenu: SelectMenuService,
+    private service: ProjectManagementService,
   ) {
     this.min = this.dateService.addDay(this.dateService.today(), 0);
   }
@@ -52,7 +54,20 @@ export class ProjectManagementCreateComponent implements OnInit {
       endAt: this.ngModelDate,
       status: this.status,
     };
-    this.dialogRef.close(this.projects);
+    // this.dialogRef.close(this.projects);
+    this.doCreate(this.projects);
+  }
+
+  doCreate(data): any {
+    this.service.postData(data).subscribe((res: any) => {
+      if (res.errorMessage) {
+        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+        return false;
+      }else{
+        this.toastr.showToast('', 'top-right', '新增成功', 'success');
+        this.dialogRef.close(true);
+      }
+    });
   }
 
   ngOnInit(): void {

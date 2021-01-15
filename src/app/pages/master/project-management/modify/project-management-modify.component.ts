@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NbDateService, NbDialogRef } from '@nebular/theme';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
+import { ProjectManagementService } from 'src/app/shared/service/master/project-management.service';
 import { SelectMenuService } from 'src/app/shared/service/master/select-menu.service';
 
 @Component({
@@ -26,6 +27,7 @@ export class ProjectManagementModifyComponent implements OnInit {
     protected dateService: NbDateService<Date>,
     private toastr: ToastrService,
     private selectMenu: SelectMenuService,
+    private service: ProjectManagementService,
   ) {
     this.min = this.dateService.addDay(this.dateService.today(), 0);
   }
@@ -52,8 +54,20 @@ export class ProjectManagementModifyComponent implements OnInit {
       endAt: this.ngModelDate,
       status: this.status,
     };
-    console.log(this.projects);
-    this.dialogRef.close(this.projects);
+    // this.dialogRef.close(this.projects);
+    this.doModify(this.sn, this.projects);
+  }
+
+  doModify(sn, data): any {
+    this.service.updateData(sn, data).subscribe((res: any) => {
+      if (res.errorMessage) {
+        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+        return false;
+      }else{
+        this.toastr.showToast('', 'top-right', '修改成功', 'success');
+        this.dialogRef.close(true);
+      }
+    });
   }
 
   ngOnInit(): void {

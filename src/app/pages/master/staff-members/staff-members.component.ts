@@ -5,6 +5,7 @@ import { NbDateService, NbDialogService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
 import { StaffMemberService } from 'src/app/shared/service/master/staff-member.service';
+import { StaffMembersCreateComponent } from './create/staff-members-create.component';
 
 @Component({
   selector: 'app-staff-members',
@@ -40,8 +41,8 @@ export class StaffMembersComponent implements OnInit {
       },
       attr: {class: 'table thead-light table-hover'},  // 表格添加class
       noDataMessage: '查無資料',
-      edit: {editButtonContent: '<img src="../../../../assets/img/icon-edit.svg">'},
-      delete: {deleteButtonContent: '<img src="../../../../assets/img/icon-delete.svg">'},
+      edit: {editButtonContent: '<img src="./assets/img/icon-edit.svg">'},
+      delete: {deleteButtonContent: '<img src="./assets/img/icon-delete.svg">'},
       columns: {
         id: {
           title: 'id',
@@ -77,7 +78,9 @@ export class StaffMembersComponent implements OnInit {
           type: 'Date',
           width: '105px',
           valuePrepareFunction: (created) => {
-            return this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
+            if (created) {
+              return this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
+            }
           }
         },
       },
@@ -101,31 +104,34 @@ export class StaffMembersComponent implements OnInit {
 
   // 開啟新增modal
   openCreate(): void {
-    // this.dialogService
-    //   .open(LatestNewsModalComponent, { dialogClass: 'model-full', autoFocus: false, hasScroll: true}, )
-    //   .onClose.subscribe((item) => {
-    //     if (item) {
-    //       this.newsItem = {
-    //         subject: item.subject,
-    //         content: item.content,
-    //         startAt: item.startAt,
-    //         endAt: item.endAt,
-    //       };
-    //       this.createNews();
-    //     }
-    //   });
+    this.dialogService
+      .open(StaffMembersCreateComponent, {autoFocus: false, hasScroll: true}, )
+      .onClose.subscribe((item) => {
+        if (item) {
+          this.member = {
+            id: item.id,
+            employeeCode: item.employeeCode,
+            name: item.name,
+            departmentName: item.departmentName,
+            mail: item.mail,
+            startAt: item.startAt,
+            status: item.status,
+          };
+          this.createNews();
+        }
+      });
   }
 
   // 開啟新增modal - 執行新增
   createNews(): void {
-    // this.service.postData(this.newsItem).subscribe((res: any) => {
-    //   if (res.errorMessage) {
-    //     this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-    //   }else{
-    //     this.toastr.showToast('', 'top-right', '新增成功', 'success');
-    //     this.refreshTable(this.query);
-    //   }
-    // });
+    this.service.postData(this.member).subscribe((res: any) => {
+      if (res.errorMessage) {
+        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+      }else{
+        this.toastr.showToast('', 'top-right', '新增成功', 'success');
+        this.refreshTable(this.query);
+      }
+    });
   }
 
   // 刪除
@@ -151,7 +157,7 @@ export class StaffMembersComponent implements OnInit {
     //   } else {
     //     this.dialogService
     //       .open(LatestNewsModifyComponent, {
-    //         dialogClass: 'model-full', autoFocus: false, hasScroll: true,
+    //         autoFocus: false, hasScroll: true,
     //         context: {
     //           subject: res.data.subject,
     //           content: res.data.content,
