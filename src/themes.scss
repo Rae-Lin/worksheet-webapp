@@ -18,8 +18,9 @@ $nb-themes: nb-register-theme(
     text-disabled-color: color-basic-600,
 
     // header
-    header-background-color: color-primary-600,
+    header-background-color: none,
     header-text-color: white,
+    header-padding: 0rem,
 
     // sidebar
     sidebar-padding: 1.25rem 0,

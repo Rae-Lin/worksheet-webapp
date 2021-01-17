@@ -26,9 +26,9 @@
     h5, .h5{ font-size: 1.05rem;}
     h6, .h6{ font-size: 1rem;}
     .subtitle{ font-size: 1rem;}
-    table tbody > tr.ng2-smart-row.selected {
-      background: unset !important;
-    }
+    // table tbody > tr.ng2-smart-row.selected {
+    //   background: unset !important;
+    // }
   }
   p{
     margin-bottom: 0.3rem;
@@ -95,7 +95,7 @@
     }
   }
 
-  .btn-cancle{
+  .btn-cancel{
     padding: 0.25rem;
     transition: all 0.3s;
     &:hover{
@@ -129,6 +129,6 @@
   padding: 0.875rem 1rem !important;
 }
 
-.nb-theme-default .btn-cancle nb-icon{
+.nb-theme-default .btn-cancel nb-icon{
   font-size: 2rem !important;
 }
