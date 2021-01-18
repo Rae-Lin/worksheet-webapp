@@ -27,16 +27,13 @@ import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
 import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
-<<<<<<< HEAD
-import { FormsModule } from '@angular/forms';
+
 import { TreeModule } from '@circlon/angular-tree-component';
-=======
 
 import zhHant from '@angular/common/locales/zh-Hant';
 import { NbMomentDateModule } from '@nebular/moment';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
 registerLocaleData(zhHant, 'zh-Hant');
->>>>>>> 955fdd7c685a934c7f9b44cca3c793ecd6ef2c31
 
 @NgModule({
   declarations: [
