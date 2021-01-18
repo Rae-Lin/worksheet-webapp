@@ -11,6 +11,8 @@
 // @import '../node_modules/bootstrap/dist/css/bootstrap.css';
 
 
+@import "../node_modules/@circlon/angular-tree-component/css/angular-tree-component.css";
+
 // install the framework styles
 @include nb-install() {
   @include nb-theme-global();

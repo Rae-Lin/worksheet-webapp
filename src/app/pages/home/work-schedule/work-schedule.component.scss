@@ -1,0 +1,35 @@
+.model-full {
+    width: 1024px !important;
+    height: auto !important;
+    max-height: 100%;
+    overflow-y: hidden;
+  
+    max-width: 1490px !important;
+
+    .cdk-visually-hidden {
+      width: 99% !important;
+      height: 99% !important;
+    }
+  
+    nb-dialog-container {
+      width: 100% !important;
+      height: 100% !important;
+    }
+}
+
+.scrolls {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: 80px;
+  white-space:nowrap
+}
+.imageDiv img {
+  box-shadow: 1px 1px 10px #999;
+  margin: 2px;
+  max-height: 50px;
+  cursor: pointer;
+  display:inline-block;
+  *display:inline;/* For IE7*/
+  *zoom:1;/* For IE7*/
+  vertical-align:top;
+}

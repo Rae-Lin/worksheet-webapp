@@ -1,0 +1,71 @@
+<nb-card class="model-full">
+    <nb-card-header fixed>
+        <h2>{{ titleWorkDate }}</h2>
+    </nb-card-header>
+
+    <nb-card-body>
+        <div class="row">
+            <div class="col">
+                <nb-layout>
+                    <nb-layout-column>
+                        <div class="row">
+                            <h6>專案群組</h6>
+                            <nb-actions size="small"><nb-action icon="search" (click)="onSearchProjectGroup(inputProjectGroup.value)"></nb-action></nb-actions>                          
+                            <input type="text" placeholder="輸入關鍵字" nbInput #inputProjectGroup [ngModel]="searchProjectGroupValue" />
+                        </div>
+                        <p></p>
+                        <div class="row">
+                            <nb-select #selectProjectGroup placeholder="選取專案群組" fullWidth shape="semi-round" 
+                                    (selectedChange)="onProjectGroupSelectionChange($event)" >  
+                                <nb-option-group *ngFor="let groupList of filteredGroups$ | async;" [title]="groupList.GroupTitle">
+                                    <nb-option *ngFor="let item of groupList.GroupList" [value]="item" >
+                                        {{ item.Name }}
+                                    </nb-option>
+                                </nb-option-group>
+                            </nb-select>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <h6>專案</h6>
+                            <nb-actions size="small">
+                                <nb-action icon="search" (click)="onSearchProject(inputProject.value)"></nb-action>                            
+                            </nb-actions>
+                            <input type="text" placeholder="輸入關鍵字" #inputProject [ngModel]="searchProjectValue"/>
+                        </div>
+                        <p></p>
+                        <div class="row">
+                            <nb-select #selectProject placeholder="選擇專案" fullWidth shape="semi-round"
+                                    (selectedChange)="onProjectSelectionChange($event)">
+                                <nb-option *ngFor="let project of filteredProject$ | async;" [value]="project.Id">
+                                    {{ project.Name }}
+                                </nb-option>
+                            </nb-select>
+                        </div>
+
+                        <div style="height: 400px">
+                            <tree-root [nodes]="nodesTree" [options]="optionsSetting"></tree-root>
+                        </div>
+                    </nb-layout-column>
+                </nb-layout>
+                
+            
+            </div>
+
+            <div class="col">
+                <nb-layout>
+                    <nb-layout-column>
+                        <p>測試</p>
+                    </nb-layout-column>
+                </nb-layout>
+            </div>
+        </div>
+    </nb-card-body>
+
+    <nb-card-footer class="text-right">
+      <button type="button" class="btn btn-primary btn-sm" nbButton (click)="dialogRef.close()">Close Dialog</button>
+    </nb-card-footer>
+
+</nb-card>
+
+    
+    
