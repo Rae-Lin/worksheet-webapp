@@ -55,7 +55,6 @@
 
 // 主檔跳窗樣式設置
 .model-custom {
-
   &.model-lg{
     width: 80vw !important;
     max-height: 90vh !important;
@@ -102,8 +101,11 @@
     transition: all 0.3s;
     &:hover{
       transform:rotate(90deg);
-      // transition: all 0.3s;
     }
+  }
+  span.quired{
+    color: red;
+    margin-left: 3px;
   }
 }
 
