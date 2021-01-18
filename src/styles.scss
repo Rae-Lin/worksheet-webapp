@@ -4,11 +4,12 @@
 
 // this is our just created themes.scss file, make sure the path to the file is correct
 @import 'themes';
-@import '../node_modules/@nebular/theme/styles/globals'; // or cosmic.css
+@import '@nebular/theme/styles/globals'; // or cosmic.css
 
 @import "./custom.scss";
+@import "bootstrap/scss/bootstrap";
 // @import '../node_modules/bootstrap/dist/css/bootstrap.css';
-@import "../node_modules/bootstrap/scss/bootstrap";
+
 
 @import "../node_modules/@circlon/angular-tree-component/css/angular-tree-component.css";
 
@@ -21,20 +22,15 @@
   text-indent: 0.1rem;
   .nb-theme-default{
     h1, .h1{ font-size: 2rem;}
-    h2, .h2{ font-size: 1.4rem;}
-    h3, .h3{ font-size: 1.3rem;}
-    h4, .h4{ font-size: 1.2rem;}
-    h5, .h5{ font-size: 1.1rem;}
-    h6, .h6{ font-size: 1.05rem;}
+    h2, .h2{ font-size: 1.2rem;}
+    h3, .h3{ font-size: 1.15rem;}
+    h4, .h4{ font-size: 1.1rem;}
+    h5, .h5{ font-size: 1.05rem;}
+    h6, .h6{ font-size: 1rem;}
     .subtitle{ font-size: 1rem;}
-    table {
-      nb-icon.operate{
-        cursor: pointer;
-      }
-      tbody > tr.ng2-smart-row.selected {
-        background: unset !important;
-      }
-    }
+    // table tbody > tr.ng2-smart-row.selected {
+    //   background: unset !important;
+    // }
   }
   p{
     margin-bottom: 0.3rem;
@@ -42,6 +38,11 @@
   .btn{
     font-weight: 600;
   }
+}
+
+// sidebar
+.nb-theme-default nb-sidebar nb-menu{
+  margin: 0 !important;
 }
 
 .days-container {
@@ -52,20 +53,56 @@
   }
 }
 
-.model-full {
-  min-width: 600px !important;
+// 主檔跳窗樣式設置
+.model-custom {
+
+  &.model-lg{
+    width: 80vw !important;
+    max-height: 90vh !important;
+    form{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .model-col{
+      width: 32.4%;
+      &:nth-child(3n+2),
+      &:nth-child(3n+3){
+        margin-left: calc((100% - 32.4%*3) / 2);
+      }
+    }
+  }
+
+  &.model-md{
+    min-width: 600px !important;
+    max-height: 90vh !important;
+  }
 
   .cdk-visually-hidden {
     width: 99% !important;
   }
+  nb-card-header{
+    padding: 0.2rem 0.35rem 0;
+    border-bottom: unset;
+  }
 
-  nb-dialog-container {
-    width: 100% !important;
-    .model-col{
-      margin-bottom: 1.25rem;
+  nb-card-footer{
+    border-top: unset;
+  }
+
+  .model-col{
+    margin-bottom: 1.25rem;
+    &:last-child{
+      margin-bottom: 4rem;
     }
-    button + button{
-      margin-left: 10px;
+  }
+
+  .btn-cancel{
+    padding: 0.25rem;
+    transition: all 0.3s;
+    &:hover{
+      transform:rotate(90deg);
+      // transition: all 0.3s;
     }
   }
 }
@@ -79,7 +116,21 @@
   height: 20px;
 }
 
-.table-cus thead th{
-    background-color: #f2eff8;
-    border-bottom: 1px solid rgb(200, 200, 200) !important;
+.select-custom{
+  display: block !important;
+}
+
+
+// 主檔部分表格樣式
+.nb-theme-default ng2-smart-table table tr th,
+.nb-theme-default ng2-smart-table table tr td{
+  padding: 0.875rem 0.75rem !important;
+}
+
+.nb-theme-default ng2-smart-table table tr.ng2-smart-titles th{
+  padding: 0.875rem 1rem !important;
+}
+
+.nb-theme-default .btn-cancel nb-icon{
+  font-size: 2rem !important;
 }

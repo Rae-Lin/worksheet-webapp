@@ -1,1 +1,22 @@
-<p>project-management works!</p>
+<!------ 新增跳窗 ------>
+<ng-template #dialog let-data let-ref="dialogRef">
+  <app-latest-news-modal></app-latest-news-modal>
+</ng-template>
+<!---------------------->
+
+<nb-card status="success">
+  <nb-card-header><h2>專案項目設定</h2></nb-card-header>
+  <nb-card-body>
+    <div class="mt-2 mb-4">
+      <p><button type="button" class="btn btn-primary btn-sm" (click)="openCreate()">新增專案項目</button></p>
+    </div>
+
+    <div class="mb-4 search-container">
+      <input #search type="text" placeholder="請輸入關鍵字(群組代號、名稱、專案編號、名稱)" (keydown.enter)="onSearch(search.value)" class="search form-control" >
+      <button type="button" class="btn btn-outline-primary btn-sm search-btn" (click)="onSearch(search.value)">搜尋</button>
+    </div>
+
+    <ng2-smart-table [settings]="settings" [source]="source" (edit)="openModify($event)" (delete)="deleteNews($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

@@ -1,21 +1,12 @@
 import { Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { LatestNewsService } from './../../../shared/service/master/latest-news.service';
+import { LatestNewsService } from 'src/app/shared/service/master/latest-news.service';
 import { NbDialogService } from '@nebular/theme';
-// import { APIdata } from 'src/app/shared/service/app.service';
 import { LatestNewsModalComponent } from './create/latest-news-modal.component';
 import { LatestNewsModifyComponent } from './modify/latest-news-modify.component';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
 import { LocalDataSource } from 'ng2-smart-table';
-
-export interface News {
-  id: number;
-  subject: string;
-  content: string;
-  startAt: string;
-  endAt: string;
-}
 
 @Component({
   selector: 'app-latest-news',
@@ -25,6 +16,7 @@ export interface News {
   providers: [DatePipe],
 })
 export class LatestNewsComponent implements OnInit {
+  private query = '?AllData=true';
   private newsItem: {
     subject: string;
     content: string;
@@ -32,45 +24,39 @@ export class LatestNewsComponent implements OnInit {
     endAt: Date;
   };
 
-  // apidata: APIdata;
-  // newsList$: Observable<APIdata>;
-  // newsList$: Observable<any[]>;
-
   // table Data
   settings = {
-    pager: {
-      display: true,
-      perPage: 10,
+    pager: {display: true}, // 設定分頁
+    mode: 'external',       // 新增、編輯以跳窗開啟
+    hideSubHeader: true ,   // 不顯示新增資料欄位
+    actions: {              // 操作欄位
+      columnTitle: '',      // 標題名稱
+      position: 'right',    // 表格最後
+      add: false,           // 不在表格內開放新增
     },
-    mode: 'external', // 編輯以跳窗開啟
-    hideSubHeader: true ,
-    actions: {
-      columnTitle: '',
-      position: 'right',
-      add: false,
-    },
-    edit: { editButtonContent: '<img src="../../../../assets/img/icon-edit.svg">'},
-    delete: { deleteButtonContent: '<img src="../../../../assets/img/icon-delete.svg">'},
-    attr: {
-      class: 'table thead-light table-hover table-cus'
-    },
+    attr: {class: 'table thead-light table-hover'},   // 表格添加class
+    noDataMessage: '查無資料',   // no data found Message
+    edit: {editButtonContent: '<img src="./assets/img/icon-edit.svg">'},
+    delete: {deleteButtonContent: '<img src="./assets/img/icon-delete.svg">'},
     columns: {
       subject: {
         title: '主旨',
-        type: 'string',
-        width: '40%',
-        class: 'subject',
+        type: 'html',
+        valuePrepareFunction: (cell) => {
+          return `<span class="subject">${cell}</span>`;
+        }
       },
       content: {
         title: '消息內容',
-        type: 'string',
-        width: '30%',
-        class: 'content',
+        type: 'html',
+        valuePrepareFunction: (cell) => {
+          return `<span class="content">${cell}</span>`;
+        }
       },
       startAt: {
         title: '開始時間',
         type: 'Date',
-        width: '120px',
+        width: '105px',
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
         }
@@ -78,7 +64,7 @@ export class LatestNewsComponent implements OnInit {
       endAt: {
         title: '結束時間',
         type: 'Date',
-        width: '120px',
+        width: '105px',
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
         }
@@ -95,7 +81,7 @@ export class LatestNewsComponent implements OnInit {
     private datePipe: DatePipe
   ) {
     this.source = new LocalDataSource(); // create the source
-    this.service.getAll().subscribe((data) => {
+    this.service.getAll(this.query).subscribe((data) => {
       this.source.load(data);
     });
   }
@@ -103,41 +89,24 @@ export class LatestNewsComponent implements OnInit {
   // 開啟新增modal
   openCreate(): void {
     this.dialogService
-      .open(LatestNewsModalComponent, { dialogClass: 'model-full' })
-      .onClose.subscribe((item) => {
-        if (item) {
-          this.newsItem = {
-            subject: item.subject,
-            content: item.content,
-            startAt: item.startAt,
-            endAt: item.endAt,
-          };
-          this.createNews();
+      .open(LatestNewsModalComponent, { autoFocus: false, hasScroll: true}, )
+      .onClose.subscribe((result) => {
+        if (result) {
+          this.refreshTable(this.query);
         }
       });
   }
 
-  // 開啟新增modal - 執行新增
-  createNews(): void {
-    this.service.postData(this.newsItem).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-      }else{
-        this.toastr.showToast('', 'top-right', '新增成功', 'success');
-        this.refreshTable();
-      }
-    });
-  }
-
   // 刪除
   deleteNews(event): void {
+    console.log(event.data.id);
     const idNo = event.data.id;
     this.service.deleteData(idNo).subscribe((res: any) => {
       if (res.errorMessage) {
         this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
       }else{
         this.toastr.showToast('', 'top-right', '刪除成功', 'success');
-        this.refreshTable();
+        this.refreshTable(this.query);
       }
     });
   }
@@ -151,88 +120,30 @@ export class LatestNewsComponent implements OnInit {
       } else {
         this.dialogService
           .open(LatestNewsModifyComponent, {
-            dialogClass: 'model-full',
+            autoFocus: false, hasScroll: true,
             context: {
+              id: idNo,
               subject: res.data.subject,
               content: res.data.content,
               formControl: new Date(res.data.startAt),
               ngModelDate: new Date(res.data.endAt),
             },
           })
-          .onClose.subscribe((item) => {
-            if (item) {
-              const Newsitem = {
-                id: idNo,
-                subject: item.subject,
-                content: item.content,
-                startAt: item.startAt,
-                endAt: item.endAt,
-              };
-              this.modifyNews(idNo, Newsitem);
+          .onClose.subscribe((result) => {
+            if (result) {
+              this.refreshTable(this.query);
             }
           });
       }
     });
   }
 
-  // 開啟編輯modal - 執行編輯
-  modifyNews(idNo: number, Newsitem: object): void {
-    this.service.updateData(idNo, Newsitem).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-      }else{
-        this.toastr.showToast('', 'top-right', '修改成功', 'success');
-        this.refreshTable();
-      }
-    });
-  }
-
-  refreshTable(): any {
-    this.service.getAll().subscribe((data) => {
+  refreshTable(query): any {
+    this.service.getAll(this.query).subscribe((data) => {
       this.source.load(data);
     });
   }
 
   ngOnInit(): void {
-    // this.newsList$ = this.service.getAll();
-    // console.log(this.newsList$);
-    // this.newsList$.subscribe((res) => {
-    //   console.log(res.data.list);
-    //   this.newsList = res.data.list;
-    // });
-
-    // this.service.postData({ title: '123'})
-    //   .subscribe(res => {
-    //     console.log(res);
-    //   });
-    // this.service.updateData(1, { title: '123'})
-    //   .subscribe(res => {
-    //     console.log(res);
-    //   });
-    // this.service.deleteData(1)
-    //   .subscribe(res => {
-    //     console.log(res);
-    //   });
   }
-
-  // error: any;
-  // headers: string[];
-  // latestNews: LatestNews;
-
-  // constructor(private latestNewsService: LatestNewsService) {}
-
-  // // tslint:disable-next-line: typedef
-  // showConfig() {
-  //   this.latestNewsService.getNews()
-  //     .subscribe((data: LatestNews) => this.latestNews = {
-  //       subject: data.subject,
-  //       content:  data.content,
-  //       startAt: data.startAt,
-  //       endAt: data.endAt,
-  //     });
-  // }
-
-  // ngAfterViewInit(): void {
-  //   this.getAll();
-  // }
 }

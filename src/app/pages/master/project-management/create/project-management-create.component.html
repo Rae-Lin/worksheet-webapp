@@ -1,0 +1,68 @@
+<nb-card class="model-custom model-md">
+  <nb-card-header class="text-right">
+    <button type="button" class="btn btn-cancel" nbButton (click)="cancel()"><nb-icon icon="close-outline"></nb-icon></button>
+  </nb-card-header>
+  <nb-card-body>
+    <div>
+      <div class="model-col">
+        <label class="subtitle" for="groupSn">專案群組名稱</label>
+        <p>
+          <nb-select placeholder="請選擇群組" [(ngModel)]="groupSn" id="groupSn" name="groupSn" #GroupSn="ngModel" required class="select-custom">
+            <nb-option *ngFor="let item of groupList" value="{{item.sn}}">【{{item.sn}}】{{item.name}}</nb-option>
+          </nb-select>
+        </p>
+        <p *ngIf="GroupSn.invalid && (GroupSn.dirty || GroupSn.touched)" class="text-danger">
+          <span *ngIf="GroupSn.errors.required">此為必填欄位</span>
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="sn">專案項目編號</label>
+        <p><input type="text" id="sn" name="sn" [(ngModel)]="sn" #ItemSn="ngModel" class="form-control" placeholder="請輸入專案項目編號" required  pattern="^[a-zA-Z0-9]*$"></p>
+        <p *ngIf="ItemSn.invalid && (ItemSn.dirty || ItemSn.touched)" class="text-danger">
+          <span *ngIf="ItemSn.errors.required">此為必填欄位</span>
+          <span *ngIf="ItemSn.errors.pattern">此欄位僅能輸入英文及數字</span>
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="name">專案項目名稱</label>
+        <p><input type="text" id="name" name="name" [(ngModel)]="name" #ItemName="ngModel" class="form-control" placeholder="請輸入專案項目名稱" required></p>
+        <p *ngIf="ItemName.invalid && (ItemName.dirty || ItemName.touched)" class="text-danger">
+          <span *ngIf="ItemName.errors.required">此為必填欄位</span>
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="status">狀態</label>
+        <p>
+          <nb-select placeholder="請選擇狀態" [(ngModel)]="status" id="status" name="status" #Status="ngModel" required class="select-custom">
+            <nb-option [value]="1">啟動</nb-option>
+            <nb-option [value]="0">結束</nb-option>
+          </nb-select>
+        </p>
+        <p *ngIf="Status.invalid && (Status.dirty || Status.touched)" class="text-danger">
+          <span *ngIf="Status.errors.required">此為必填欄位</span>
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="startAt">開始時間</label>
+          <p>
+            <input nbInput [nbDatepicker]="formcontrol" [formControl]="formControl" class="form-control" id="startAt" required>
+            <nb-datepicker #formcontrol [min]="min"></nb-datepicker>
+          </p>
+      </div>
+      <div class="model-col-last">
+        <label class="subtitle" for="endAt">結束時間</label>
+        <p>
+          <input nbInput [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate" id="endAt" #newsEndAt="ngModel" class="form-control" id="endAt" required>
+          <nb-datepicker #ngmodel [min]="formControl.value"></nb-datepicker>
+        </p>
+        <p *ngIf="newsEndAt.invalid && (newsEndAt.dirty || newsEndAt.touched)" class="text-danger">
+          <span *ngIf="newsEndAt.errors.required">此為必填欄位</span>
+        </p>
+      </div>
+
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button type="button" class="btn btn-primary btn-sm" nbButton (click)="submit()">確認</button>
+  </nb-card-footer>
+</nb-card>

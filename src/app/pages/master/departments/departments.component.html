@@ -1,1 +1,16 @@
-<p>departments works!</p>
+<!------ 新增跳窗 ------>
+<ng-template #dialog let-data let-ref="dialogRef">
+  <app-latest-news-modal></app-latest-news-modal>
+</ng-template>
+<!---------------------->
+
+<nb-card status="success">
+  <nb-card-header><h2>單位資訊</h2></nb-card-header>
+  <nb-card-body>
+    <div class="mt-2 mb-4">
+      <p><button type="button" class="btn btn-primary btn-sm" (click)="openCreate()">新增單位</button></p>
+    </div>
+    <ng2-smart-table [settings]="settings" [source]="source" (edit)="openModify($event)" (delete)="deleteNews($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

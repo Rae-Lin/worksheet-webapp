@@ -17,25 +17,49 @@
   }
 }
 
-app-header{
+app-header {
   width: 100%;
 }
 
-.model-full {
-  width: 100% !important;
-  height: 100% !important;
+// .model-md {
+//   width: 100% !important;
+//   height: 100% !important;
 
-  .cdk-visually-hidden {
-    width: 99% !important;
-    height: 99% !important;
-  }
+//   .cdk-visually-hidden {
+//     width: 99% !important;
+//     height: 99% !important;
+//   }
 
-  nb-dialog-container {
-    width: 100% !important;
-    height: 100% !important;
-  }
+//   nb-dialog-container {
+//     width: 100% !important;
+//     height: 100% !important;
+//   }
+// }
+
+nb-sidebar,
+nb-layout-column {
+  transition: all 0.5s;
 }
 
-nb-sidebar{
-  transition: all 0.5s;
+::ng-deep .main-container {
+  transition: all 0.5s !important;
+}
+
+::ng-deep ng2-smart-table {
+  tbody > tr.ng2-smart-row.selected {
+      background: unset !important;
+    }
+  thead > tr > th {
+    background-color: #f2eff8;
+    border-bottom: 1px solid rgb(200, 200, 200) !important;
+    a {
+      font-weight: 600 !important;
+    }
+    a:hover {
+      color: color-primary-800 !important;
+    }
+    a:visited {
+      color: color-primary-800 !important;
+    }
+  }
 }

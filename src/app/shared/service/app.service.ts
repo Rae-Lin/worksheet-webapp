@@ -34,6 +34,10 @@ export class AppService {
         errorMessage = '404 內容不存在';
         break;
 
+      case 409:
+        errorMessage = '409 重複資料';
+        break;
+
       default:
         errorMessage = '異常錯誤';
         break;
@@ -48,14 +52,14 @@ export class AppService {
   //   );
   // }
 
-  getAllData(): any {
-    return this.http.get<any>(`${this.url}`).pipe(
-      catchError(this.handleError),
-    );
-  }
+  // getAllData(): any {
+  //   return this.http.get<any>(`${this.url}`).pipe(
+  //     catchError(this.handleError),
+  //   );
+  // }
 
-  getAll(): any {
-    return this.http.get<any>(`${this.url}`).pipe(
+  getAll(query): any {
+    return this.http.get<any>(`${this.url}${query}`).pipe(
       map(res => res.data.list),
       catchError(this.handleError),
     );
@@ -85,6 +89,12 @@ export class AppService {
     );
   }
 
+  getMenu(query): any {
+    return this.http.get<any>(`${this.url}${query}`).pipe(
+      map(res => res.data),
+      catchError(this.handleError),
+    );
+  }
   // updateData(id, data): any  {
   //   return this.http.patch<any>(`${this.url}/${id}`, data).pipe(
   //     catchError(this.handleError)

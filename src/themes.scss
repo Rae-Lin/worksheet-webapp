@@ -18,8 +18,9 @@ $nb-themes: nb-register-theme(
     text-disabled-color: color-basic-600,
 
     // header
-    header-background-color: color-primary-600,
+    header-background-color: none,
     header-text-color: white,
+    header-padding: 0rem,
 
     // sidebar
     sidebar-padding: 1.25rem 0,
@@ -40,6 +41,14 @@ $nb-themes: nb-register-theme(
     // card
     card-header-success-background-color: #cecece,
     card-header-success-text-color: color-basic-800,
+
+    // 下拉選單
+    // select-min-width: 100%,
+    select-medium-max-width: 100%,
+    select-medium-text-font-size: 1rem,
+    select-medium-text-font-weight: 400,
+    select-outline-medium-padding: 0.375rem 0.75rem,
+    select-outline-basic-border-color: #ced4da,
   ),
   default,
   default

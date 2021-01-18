@@ -1,0 +1,22 @@
+::ng-deep {
+  .search-container {
+    input.search {
+      width: 50%;
+      margin-right: 5px;
+      display: inline-block;
+    }
+    .search-btn {
+      vertical-align: baseline;
+      margin-left: 1rem;
+      display: inline-block;
+      height: calc(1.5em + 0.75rem + 2px);
+    }
+  }
+}
+
+::ng-deep ng2-smart-table {
+  span.onStatus {
+    color: rgb(48, 159, 48);
+    font-weight: 600;
+  }
+}

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NbDialogService } from '@nebular/theme';
 
-import { ProjectGroupsService } from './../../../shared/service/master/project-groups.service';
+import { ProjectGroupsService } from 'src/app/shared/service/master/project-groups.service';
 import { ProjectGroupsCreateComponent } from './create/project-groups-create.component';
 import { ProjectGroupsModifyComponent } from './modify/project-groups-modify.component';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
@@ -15,6 +15,7 @@ import { LocalDataSource } from 'ng2-smart-table';
   styleUrls: ['./project-groups.component.scss'],
 })
 export class ProjectGroupsComponent implements OnInit {
+  private query = '?AllData=true';
   private group: {
     sn: string;
     name: string;
@@ -24,37 +25,32 @@ export class ProjectGroupsComponent implements OnInit {
   itemList$: Observable<any[]>;
 
   settings = {
-    pager: {
-      display: true,
-      // perPage: 9,
-    },
-    mode: 'external', // 編輯以跳窗開啟
+    pager: {display: true},
+    mode: 'external',
     hideSubHeader: true ,
+    noDataMessage: '查無資料',
     actions: {
       columnTitle: '',
       position: 'right',
       add: false,
     },
-    edit: { editButtonContent: '<img src="../../../../assets/img/icon-edit.svg">'},
-    delete: { deleteButtonContent: '<img src="../../../../assets/img/icon-delete.svg">'},
-    attr: {
-      class: 'table thead-light table-hover table-cus'
-    },
+    edit: {editButtonContent: '<img src="./assets/img/icon-edit.svg">'},
+    delete: {deleteButtonContent: '<img src="./assets/img/icon-delete.svg">'},
+    attr: {class: 'table thead-light table-hover'},
     columns: {
       sn: {
         title: '代號',
         type: 'string',
-        width: '220px',
-        class: 'subject',
         valuePrepareFunction: (cell) => {
           return `【${cell}】`;
         }
       },
       name: {
         title: '專案群組名稱',
-        type: 'string',
-        width: '75%',
-        class: 'content',
+        type: 'html',
+        valuePrepareFunction: (cell) => {
+          return `<span class="name">${cell}</span>`;
+        }
       },
     },
   };
@@ -67,7 +63,7 @@ export class ProjectGroupsComponent implements OnInit {
     private toastr: ToastrService,
   ) {
     this.source = new LocalDataSource();
-    this.service.getAll().subscribe((data) => {
+    this.service.getAll(this.query).subscribe((data) => {
       this.source.load(data);
     });
   }
@@ -75,28 +71,12 @@ export class ProjectGroupsComponent implements OnInit {
   // 開啟新增modal
   openCreate(): void {
     this.dialogService
-      .open(ProjectGroupsCreateComponent, { dialogClass: 'model-full' })
-      .onClose.subscribe((item) => {
-        if (item) {
-          this.group = {
-            sn: item.sn,
-            name: item.name,
-          };
-          this.createGroup();
+      .open(ProjectGroupsCreateComponent, { autoFocus: false, hasScroll: true, })
+      .onClose.subscribe((result) => {
+        if (result) {
+          this.refreshTable(this.query);
         }
       });
-  }
-
-  // 開啟新增modal - 執行新增
-  createGroup(): void {
-    this.service.postData(this.group).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-      }else{
-        this.toastr.showToast('', 'top-right', '新增成功', 'success');
-        this.refreshTable();
-      }
-    });
   }
 
   // 刪除
@@ -107,7 +87,7 @@ export class ProjectGroupsComponent implements OnInit {
         this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
       }else{
         this.toastr.showToast('', 'top-right', '刪除成功', 'success');
-        this.refreshTable();
+        this.refreshTable(this.query);
       }
     });
   }
@@ -121,39 +101,23 @@ export class ProjectGroupsComponent implements OnInit {
       } else {
         this.dialogService
           .open(ProjectGroupsModifyComponent, {
-            dialogClass: 'model-full',
+            autoFocus: false, hasScroll: true,
             context: {
               sn: res.data.sn,
               name: res.data.name,
             },
           })
-          .onClose.subscribe((item) => {
-            if (item) {
-              const groupItem = {
-                sn: snNo,
-                name: item.name,
-              };
-              this.modifyGroup(snNo, groupItem);
+          .onClose.subscribe((result) => {
+            if (result) {
+              this.refreshTable(this.query);
             }
           });
       }
     });
   }
 
-  // 開啟編輯modal - 執行編輯
-  modifyGroup(snNo: string, groupItem: object): void {
-    this.service.updateData(snNo, groupItem).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-      }else{
-        this.toastr.showToast('', 'top-right', '修改成功', 'success');
-        this.refreshTable();
-      }
-    });
-  }
-
-  refreshTable(): any {
-    this.service.getAll().subscribe((data) => {
+  refreshTable(query): any {
+    this.service.getAll(query).subscribe((data) => {
       this.source.load(data);
     });
   }
@@ -163,7 +127,6 @@ export class ProjectGroupsComponent implements OnInit {
       this.source.setFilter([]);
     } else {
       this.source.setFilter([
-        // fields we want to include in the search
         {
           field: 'sn',
           search: query
@@ -173,13 +136,10 @@ export class ProjectGroupsComponent implements OnInit {
           search: query
         }
       ], false);
-      // second parameter specifying whether to perform 'AND' or 'OR' search
-      // (meaning all columns should contain search query or at least one)
-      // 'AND' by default, so changing to 'OR' by setting false here
     }
   }
 
   ngOnInit(): void {
-    this.itemList$ = this.service.getAll();
+    // this.itemList$ = this.service.getAll();
   }
 }

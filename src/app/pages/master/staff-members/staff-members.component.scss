@@ -1,0 +1,11 @@
+.search-container {
+  .search-container-rule{
+    min-width: 30%;
+    input.search {
+      width: 100%;
+    }
+    & + .search-container-rule{
+      margin-left: .75rem;
+    }
+  }
+}

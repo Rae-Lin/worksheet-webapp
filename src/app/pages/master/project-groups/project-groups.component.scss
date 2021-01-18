@@ -1,6 +1,10 @@
-input[type="text"] {
-  width: 400px;
-}
-.searchbtn{
-  vertical-align: baseline;
+::ng-deep ng2-smart-table {
+  span.name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    width: 600px;
+  }
 }
