@@ -8,7 +8,7 @@
         <label class="subtitle" for="groupSn">專案群組</label>
         <!-- <p><input type="text" id="groupSn" name="groupSn" [(ngModel)]="groupSn" #GroupSn="ngModel" class="form-control" placeholder="請輸入專案群組" required></p> -->
         <p>
-          <nb-select placeholder="請選擇群組" [(ngModel)]="groupSn" id="groupSn" name="groupSn" #GroupSn="ngModel" required class="select-custom">
+          <nb-select placeholder="請選擇群組" [(ngModel)]="groupSn" id="groupSn" name="groupSn" #GroupSn="ngModel" required class="select-custom" disabled>
             <nb-option *ngFor="let item of groupList" value="{{item.sn}}">【{{item.sn}}】{{item.name}}</nb-option>
           </nb-select>
         </p>

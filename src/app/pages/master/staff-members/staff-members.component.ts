@@ -20,73 +20,79 @@ export class StaffMembersComponent implements OnInit {
   min: Date;
   private query = '?AllData=true';
   private member: {
-    id: string,
-    employeeCode: string,
-    name: string,
-    departmentName: string,
-    mail: string,
-    startAt: Date,
-    status: number
+    id: string;
+    employeeCode: string;
+    name: string;
+    departmentName: string;
+    mail: string;
+    startAt: Date;
+    status: number;
   };
 
-    // table Data
-    settings = {
-      pager: {display: true}, // 設定分頁
-      mode: 'external',       // 新增、編輯以跳窗開啟
-      hideSubHeader: true ,   // 不顯示新增資料欄位
-      actions: {              // 操作欄位
-        columnTitle: '',      // 標題名稱
-        position: 'right',    // 表格最後
-        add: false,           // 不在表格內開放新增
+  // table Data
+  settings = {
+    pager: { display: true },   // 設定分頁
+    mode: 'external',           // 新增、編輯以跳窗開啟
+    hideSubHeader: true,        // 不顯示新增資料欄位
+    actions: {                  // 操作欄位
+      columnTitle: '',          // 標題名稱
+      position: 'right',        // 表格最後
+      add: false,               // 不在表格內開放新增
+    },
+    attr: { class: 'table thead-light table-hover' },   // 表格添加class
+    noDataMessage: '查無資料',
+    edit: { editButtonContent: '<img src="./assets/img/icon-edit.svg">' },
+    delete: { deleteButtonContent: '<img src="./assets/img/icon-delete.svg">' },
+    columns: {
+      id: {
+        title: 'id',
+        type: 'string',
+        hide: true,
       },
-      attr: {class: 'table thead-light table-hover'},  // 表格添加class
-      noDataMessage: '查無資料',
-      edit: {editButtonContent: '<img src="./assets/img/icon-edit.svg">'},
-      delete: {deleteButtonContent: '<img src="./assets/img/icon-delete.svg">'},
-      columns: {
-        id: {
-          title: 'id',
-          type: 'string',
-          hide: true
-        },
-        employeeCode: {
-          title: '員工編號',
-          type: 'string',
-        },
-        name: {
-          title: '姓名',
-          type: 'string',
-        },
-        departmentName: {
-          title: '單位',
-          type: 'string',
-        },
-        status: {
-          title: '狀態',
-          type: 'html',
-          width: '70px',
-          // valuePrepareFunction: (cell) => {
-          //   return (cell ? `<span class="onStatus">啟動</span>` : '結束');
-          // }
-        },
-        mail: {
-          title: 'Email',
-          type: 'string',
-        },
-        startAt: {
-          title: '到職日',
-          type: 'Date',
-          width: '105px',
-          valuePrepareFunction: (created) => {
-            if (created) {
-              return this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
-            }
+      employeeCode: {
+        title: '員工編號',
+        type: 'string',
+      },
+      name: {
+        title: '姓名',
+        type: 'string',
+      },
+      departmentName: {
+        title: '單位',
+        type: 'string',
+      },
+      status: {
+        title: '狀態',
+        type: 'html',
+        width: '70px',
+        valuePrepareFunction: (cell) => {
+          if (cell === 0) {
+            return `<span>離職</span>`;
+          } else if (cell === 1) {
+            return `<span class="onStatus">在職中</span>`;
+          } else {
+            return `<span>留職停薪</span>`;
+          }
+        }
+      },
+      mail: {
+        title: 'Email',
+        type: 'string',
+      },
+      startAt: {
+        title: '到職日',
+        type: 'Date',
+        width: '105px',
+        valuePrepareFunction: (created) => {
+          if (created) {
+            return this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
           }
         },
       },
-    };
+    },
+  };
 
-    source: LocalDataSource; // add a property to the component
+  source: LocalDataSource; // add a property to the component
 
   constructor(
     private service: StaffMemberService,
@@ -105,7 +111,7 @@ export class StaffMembersComponent implements OnInit {
   // 開啟新增modal
   openCreate(): void {
     this.dialogService
-      .open(StaffMembersCreateComponent, {autoFocus: false, hasScroll: true}, )
+      .open(StaffMembersCreateComponent, { autoFocus: false, hasScroll: true })
       .onClose.subscribe((item) => {
         if (item) {
           this.member = {
@@ -126,8 +132,8 @@ export class StaffMembersComponent implements OnInit {
   createNews(): void {
     this.service.postData(this.member).subscribe((res: any) => {
       if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-      }else{
+        this.toastr.showToast('', 'top-right', res.errorMessage, 'danger');
+      } else {
         this.toastr.showToast('', 'top-right', '新增成功', 'success');
         this.refreshTable(this.query);
       }
@@ -136,16 +142,16 @@ export class StaffMembersComponent implements OnInit {
 
   // 刪除
   deleteNews(event): void {
-    // console.log(event.data.id);
-    // const idNo = event.data.id;
-    // this.service.deleteData(idNo).subscribe((res: any) => {
-    //   if (res.errorMessage) {
-    //     this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-    //   }else{
-    //     this.toastr.showToast('', 'top-right', '刪除成功', 'success');
-    //     this.refreshTable(this.query);
-    //   }
-    // });
+    console.log(event.data.id);
+    const idNo = event.data.id;
+    this.service.deleteData(idNo).subscribe((res: any) => {
+      if (res.errorMessage) {
+        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+      }else{
+        this.toastr.showToast('', 'top-right', '刪除成功', 'success');
+        this.refreshTable(this.query);
+      }
+    });
   }
 
   // 開啟編輯modal
@@ -224,7 +230,5 @@ export class StaffMembersComponent implements OnInit {
     // }
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

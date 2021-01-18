@@ -22,7 +22,7 @@ export class ProjectGroupsCreateComponent implements OnInit {
   ) { }
 
   cancel(): void {
-    this.masterCommon.doDelete(this.dialogRef);
+    this.masterCommon.doClose(this.dialogRef);
   }
 
   submit(): void {

@@ -34,6 +34,10 @@ export class AppService {
         errorMessage = '404 內容不存在';
         break;
 
+      case 409:
+        errorMessage = '409 重複資料';
+        break;
+
       default:
         errorMessage = '異常錯誤';
         break;

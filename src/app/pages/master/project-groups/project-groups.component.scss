@@ -1,10 +1,10 @@
-ng2-smart-table {
+::ng-deep ng2-smart-table {
   span.name {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-    width: 700px;
+    width: 600px;
   }
 }

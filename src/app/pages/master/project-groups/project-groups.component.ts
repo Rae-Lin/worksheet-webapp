@@ -79,18 +79,6 @@ export class ProjectGroupsComponent implements OnInit {
       });
   }
 
-  // 開啟新增modal - 執行新增
-  // createGroup(): void {
-  //   this.service.postData(this.group).subscribe((res: any) => {
-  //     if (res.errorMessage) {
-  //       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-  //     }else{
-  //       this.toastr.showToast('', 'top-right', '新增成功', 'success');
-  //       this.refreshTable(this.query);
-  //     }
-  //   });
-  // }
-
   // 刪除
   deleteNews(event): void {
     const snNo = event.data.sn;
@@ -127,18 +115,6 @@ export class ProjectGroupsComponent implements OnInit {
       }
     });
   }
-
-  // 開啟編輯modal - 執行編輯
-  // modifyGroup(snNo: string, groupItem: object): void {
-  //   this.service.updateData(snNo, groupItem).subscribe((res: any) => {
-  //     if (res.errorMessage) {
-  //       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-  //     }else{
-  //       this.toastr.showToast('', 'top-right', '修改成功', 'success');
-  //       this.refreshTable(this.query);
-  //     }
-  //   });
-  // }
 
   refreshTable(query): any {
     this.service.getAll(query).subscribe((data) => {

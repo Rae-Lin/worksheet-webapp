@@ -10,7 +10,7 @@ export class MasterCommonService {
     private toastr: ToastrService,
   ) { }
 
-  doDelete(dialogRef): void {
+  doClose(dialogRef): void {
     dialogRef.close();
   }
 
@@ -21,6 +21,18 @@ export class MasterCommonService {
         return false;
       }else{
         this.toastr.showToast('', 'top-right', '新增成功', 'success');
+        dialogRef.close(true);
+      }
+    });
+  }
+
+  doModify(service, dialogRef, sn, data): any {
+    service.updateData(sn, data).subscribe((res: any) => {
+      if (res.errorMessage) {
+        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+        return false;
+      }else{
+        this.toastr.showToast('', 'top-right', '修改成功', 'success');
         dialogRef.close(true);
       }
     });

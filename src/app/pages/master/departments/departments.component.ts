@@ -70,18 +70,6 @@ export class DepartmentsComponent implements OnInit {
       });
   }
 
-  // 開啟新增modal - 執行新增
-  // createNews(): void {
-  //   this.service.postData(this.department).subscribe((res: any) => {
-  //     if (res.errorMessage) {
-  //       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-  //     }else{
-  //       this.toastr.showToast('', 'top-right', '新增成功', 'success');
-  //       this.refreshTable(this.query);
-  //     }
-  //   });
-  // }
-
   // 刪除
   deleteNews(event): void {
     const snNo = event.data.sn;
@@ -118,18 +106,6 @@ export class DepartmentsComponent implements OnInit {
       }
     });
   }
-
-  // 開啟編輯modal - 執行編輯
-  // modifyNews(snNo: number, Newsitem: object): void {
-  //   this.service.updateData(snNo, Newsitem).subscribe((res: any) => {
-  //     if (res.errorMessage) {
-  //       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-  //     }else{
-  //       this.toastr.showToast('', 'top-right', '修改成功', 'success');
-  //       this.refreshTable(this.query);
-  //     }
-  //   });
-  // }
 
   refreshTable(query): any {
     this.service.getAll(this.query).subscribe((data) => {

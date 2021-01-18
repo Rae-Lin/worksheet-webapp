@@ -17,29 +17,30 @@ import { ProjectManagementModifyComponent } from './modify/project-management-mo
 export class ProjectManagementComponent implements OnInit {
   private query = '?AllData=true';
   private groupItem: {
-    groupSn: string,
-    groupName: string,
-    sn: string,
-    name: string,
-    startAt: Date,
-    endAt: Date,
-    status: boolean
+    groupSn: string;
+    groupName: string;
+    sn: string;
+    name: string;
+    startAt: Date;
+    endAt: Date;
+    status: boolean;
   };
 
   // table Data
   settings = {
-    pager: {display: true}, // 設定分頁
-    mode: 'external',     // 新增、編輯以跳窗開啟
-    hideSubHeader: true , // 不顯示新增資料欄位
-    actions: {            // 操作欄位
-      columnTitle: '',    // 標題名稱
-      position: 'right',  // 表格最後
-      add: false,         // 不在表格內開放新增
+    pager: { display: true }, // 設定分頁
+    mode: 'external', // 新增、編輯以跳窗開啟
+    hideSubHeader: true, // 不顯示新增資料欄位
+    actions: {
+      // 操作欄位
+      columnTitle: '', // 標題名稱
+      position: 'right', // 表格最後
+      add: false, // 不在表格內開放新增
     },
-    noDataMessage: '查無資料',  // no data found Message
-    edit: {editButtonContent: '<img src="./assets/img/icon-edit.svg">'},
-    delete: {deleteButtonContent: '<img src="./assets/img/icon-delete.svg">'},
-    attr: {class: 'table thead-light table-hover'},  // 表格添加class
+    attr: { class: 'table thead-light table-hover' }, // 表格添加class
+    noDataMessage: '查無資料', // no data found Message
+    edit: { editButtonContent: '<img src="./assets/img/icon-edit.svg">' },
+    delete: { deleteButtonContent: '<img src="./assets/img/icon-delete.svg">' },
     columns: {
       groupSn: {
         title: '專案群組代號',
@@ -53,7 +54,7 @@ export class ProjectManagementComponent implements OnInit {
         type: 'html',
         valuePrepareFunction: (cell) => {
           return `<span class="groupName">${cell}</span>`;
-        }
+        },
       },
       sn: {
         title: '專案項目編號',
@@ -67,31 +68,35 @@ export class ProjectManagementComponent implements OnInit {
         type: 'html',
         valuePrepareFunction: (cell) => {
           return `<span class="name">${cell}</span>`;
-        }
+        },
       },
       status: {
         title: '狀態',
         type: 'html',
         width: '70px',
         valuePrepareFunction: (cell) => {
-          return (cell ? `<span class="onStatus">啟動</span>` : '結束');
-        }
+          return cell ? `<span class="onStatus">啟動</span>` : '結束';
+        },
       },
       startAt: {
         title: '開始時間',
         type: 'Date',
         width: '105px',
         valuePrepareFunction: (created) => {
-          return (created === '' ? '' : this.datePipe.transform(new Date(created), 'yyyy-MM-dd'));
-        }
+          return created === ''
+            ? ''
+            : this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
+        },
       },
       endAt: {
         title: '結束時間',
         type: 'Date',
         width: '105px',
         valuePrepareFunction: (created) => {
-          return (created === '' ? '' : this.datePipe.transform(new Date(created), 'yyyy-MM-dd'));
-        }
+          return created === ''
+            ? ''
+            : this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
+        },
       },
     },
   };
@@ -113,103 +118,54 @@ export class ProjectManagementComponent implements OnInit {
   // 開啟新增modal
   openCreate(): void {
     this.dialogService
-      .open(ProjectManagementCreateComponent, { autoFocus: false, hasScroll: true, })
+      .open(ProjectManagementCreateComponent, {
+        autoFocus: false,
+        hasScroll: true,
+      })
       .onClose.subscribe((result) => {
         if (result) {
           this.refreshTable(this.query);
         }
       });
-      // .onClose.subscribe((item) => {
-      //   if (item) {
-      //     this.groupItem = {
-      //       groupSn: item.groupSn,
-      //       groupName: item.groupName,
-      //       sn: item.sn,
-      //       name: item.name,
-      //       startAt: item.startAt,
-      //       endAt: item.endAt,
-      //       status: item.status
-      //     };
-      //     this.createNews();
-      //   }
-      // });
   }
 
-  // 開啟新增modal - 執行新增
-  // createNews(): void {
-  //   this.service.postData(this.groupItem).subscribe((res: any) => {
-  //     if (res.errorMessage) {
-  //       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-  //     }else{
-  //       this.toastr.showToast('', 'top-right', '新增成功', 'success');
-  //       this.refreshTable(this.query);
-  //     }
-  //   });
-  // }
-
-// 開啟編輯modal
-openModify(event): void {
-  const snNo = event.data.sn;
-  this.service.getData(snNo).subscribe((res: any) => {
-    if (res.errorMessage) {
-      this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-    } else {
-      this.dialogService
-        .open(ProjectManagementModifyComponent, {
-          autoFocus: false, hasScroll: true,
-          context: {
-            groupSn: res.data.groupSn,
-            groupName: res.data.groupName,
-            sn: res.data.sn,
-            name: res.data.name,
-            status: res.data.status,
-            formControl: new Date(res.data.startAt),
-            ngModelDate: new Date(res.data.endAt),
-          },
-        })
-        .onClose.subscribe((result) => {
-          if (result) {
-            this.refreshTable(this.query);
-          }
-        });
-        // .onClose.subscribe((item) => {
-        //   if (item) {
-        //     const ProjectItem = {
-        //       sn: snNo,
-        //       groupSn: item.groupSn,
-        //       // groupName: item.groupName,
-        //       name: item.name,
-        //       status: item.status,
-        //       startAt: item.startAt,
-        //       endAt: item.endAt,
-        //     };
-        //     this.modifyNews(snNo, ProjectItem);
-        //   }
-        // });
-    }
-  });
-}
-
-// 開啟編輯modal - 執行編輯
-// modifyNews(snNo: number, ProjectItem: object): void {
-//   this.service.updateData(snNo, ProjectItem).subscribe((res: any) => {
-//     if (res.errorMessage) {
-//       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-//     }else{
-//       this.toastr.showToast('', 'top-right', '修改成功', 'success');
-//       this.refreshTable(this.query);
-//     }
-//   });
-// }
-
+  // 開啟編輯modal
+  openModify(event): void {
+    const snNo = event.data.sn;
+    this.service.getData(snNo).subscribe((res: any) => {
+      if (res.errorMessage) {
+        this.toastr.showToast('', 'top-right', res.errorMessage, 'danger');
+      } else {
+        this.dialogService
+          .open(ProjectManagementModifyComponent, {
+            autoFocus: false,
+            hasScroll: true,
+            context: {
+              groupSn: res.data.groupSn,
+              groupName: res.data.groupName,
+              sn: res.data.sn,
+              name: res.data.name,
+              status: res.data.status,
+              formControl: new Date(res.data.startAt),
+              ngModelDate: new Date(res.data.endAt),
+            },
+          })
+          .onClose.subscribe((result) => {
+            if (result) {
+              this.refreshTable(this.query);
+            }
+          });
+      }
+    });
+  }
 
   // 刪除
   deleteNews(event): void {
     const snNo = event.data.sn;
     this.service.deleteData(snNo).subscribe((res: any) => {
       if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
-      }else{
+        this.toastr.showToast('', 'top-right', res.errorMessage, 'danger');
+      } else {
         this.toastr.showToast('', 'top-right', '刪除成功', 'success');
         this.refreshTable(this.query);
       }
@@ -226,28 +182,29 @@ openModify(event): void {
     if (query === '') {
       this.source.setFilter([]);
     } else {
-      this.source.setFilter([
-        {
-          field: 'groupSn',
-          search: query
-        },
-        {
-          field: 'groupName',
-          search: query
-        },
-        {
-          field: 'sn',
-          search: query
-        },
-        {
-          field: 'name',
-          search: query
-        }
-      ], false);
+      this.source.setFilter(
+        [
+          {
+            field: 'groupSn',
+            search: query,
+          },
+          {
+            field: 'groupName',
+            search: query,
+          },
+          {
+            field: 'sn',
+            search: query,
+          },
+          {
+            field: 'name',
+            search: query,
+          },
+        ],
+        false
+      );
     }
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
