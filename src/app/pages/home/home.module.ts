@@ -1,29 +1,45 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { HomeComponent } from './home.component';
 import {
+  NbCalendarModule,
   NbSidebarModule,
-  NbCardModule,
-  NbThemeModule,
   NbMenuModule,
   NbLayoutModule,
   NbTabsetModule,
+  NbCardModule,
+  NbDatepickerModule,
+  NbDialogModule,
+  NbIconModule,
+  NbThemeModule,
+  NbSelectModule,
+  NbAutocompleteModule,
+  NbFormFieldModule,
+  NbSearchModule,
+  NbActionsModule,
+  NbListModule,
 } from '@nebular/theme';
+
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
 
 import { FullCalendarModule } from '@fullcalendar/angular'; 
 import dayGridPlugin from '@fullcalendar/daygrid'; 
-import interactionPlugin from '@fullcalendar/interaction'; 
+import interactionPlugin from '@fullcalendar/interaction';
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin
 ]);
 
+import { HomeComponent } from './home.component';
+import { WorkScheduleComponent } from './work-schedule/work-schedule.component';
+
+import { TreeModule } from '@circlon/angular-tree-component';
+
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, WorkScheduleComponent],
   imports: [
     CommonModule,
     NbCardModule,
@@ -35,6 +51,23 @@ FullCalendarModule.registerPlugins([
     SharedModule,
     HomeRoutingModule,
     FullCalendarModule,
+    NbCardModule,
+    NbThemeModule,
+    NbLayoutModule,
+    NbDatepickerModule,
+    NbIconModule,
+    NbCalendarModule,
+    NbDialogModule.forChild(),
+    NbSelectModule,
+    NbAutocompleteModule,
+    NbFormFieldModule,
+    NbSearchModule,
+    NbActionsModule,
+    NbListModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TreeModule,
+    
   ],
   exports: [
     HomeComponent

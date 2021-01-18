@@ -24,6 +24,7 @@ import { LayoutModule } from './layout/layout.module';
 import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { TreeModule } from '@circlon/angular-tree-component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { FormsModule } from '@angular/forms';
     LayoutModule,
     PagesModule,
     SharedModule,
+    TreeModule,
   ],
   providers: [
     // { provide: LOCALE_ID, useValue: 'zh-Hant' }
