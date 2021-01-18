@@ -112,33 +112,24 @@ export class StaffMembersComponent implements OnInit {
   openCreate(): void {
     this.dialogService
       .open(StaffMembersCreateComponent, { autoFocus: false, hasScroll: true })
-      .onClose.subscribe((item) => {
-        if (item) {
-          this.member = {
-            id: item.id,
-            employeeCode: item.employeeCode,
-            name: item.name,
-            departmentName: item.departmentName,
-            mail: item.mail,
-            startAt: item.startAt,
-            status: item.status,
-          };
-          this.createNews();
+      .onClose.subscribe((result) => {
+        if (result) {
+          this.refreshTable(this.query);
         }
       });
   }
 
   // 開啟新增modal - 執行新增
-  createNews(): void {
-    this.service.postData(this.member).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage, 'danger');
-      } else {
-        this.toastr.showToast('', 'top-right', '新增成功', 'success');
-        this.refreshTable(this.query);
-      }
-    });
-  }
+  // createNews(): void {
+  //   this.service.postData(this.member).subscribe((res: any) => {
+  //     if (res.errorMessage) {
+  //       this.toastr.showToast('', 'top-right', res.errorMessage, 'danger');
+  //     } else {
+  //       this.toastr.showToast('', 'top-right', '新增成功', 'success');
+  //       this.refreshTable(this.query);
+  //     }
+  //   });
+  // }
 
   // 刪除
   deleteNews(event): void {
@@ -206,28 +197,28 @@ export class StaffMembersComponent implements OnInit {
   }
 
   onSearch(query: string = ''): any {
-    // if (query === '') {
-    //   this.source.setFilter([]);
-    // } else {
-    //   this.source.setFilter([
-    //     {
-    //       field: 'groupSn',
-    //       search: query
-    //     },
-    //     {
-    //       field: 'groupName',
-    //       search: query
-    //     },
-    //     {
-    //       field: 'sn',
-    //       search: query
-    //     },
-    //     {
-    //       field: 'name',
-    //       search: query
-    //     }
-    //   ], false);
-    // }
+    if (query === '') {
+      this.source.setFilter([]);
+    } else {
+      this.source.setFilter([
+        {
+          field: 'employeeCode',
+          search: query
+        },
+        {
+          field: 'name',
+          search: query
+        },
+        {
+          field: 'departmentName',
+          search: query
+        },
+        {
+          field: 'mail',
+          search: query
+        }
+      ], false);
+    }
   }
 
   ngOnInit(): void {}

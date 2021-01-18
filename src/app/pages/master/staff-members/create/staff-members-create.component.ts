@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { NbDateService, NbDialogRef } from '@nebular/theme';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
+import { MasterCommonService } from 'src/app/shared/service/master/master-common.service';
+import { StaffMemberService } from 'src/app/shared/service/master/staff-member.service';
+import { SelectMenuService } from 'src/app/shared/service/master/select-menu.service';
 
 @Component({
   selector: 'app-staff-members-create',
   templateUrl: './staff-members-create.component.html',
-  styleUrls: ['./staff-members-create.component.scss']
+  styleUrls: ['./staff-members-create.component.scss'],
 })
 export class StaffMembersCreateComponent implements OnInit {
   id = '';
@@ -19,24 +23,30 @@ export class StaffMembersCreateComponent implements OnInit {
   group = '';
   memo = '';
   status = '';
+  deptList = [];
   startAt = new Date();
   endAt = new Date();
   applyStartAt = new Date();
   applyEndAt = new Date();
 
+  // formControl = new FormControl(new Date());
+  // ngModelDate = new Date();
   min: Date;
   member = {};
 
   constructor(
     private dialogRef: NbDialogRef<StaffMembersCreateComponent>,
+    private service: StaffMemberService,
     protected dateService: NbDateService<Date>,
+    private selectMenu: SelectMenuService,
     private toastr: ToastrService,
+    private masterCommon: MasterCommonService
   ) {
     this.min = this.dateService.addDay(this.dateService.today(), 0);
   }
 
   cancel(): void {
-    this.dialogRef.close();
+    this.masterCommon.doClose(this.dialogRef);
   }
 
   submit(): void {
@@ -49,7 +59,6 @@ export class StaffMembersCreateComponent implements OnInit {
     //   return;
     // }
     this.member = {
-      id: this.id,
       employeeCode: this.employeeCode,
       domainAccount: this.domainAccount,
       password: this.password,
@@ -60,16 +69,22 @@ export class StaffMembersCreateComponent implements OnInit {
       group: this.group,
       memo: this.memo,
       status: this.status,
+      // startAt: this.formControl.value,
+      // endAt: this.ngModelDate,
       startAt: this.startAt,
       endAt: this.endAt,
       applyStartAt: this.applyStartAt,
       applyEndAt: this.applyEndAt,
     };
-    this.dialogRef.close(this.member);
+    console.log(this.member);
+    this.masterCommon.doCreate(this.service, this.dialogRef, this.member);
   }
-
 
   ngOnInit(): void {
+    // load 下拉選單
+    const query = '/Department';
+    this.selectMenu.getMenu(query).subscribe((res) => {
+      this.deptList = res;
+    });
   }
-
 }
