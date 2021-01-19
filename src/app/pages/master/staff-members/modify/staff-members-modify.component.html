@@ -1,105 +1,105 @@
 <nb-card class="model-custom model-lg">
-    <nb-card-header class="text-right">
-        <button type="button" class="btn btn-cancel" nbButton (click)="cancel()">
-    <nb-icon icon="close-outline"></nb-icon>
-  </button>
-    </nb-card-header>
-    <nb-card-body>
-        <form #Form="ngForm">
-            <div class="model-col">
-                <label class="subtitle" for="employeeCode">員工編號<span class="quired">*</span></label>
-                <p><input type="text" id="employeeCode" name="employeeCode" [(ngModel)]="employeeCode" #EmployeeCode="ngModel" class="form-control" placeholder="請輸入員工編號" required disabled></p>
-                <p *ngIf="EmployeeCode.invalid && (EmployeeCode.dirty || EmployeeCode.touched)" class="text-danger">
-                    <span *ngIf="EmployeeCode.errors.required">此為必填欄位</span>
-                </p>
-            </div>
-            <div class="model-col">
-                <label class="subtitle" for="name">姓名<span class="quired">*</span></label>
-                <p><input type="text" id="name" name="name" [(ngModel)]="name" #Name="ngModel" class="form-control" placeholder="請輸入姓名" required></p>
-                <p *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="text-danger">
-                    <span *ngIf="Name.errors.required">此為必填欄位</span>
-                </p>
-            </div>
-            <div class="model-col">
-                <label class="subtitle" for="departmentSn">單位<span class="quired">*</span></label>
-                <p>
-                    <nb-select placeholder="請選擇單位" [(ngModel)]="departmentSn" id="departmentSn" name="departmentSn" #DepartmentSn="ngModel" required class="select-custom">
-                        <nb-option *ngFor="let item of deptList" value="{{item.sn}}">【{{item.sn}}】{{item.name}}</nb-option>
-                    </nb-select>
-                </p>
-                <p *ngIf="DepartmentSn.invalid && (DepartmentSn.dirty || DepartmentSn.touched)" class="text-danger">
-                    <span *ngIf="DepartmentSn.errors.required">此為必填欄位</span>
-                </p>
-            </div>
-            <div class="model-col">
-                <label class="subtitle" for="jobTitle">職稱</label>
-                <p><input type="text" id="jobTitle" name="jobTitle" [(ngModel)]="jobTitle" #JobTitle="ngModel" class="form-control" placeholder="請輸入職稱">
-                </p>
-            </div>
-            <div class="model-col">
-                <label class="subtitle" for="status">狀態<span class="quired">*</span></label>
-                <p>
-                    <nb-select placeholder="請選擇狀態" [(ngModel)]="status" id="status" name="status" #Status="ngModel" class="select-custom" required>
-                        <nb-option [value]="1">在職中</nb-option>
-                        <nb-option [value]="0">離職</nb-option>
-                        <nb-option [value]="2">留職停薪</nb-option>
-                    </nb-select>
-                </p>
-                <p *ngIf="Status.invalid && (Status.dirty || Status.touched)" class="text-danger">
-                  <span *ngIf="Status.errors.required">此為必填欄位</span>
-              </p>
-            </div>
-            <div class="model-col">
-                <label class="subtitle" for="mail">Email</label>
-                <p><input type="text" id="mail" name="mail" [(ngModel)]="mail" #Email="ngModel" class="form-control" placeholder="請輸入Email"></p>
-            </div>
-            <div class="model-col">
-                <label class="subtitle" for="domainAccount">帳號</label>
-                <p>
-                    <input type="text" id="domainAccount" name="domainAccount" [(ngModel)]="domainAccount" #DomainAccount="ngModel" class="form-control" placeholder="請輸入帳號">
-                </p>
-            </div>
-            <div class="model-col">
-                <label class="subtitle" for="startAt">到職日</label>
-                <p>
-                    <input nbInput [nbDatepicker]="startAtDate" [(ngModel)]="startAt" class="form-control" id="startAt" name="startAt">
-                    <nb-datepicker #startAtDate></nb-datepicker>
-                </p>
-            </div>
-            <div class="model-col">
-                <label class="subtitle" for="endAt">離職日</label>
-                <p>
-                    <input nbInput [nbDatepicker]="endAtDate" [(ngModel)]="endAt" #newsEndAt="ngModel" class="form-control" id="endAt" name="endAt">
-                    <nb-datepicker #endAtDate [min]="startAt" format="yyyy-MM-dd"></nb-datepicker>
-                </p>
-            </div>
-            <div class="model-col">
-                <label class="subtitle" for="startAt">適用開始日</label>
-                <p>
-                    <input nbInput [nbDatepicker]="applyStartAtDate" [(ngModel)]="applyStartAt" class="form-control" id="applyStartAt" name="applyStartAt">
-                    <nb-datepicker #applyStartAtDate></nb-datepicker>
-                </p>
-            </div>
-            <div class="model-col">
-                <label class="subtitle" for="endAt">適用結束日</label>
-                <p>
-                    <input nbInput [nbDatepicker]="applyEndAtDate" [(ngModel)]="applyEndAt" #newsEndAt="ngModel" class="form-control" id="applyEndAt" name="applyEndAt">
-                    <nb-datepicker #applyEndAtDate [min]="applyStartAt" format="yyyy-MM-dd"></nb-datepicker>
-                </p>
-            </div>
-            <div class="model-col">
-              <label class="subtitle" for="group">Group</label>
-              <p>
-                  <input type="text" id="group" name="group" [(ngModel)]="group" class="form-control" placeholder="請輸入Group">
-              </p>
-          </div>
-            <div class="model-col">
-                <label class="subtitle" for="memo">備註</label>
-                <p><textarea id="memo" name="memo" [(ngModel)]="memo" cols="10" rows="1" maxlength="200" class="form-control"></textarea></p>
-            </div>
-        </form>
-    </nb-card-body>
-    <nb-card-footer class="text-right">
-      <button type="button" class="btn btn-primary btn-md" nbButton (click)="submit()" [disabled]="!this.employeeCode.trim() || !this.name.trim() || !this.departmentSn.trim() ">確認</button>
-    </nb-card-footer>
+  <nb-card-header class="text-right">
+    <button type="button" class="btn btn-cancel" nbButton (click)="cancel()">
+      <nb-icon icon="close-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <form #Form="ngForm">
+      <div class="model-col">
+        <label class="subtitle" for="employeeCode">員工編號<span class="quired">*</span></label>
+        <p><input type="text" id="employeeCode" name="employeeCode" [(ngModel)]="employeeCode" #EmployeeCode="ngModel" class="form-control" placeholder="請輸入員工編號" required disabled></p>
+        <p *ngIf="EmployeeCode.invalid && (EmployeeCode.dirty || EmployeeCode.touched)" class="text-danger">
+          <span *ngIf="EmployeeCode.errors.required">此為必填欄位</span>
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="name">姓名<span class="quired">*</span></label>
+        <p><input type="text" id="name" name="name" [(ngModel)]="name" #Name="ngModel" class="form-control" placeholder="請輸入姓名" required></p>
+        <p *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="text-danger">
+          <span *ngIf="Name.errors.required">此為必填欄位</span>
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="departmentSn">單位<span class="quired">*</span></label>
+        <p>
+          <nb-select placeholder="請選擇單位" [(ngModel)]="departmentSn" id="departmentSn" name="departmentSn" #DepartmentSn="ngModel" required class="select-custom">
+            <nb-option *ngFor="let item of deptList" value="{{item.sn}}">【{{item.sn}}】{{item.name}}</nb-option>
+          </nb-select>
+        </p>
+        <p *ngIf="DepartmentSn.invalid && (DepartmentSn.dirty || DepartmentSn.touched)" class="text-danger">
+          <span *ngIf="DepartmentSn.errors.required">此為必填欄位</span>
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="jobTitle">職稱</label>
+        <p><input type="text" id="jobTitle" name="jobTitle" [(ngModel)]="jobTitle" #JobTitle="ngModel" class="form-control" placeholder="請輸入職稱">
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="status">狀態<span class="quired">*</span></label>
+        <p>
+          <nb-select placeholder="請選擇狀態" [(ngModel)]="status" id="status" name="status" #Status="ngModel" class="select-custom" required>
+            <nb-option [value]="1">在職中</nb-option>
+            <nb-option [value]="0">離職</nb-option>
+            <nb-option [value]="2">留職停薪</nb-option>
+          </nb-select>
+        </p>
+        <p *ngIf="Status.invalid && (Status.dirty || Status.touched)" class="text-danger">
+          <span *ngIf="Status.errors.required">此為必填欄位</span>
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="mail">Email</label>
+        <p><input type="text" id="mail" name="mail" [(ngModel)]="mail" #Email="ngModel" class="form-control" placeholder="請輸入Email"></p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="domainAccount">帳號</label>
+        <p>
+          <input type="text" id="domainAccount" name="domainAccount" [(ngModel)]="domainAccount" #DomainAccount="ngModel" class="form-control" placeholder="請輸入帳號">
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="startAt">到職日</label>
+        <p>
+          <input nbInput [nbDatepicker]="startAtDate" [(ngModel)]="startAt" class="form-control" id="startAt" name="startAt">
+          <nb-datepicker #startAtDate></nb-datepicker>
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="endAt">離職日</label>
+        <p>
+          <input nbInput [nbDatepicker]="endAtDate" [(ngModel)]="endAt" #newsEndAt="ngModel" class="form-control" id="endAt" name="endAt">
+          <nb-datepicker #endAtDate [min]="startAt" format="yyyy-MM-dd"></nb-datepicker>
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="startAt">適用開始日</label>
+        <p>
+          <input nbInput [nbDatepicker]="applyStartAtDate" [(ngModel)]="applyStartAt" class="form-control" id="applyStartAt" name="applyStartAt">
+          <nb-datepicker #applyStartAtDate></nb-datepicker>
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="endAt">適用結束日</label>
+        <p>
+          <input nbInput [nbDatepicker]="applyEndAtDate" [(ngModel)]="applyEndAt" #newsEndAt="ngModel" class="form-control" id="applyEndAt" name="applyEndAt">
+          <nb-datepicker #applyEndAtDate [min]="applyStartAt" format="yyyy-MM-dd"></nb-datepicker>
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="group">Group</label>
+        <p>
+          <input type="text" id="group" name="group" [(ngModel)]="group" class="form-control" placeholder="請輸入Group">
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="memo">備註</label>
+        <p><textarea id="memo" name="memo" [(ngModel)]="memo" cols="10" rows="1" maxlength="200" class="form-control"></textarea></p>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button type="button" class="btn btn-primary btn-md" nbButton (click)="submit()" [disabled]="!this.employeeCode.trim() || !this.name.trim() || !this.departmentSn.trim() ">確認</button>
+  </nb-card-footer>
 </nb-card>

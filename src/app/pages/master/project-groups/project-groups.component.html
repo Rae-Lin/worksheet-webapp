@@ -4,11 +4,11 @@
 <nb-card status="success">
   <nb-card-header><h2>專案群組設定</h2></nb-card-header>
   <nb-card-body>
-      <div class="mt-2 mb-4">
-        <p><button type="button" class="btn btn-primary btn-md" (click)="openCreate()">新增專案群組</button></p>
-      </div>
+    <div class="mt-2 mb-4">
+      <p><button type="button" class="btn btn-primary btn-md" (click)="openCreate()">新增專案群組</button></p>
+    </div>
     <div class="mb-4 search-container">
-      <input #search type="text" placeholder="請輸入關鍵字" (keydown.enter)="onSearch(search.value.trim())" class="search form-control  d-inline-block" >
+      <input #search type="text" placeholder="請輸入關鍵字" (keydown.enter)="onSearch(search.value.trim())" class="search form-control  d-inline-block">
       <button type="button" class="btn btn-outline-primary btn-sm search-btn" (click)="onSearch(search.value.trim())">搜尋</button>
     </div>
     <ng2-smart-table [settings]="settings" [source]="source" (edit)="openModify($event)" (delete)="deleteNews($event)">

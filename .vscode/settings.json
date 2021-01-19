@@ -11,5 +11,6 @@
         "xxxl"
     ],
     "editor.detectIndentation": false,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "html.format.wrapLineLength": 0
 }

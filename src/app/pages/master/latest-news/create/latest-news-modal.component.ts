@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NbDateService, NbDialogRef } from '@nebular/theme';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
@@ -8,9 +8,8 @@ import { MasterCommonService } from 'src/app/shared/service/master/master-common
 @Component({
   selector: 'app-latest-news-modal',
   templateUrl: './latest-news-modal.component.html',
-  styleUrls: ['./latest-news-modal.component.scss']
+  styleUrls: ['./latest-news-modal.component.scss'],
 })
-
 export class LatestNewsModalComponent implements OnInit {
   subject = '';
   content = '';
@@ -24,7 +23,7 @@ export class LatestNewsModalComponent implements OnInit {
     private service: LatestNewsService,
     protected dateService: NbDateService<Date>,
     private toastr: ToastrService,
-    private masterCommon: MasterCommonService,
+    private masterCommon: MasterCommonService
   ) {
     this.min = this.dateService.addDay(this.dateService.today(), 0);
   }
@@ -34,12 +33,17 @@ export class LatestNewsModalComponent implements OnInit {
   }
 
   submit(): void {
-    if (!this.subject.trim() || !this.content.trim() || !this.formControl.value || !this.ngModelDate) {
-      this.toastr.showToast('', 'top-right', '必填欄位未填寫' , 'danger');
+    if (
+      !this.subject.trim() ||
+      !this.content.trim() ||
+      !this.formControl.value ||
+      !this.ngModelDate
+    ) {
+      this.toastr.showToast('', 'top-right', '必填欄位未填寫', 'danger');
       return;
     }
     if (this.formControl.value > this.ngModelDate) {
-      this.toastr.showToast('', 'top-right', '結束時間需晚於開始時間' , 'danger');
+      this.toastr.showToast('', 'top-right', '結束時間需晚於開始時間', 'danger');
       return;
     }
     this.news = {
@@ -85,7 +89,5 @@ export class LatestNewsModalComponent implements OnInit {
   //   });
   // }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
