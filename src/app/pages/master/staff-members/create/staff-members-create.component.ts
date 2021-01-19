@@ -24,10 +24,10 @@ export class StaffMembersCreateComponent implements OnInit {
   memo = '';
   status = '';
   deptList = [];
-  startAt =  new Date();
-  endAt = new Date();
-  applyStartAt = new Date();
-  applyEndAt = new Date();
+  startAt =  null;
+  endAt = null;
+  applyStartAt = null;
+  applyEndAt = null;
 
   // formControl = new FormControl(new Date());
   // ngModelDate = new Date();
@@ -50,14 +50,14 @@ export class StaffMembersCreateComponent implements OnInit {
   }
 
   submit(): void {
-    // if (!this.subject.trim() || !this.content.trim() || !this.formControl.value || !this.ngModelDate) {
-    //   this.toastr.showToast('', 'top-right', '必填欄位未填寫' , 'danger');
-    //   return;
-    // }
-    // if (this.formControl.value > this.ngModelDate) {
-    //   this.toastr.showToast('', 'top-right', '結束時間需晚於開始時間' , 'danger');
-    //   return;
-    // }
+    if (this.startAt > this.endAt) {
+      this.toastr.showToast('', 'top-right', '離職日需晚於到職日' , 'danger');
+      return;
+    }
+    if (this.applyStartAt > this.applyEndAt) {
+      this.toastr.showToast('', 'top-right', '適用結束日需晚於適用開始日' , 'danger');
+      return;
+    }
     this.member = {
       employeeCode: this.employeeCode,
       domainAccount: this.domainAccount,
@@ -69,14 +69,11 @@ export class StaffMembersCreateComponent implements OnInit {
       group: this.group,
       memo: this.memo,
       status: this.status,
-      // startAt: this.formControl.value,
-      // endAt: this.ngModelDate,
       startAt: this.startAt,
       endAt: this.endAt,
       applyStartAt: this.applyStartAt,
-      applyEndAt: this.applyEndAt,
+      applyEndAt: this.applyEndAt
     };
-    console.log(this.member);
     this.masterCommon.doCreate(this.service, this.dialogRef, this.member);
   }
 

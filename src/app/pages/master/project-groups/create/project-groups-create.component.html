@@ -5,7 +5,7 @@
   <nb-card-body>
     <form #Form="ngForm">
       <div class="model-col">
-        <label class="subtitle" for="subject">群組編號</label>
+        <label class="subtitle" for="subject">群組編號<span class="quired">*</span></label>
         <p><input type="text" id="sn" name="sn" [(ngModel)]="sn" class="form-control" #SN="ngModel" placeholder="請輸入群組編號" required pattern="^[a-zA-Z0-9]*$"></p>
         <p *ngIf="SN.invalid && (SN.dirty || SN.touched)" class="text-danger">
           <span *ngIf="SN.errors.required">此為必填欄位</span>
@@ -13,7 +13,7 @@
         </p>
       </div>
       <div class="model-col-last">
-        <label class="subtitle" for="subject">群組名稱</label>
+        <label class="subtitle" for="subject">群組名稱<span class="quired">*</span></label>
         <p><input type="text" id="name" name="name" [(ngModel)]="name" #Name="ngModel" class="form-control" placeholder="請輸入群組名稱" required></p>
         <p *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="text-danger">
           <span *ngIf="Name.errors.required">此為必填欄位</span>
@@ -22,6 +22,6 @@
     </form>
   </nb-card-body>
   <nb-card-footer class="text-right">
-    <button type="button" class="btn btn-primary btn-sm" nbButton (click)="submit()" [disabled]="!Form.form.valid">確認</button>
+    <button type="button" class="btn btn-primary btn-md" nbButton (click)="submit()" [disabled]="!Form.form.valid">確認</button>
   </nb-card-footer>
 </nb-card>

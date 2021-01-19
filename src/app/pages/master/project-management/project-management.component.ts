@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
+import { MasterCommonService } from 'src/app/shared/service/master/master-common.service';
 import { ProjectManagementService } from 'src/app/shared/service/master/project-management.service';
 import { ProjectManagementCreateComponent } from './create/project-management-create.component';
 import { ProjectManagementModifyComponent } from './modify/project-management-modify.component';
@@ -107,7 +108,8 @@ export class ProjectManagementComponent implements OnInit {
     private service: ProjectManagementService,
     private dialogService: NbDialogService,
     private toastr: ToastrService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private masterCommon: MasterCommonService
   ) {
     this.source = new LocalDataSource(); // create the source
     this.service.getAll(this.query).subscribe((data) => {
@@ -124,7 +126,7 @@ export class ProjectManagementComponent implements OnInit {
       })
       .onClose.subscribe((result) => {
         if (result) {
-          this.refreshTable(this.query);
+          this.masterCommon.refreshTable(this.service, this.query, this.source);
         }
       });
   }
@@ -133,8 +135,8 @@ export class ProjectManagementComponent implements OnInit {
   openModify(event): void {
     const snNo = event.data.sn;
     this.service.getData(snNo).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage, 'danger');
+      if (res.errorStatus) {
+        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
       } else {
         this.dialogService
           .open(ProjectManagementModifyComponent, {
@@ -152,7 +154,7 @@ export class ProjectManagementComponent implements OnInit {
           })
           .onClose.subscribe((result) => {
             if (result) {
-              this.refreshTable(this.query);
+              this.masterCommon.refreshTable(this.service, this.query, this.source);
             }
           });
       }
@@ -163,18 +165,12 @@ export class ProjectManagementComponent implements OnInit {
   deleteNews(event): void {
     const snNo = event.data.sn;
     this.service.deleteData(snNo).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage, 'danger');
+      if (res.errorStatus) {
+        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
       } else {
         this.toastr.showToast('', 'top-right', '刪除成功', 'success');
-        this.refreshTable(this.query);
+        this.masterCommon.refreshTable(this.service, this.query, this.source);
       }
-    });
-  }
-
-  refreshTable(query): any {
-    this.service.getAll(query).subscribe((data) => {
-      this.source.load(data);
     });
   }
 
@@ -184,22 +180,10 @@ export class ProjectManagementComponent implements OnInit {
     } else {
       this.source.setFilter(
         [
-          {
-            field: 'groupSn',
-            search: query,
-          },
-          {
-            field: 'groupName',
-            search: query,
-          },
-          {
-            field: 'sn',
-            search: query,
-          },
-          {
-            field: 'name',
-            search: query,
-          },
+          { field: 'groupSn', search: query },
+          { field: 'groupName', search: query },
+          { field: 'sn', search: query },
+          { field: 'name', search: query },
         ],
         false
       );

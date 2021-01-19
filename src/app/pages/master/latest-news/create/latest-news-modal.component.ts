@@ -75,8 +75,8 @@ export class LatestNewsModalComponent implements OnInit {
 
   // doCreate(data): void {
   //   this.service.postData(data).subscribe((res: any) => {
-  //     if (res.errorMessage) {
-  //       this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+  //     if (res.errorStatus) {
+  //       this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
   //       return false;
   //     }else{
   //       this.toastr.showToast('', 'top-right', '新增成功', 'success');

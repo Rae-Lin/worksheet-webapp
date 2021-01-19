@@ -5,21 +5,21 @@
     <nb-card-body>
       <form #Form="ngForm">
         <div class="model-col">
-          <label class="subtitle" for="subject">主旨</label>
+          <label class="subtitle" for="subject">主旨<span class="quired">*</span></label>
           <p><input type="text" id="subject" name="subject" [(ngModel)]="subject" #newsSubject="ngModel" class="form-control" placeholder="請輸入主旨" required></p>
           <p *ngIf="newsSubject.invalid && (newsSubject.dirty || newsSubject.touched)" class="text-danger">
             <span *ngIf="newsSubject.errors.required">此為必填欄位</span>
           </p>
         </div>
         <div class="model-col">
-          <label class="subtitle" for="startAt">開始時間</label>
+          <label class="subtitle" for="startAt">開始時間<span class="quired">*</span></label>
             <p>
               <input nbInput [nbDatepicker]="formcontrol" [formControl]="formControl" class="form-control" id="startAt" name="startAt" required>
               <nb-datepicker #formcontrol [min]="min"></nb-datepicker>
             </p>
         </div>
         <div class="model-col">
-          <label class="subtitle" for="endAt">結束時間</label>
+          <label class="subtitle" for="endAt">結束時間<span class="quired">*</span></label>
           <p>
             <input nbInput [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate" #newsEndAt="ngModel" class="form-control" id="endAt" name="endAt" required>
             <nb-datepicker #ngmodel [min]="formControl.value" format="yyyy-MM-dd"></nb-datepicker>
@@ -29,7 +29,7 @@
           </p>
         </div>
         <div class="model-col mb-2">
-          <label class="subtitle" for="content">消息內容</label>
+          <label class="subtitle" for="content">消息內容<span class="quired">*</span></label>
           <p><textarea id="content" name="content" [(ngModel)]="content" #newsContent="ngModel" cols="10" rows="3" maxlength="200" class="form-control" required></textarea></p>
           <p *ngIf="newsContent.invalid && (newsContent.dirty || newsContent.touched)" class="text-danger">
             <span *ngIf="newsContent.errors.required">此為必填欄位</span>
@@ -38,6 +38,6 @@
       </form>
     </nb-card-body>
     <nb-card-footer class="text-right">
-      <button type="button" class="btn btn-primary btn-sm" nbButton (click)="submit()">確認</button>
+      <button type="button" class="btn btn-primary btn-md" nbButton (click)="submit()" [disabled]="!this.subject.trim() || this.formControl.value == '' || !this.ngModelDate || this.content=='' ">確認</button>
     </nb-card-footer>
   </nb-card>
