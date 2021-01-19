@@ -24,7 +24,7 @@ export class StaffMembersCreateComponent implements OnInit {
   memo = '';
   status = '';
   deptList = [];
-  startAt = new Date();
+  startAt =  new Date();
   endAt = new Date();
   applyStartAt = new Date();
   applyEndAt = new Date();

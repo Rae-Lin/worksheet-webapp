@@ -15,8 +15,10 @@ import { StaffMembersCreateComponent } from './create/staff-members-create.compo
   providers: [DatePipe],
 })
 export class StaffMembersComponent implements OnInit {
-  formControl = new FormControl(new Date());
-  ngModelDate = new Date();
+  formControl = new FormControl(null);
+  ngModelDate = null;
+  // formControl = new FormControl(Date);
+  // ngModelDate = Date;
   min: Date;
   private query = '?AllData=true';
   private member: {
@@ -196,7 +198,14 @@ export class StaffMembersComponent implements OnInit {
     });
   }
 
-  onSearch(query: string = ''): any {
+  onSearch(query: string = '', startAt: Date, endAt: Date): any {
+    if(!startAt === null || !endAt === null){
+
+    }
+    this.query = `${startAt} / ${endAt}`;
+    console.log(this.query);
+    // this.refreshTable(this.query);
+
     if (query === '') {
       this.source.setFilter([]);
     } else {
