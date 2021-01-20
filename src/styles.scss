@@ -28,9 +28,13 @@
     h5, .h5{ font-size: 1.05rem;}
     h6, .h6{ font-size: 1rem;}
     .subtitle{ font-size: 1rem;}
-    // table tbody > tr.ng2-smart-row.selected {
-    //   background: unset !important;
-    // }
+  }
+  .btn-primary {
+    background-image: linear-gradient(to bottom, #9552f7, #7c44ff, #733efe);
+    border: none;
+    &:hover{
+      background-image: linear-gradient(to bottom, #501cb1, #501cb1);
+    }
   }
   p{
     margin-bottom: 0.3rem;
@@ -55,9 +59,8 @@
 
 // 主檔跳窗樣式設置
 .model-custom {
-
   &.model-lg{
-    width: 80vw !important;
+    width: 75vw !important;
     max-height: 90vh !important;
     form{
       display: flex;
@@ -102,13 +105,12 @@
     transition: all 0.3s;
     &:hover{
       transform:rotate(90deg);
-      // transition: all 0.3s;
     }
   }
-}
-
-.table-edit-icon{
-  width: 65px !important;
+  span.quired{
+    color: red;
+    margin-left: 3px;
+  }
 }
 
 .ng2-smart-actions img{

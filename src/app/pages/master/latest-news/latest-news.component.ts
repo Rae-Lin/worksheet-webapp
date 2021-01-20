@@ -7,6 +7,7 @@ import { LatestNewsModalComponent } from './create/latest-news-modal.component';
 import { LatestNewsModifyComponent } from './modify/latest-news-modify.component';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
 import { LocalDataSource } from 'ng2-smart-table';
+import { MasterCommonService } from 'src/app/shared/service/master/master-common.service';
 
 @Component({
   selector: 'app-latest-news',
@@ -78,7 +79,8 @@ export class LatestNewsComponent implements OnInit {
     private service: LatestNewsService,
     private dialogService: NbDialogService,
     private toastr: ToastrService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private masterCommon: MasterCommonService
   ) {
     this.source = new LocalDataSource(); // create the source
     this.service.getAll(this.query).subscribe((data) => {
@@ -92,21 +94,20 @@ export class LatestNewsComponent implements OnInit {
       .open(LatestNewsModalComponent, { autoFocus: false, hasScroll: true}, )
       .onClose.subscribe((result) => {
         if (result) {
-          this.refreshTable(this.query);
+          this.masterCommon.refreshTable(this.service, this.query, this.source);
         }
       });
   }
 
   // 刪除
   deleteNews(event): void {
-    console.log(event.data.id);
     const idNo = event.data.id;
     this.service.deleteData(idNo).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+      if (res.errorStatus) {
+        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
       }else{
         this.toastr.showToast('', 'top-right', '刪除成功', 'success');
-        this.refreshTable(this.query);
+        this.masterCommon.refreshTable(this.service, this.query, this.source);
       }
     });
   }
@@ -115,8 +116,8 @@ export class LatestNewsComponent implements OnInit {
   openModify(event): void {
     const idNo = event.data.id;
     this.service.getData(idNo).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+      if (res.errorStatus) {
+        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
       } else {
         this.dialogService
           .open(LatestNewsModifyComponent, {
@@ -131,16 +132,10 @@ export class LatestNewsComponent implements OnInit {
           })
           .onClose.subscribe((result) => {
             if (result) {
-              this.refreshTable(this.query);
+              this.masterCommon.refreshTable(this.service, this.query, this.source);
             }
           });
       }
-    });
-  }
-
-  refreshTable(query): any {
-    this.service.getAll(this.query).subscribe((data) => {
-      this.source.load(data);
     });
   }
 

@@ -3,6 +3,7 @@ import { NbDialogService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ToastrService } from 'src/app/shared/component/toastr/toastr.service';
 import { DepartmentService } from 'src/app/shared/service/master/department.service';
+import { MasterCommonService } from 'src/app/shared/service/master/master-common.service';
 import { DepartmentsCreateComponent } from './create/departments-create.component';
 import { DepartmentsModifyComponent } from './modify/departments-modify.component';
 
@@ -52,6 +53,7 @@ export class DepartmentsComponent implements OnInit {
     private service: DepartmentService,
     private dialogService: NbDialogService,
     private toastr: ToastrService,
+    private masterCommon: MasterCommonService
   ) {
     this.source = new LocalDataSource(); // create the source
     this.service.getAll(this.query).subscribe((data) => {
@@ -65,7 +67,7 @@ export class DepartmentsComponent implements OnInit {
       .open(DepartmentsCreateComponent, { autoFocus: false, hasScroll: true}, )
       .onClose.subscribe((result) => {
         if (result) {
-          this.refreshTable(this.query);
+          this.masterCommon.refreshTable(this.service, this.query, this.source);
         }
       });
   }
@@ -74,11 +76,11 @@ export class DepartmentsComponent implements OnInit {
   deleteNews(event): void {
     const snNo = event.data.sn;
     this.service.deleteData(snNo).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+      if (res.errorStatus) {
+        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
       }else{
         this.toastr.showToast('', 'top-right', '刪除成功', 'success');
-        this.refreshTable(this.query);
+        this.masterCommon.refreshTable(this.service, this.query, this.source);
       }
     });
   }
@@ -87,8 +89,8 @@ export class DepartmentsComponent implements OnInit {
   openModify(event): void {
     const snNo = event.data.sn;
     this.service.getData(snNo).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+      if (res.errorStatus) {
+        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
       } else {
         this.dialogService
           .open(DepartmentsModifyComponent, {
@@ -100,16 +102,10 @@ export class DepartmentsComponent implements OnInit {
           })
           .onClose.subscribe((result) => {
             if (result) {
-              this.refreshTable(this.query);
+              this.masterCommon.refreshTable(this.service, this.query, this.source);
             }
           });
       }
-    });
-  }
-
-  refreshTable(query): any {
-    this.service.getAll(this.query).subscribe((data) => {
-      this.source.load(data);
     });
   }
 

@@ -5,17 +5,17 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, delay, map, retry } from 'rxjs/operators';
 
-export interface APIdata {
-  data: any;
-  page: number;
-  start: number;
-  end: number;
-  totalCount: number;
-  totalPages: number;
-  list: any[];
-  hasPreviousPage: boolean;
-  hasNextPage: boolean;
-}
+// export interface APIdata {
+//   data: any;
+//   page: number;
+//   start: number;
+//   end: number;
+//   totalCount: number;
+//   totalPages: number;
+//   list: any[];
+//   hasPreviousPage: boolean;
+//   hasNextPage: boolean;
+// }
 
 export class AppService {
   constructor(
@@ -24,25 +24,27 @@ export class AppService {
   ) {}
 
   private handleError = (err: HttpErrorResponse) => {
+    let errorStatus: string;
     let errorMessage: string;
     switch (err.status) {
       case 400:
-        errorMessage = '400 參數錯誤';
+        errorStatus = '400 參數錯誤';
         break;
 
       case 404:
-        errorMessage = '404 內容不存在';
+        errorStatus = '404 內容不存在';
         break;
 
       case 409:
-        errorMessage = '409 重複資料';
+        errorStatus = '409 重複資料';
         break;
 
       default:
-        errorMessage = '異常錯誤';
+        errorStatus = '異常錯誤';
         break;
     }
-    return of({ errorMessage });
+    errorMessage = err.error;
+    return of({ errorStatus, errorMessage });
   }
 
   // getAll(): Observable<APIdata> {

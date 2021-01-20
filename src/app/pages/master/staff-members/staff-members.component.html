@@ -1,34 +1,36 @@
 <!------ 新增跳窗 ------>
-<ng-template #dialog let-data let-ref="dialogRef">
-  <app-latest-news-modal></app-latest-news-modal>
-</ng-template>
+<!-- <ng-template #dialog let-data let-ref="dialogRef">
+    <app-latest-news-modal></app-latest-news-modal>
+</ng-template> -->
 <!---------------------->
 
 <nb-card status="success">
-  <nb-card-header><h2>員工資訊</h2></nb-card-header>
-  <nb-card-body>
-    <div class="mt-2 mb-4">
-      <p><button type="button" class="btn btn-primary btn-sm" (click)="openCreate()">新增人員</button></p>
-    </div>
-    <div class="mb-4 search-container d-flex justify-content-start align-items-end">
-      <div class="search-container-rule">
-        <p class="subtitle">關鍵字搜尋</p>
-        <input #search type="text" placeholder="請輸入關鍵字(員編、姓名、單位、帳號、Email)" (keydown.enter)="onSearch(search.value)" class="search form-control d-inline-block">
-      </div>
-      <div class="search-container-rule">
-        <p class="subtitle">開始時間</p>
-        <input nbInput [nbDatepicker]="formcontrol" [formControl]="formControl" id="startAt" name="startAt" required class="search form-control d-inline-block">
-        <nb-datepicker #formcontrol [min]="min"></nb-datepicker>
-      </div>
-      <div class="search-container-rule">
-        <p class="subtitle">結束時間</p>
-        <input nbInput [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate" #newsEndAt="ngModel" id="endAt" name="endAt" required class="search form-control d-inline-block">
-        <nb-datepicker #ngmodel [min]="formControl.value" format="yyyy-MM-dd"></nb-datepicker>
-      </div>
-      <button type="button" class="btn btn-outline-primary btn-sm search-btn" (click)="onSearch(search.value)">搜尋</button>
-    </div>
+    <nb-card-header>
+        <h2>員工資訊</h2>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="mt-2 mb-4">
+            <p><button type="button" class="btn btn-primary btn-md" (click)="openCreate()">新增人員</button></p>
+        </div>
+        <div class="mb-4 search-container d-flex justify-content-start align-items-end">
+            <div class="search-container-rule">
+                <p class="subtitle">關鍵字搜尋</p>
+                <input #search type="text" placeholder="請輸入關鍵字(員編、姓名、單位、Email)" class="search form-control d-inline-block">
+            </div>
+            <div class="search-container-rule">
+                <p class="subtitle">開始時間</p>
+                <input nbInput [nbDatepicker]="formcontrol" [formControl]="formControl" placeholder="請輸入" id="startAt" name="startAt" required class="search form-control d-inline-block">
+                <nb-datepicker #formcontrol></nb-datepicker>
+            </div>
+            <div class="search-container-rule">
+                <p class="subtitle">結束時間</p>
+                <input nbInput [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate" #newsEndAt="ngModel" placeholder="請輸入" id="endAt" name="endAt" required class="search form-control d-inline-block">
+                <nb-datepicker #ngmodel [min]="formControl.value" format="yyyy-MM-dd"></nb-datepicker>
+            </div>
+            <button type="button" class="btn btn-outline-primary btn-sm search-btn" (click)="onSearch(search.value.trim(), formControl.value, ngModelDate)">搜尋</button>
+        </div>
 
-    <ng2-smart-table [settings]="settings" [source]="source" (edit)="openModify($event)" (delete)="deleteNews($event)">
-    </ng2-smart-table>
-  </nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="source" (edit)="openModify($event)" (delete)="deleteNews($event)">
+        </ng2-smart-table>
+    </nb-card-body>
 </nb-card>

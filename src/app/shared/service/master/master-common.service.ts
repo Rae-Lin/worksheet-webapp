@@ -16,8 +16,8 @@ export class MasterCommonService {
 
   doCreate(service, dialogRef, data ): void {
     service.postData(data).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+      if (res.errorStatus) {
+        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
         return false;
       }else{
         this.toastr.showToast('', 'top-right', '新增成功', 'success');
@@ -28,13 +28,19 @@ export class MasterCommonService {
 
   doModify(service, dialogRef, sn, data): any {
     service.updateData(sn, data).subscribe((res: any) => {
-      if (res.errorMessage) {
-        this.toastr.showToast('', 'top-right', res.errorMessage , 'danger');
+      if (res.errorStatus) {
+        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
         return false;
       }else{
         this.toastr.showToast('', 'top-right', '修改成功', 'success');
         dialogRef.close(true);
       }
+    });
+  }
+
+  refreshTable(service, query, source): any {
+    service.getAll(query).subscribe((data) => {
+      source.load(data);
     });
   }
 }

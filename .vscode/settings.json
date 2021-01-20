@@ -5,8 +5,11 @@
         "Tabset",
         "Toastr",
         "Worktime",
+        "circlon",
         "formcontrol",
         "ngmodel",
         "xxxl"
-    ]
+    ],
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2
 }

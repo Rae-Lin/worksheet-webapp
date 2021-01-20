@@ -13,10 +13,9 @@ export class ToastrService {
 
   constructor(private toastrService: NbToastrService) { }
 
-  showToast(iconName, position, title, status): void {
-    const iconConfig: NbIconConfig = { icon: iconName, pack: 'eva' };
+  showToast(message, position, title, status): void {
+    // const iconConfig: NbIconConfig = { icon: iconName, pack: 'eva' };
     this.toastrService.show(
-      '',   `${title}`,
-      { position, status });
+      `${message}`, `${title}`, { position, status });
   }
 }
