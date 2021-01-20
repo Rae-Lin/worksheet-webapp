@@ -11,10 +11,19 @@ import {
   NbLayoutModule,
   NbSelectModule,
   NbThemeModule,
+  NbRadioModule,
 } from '@nebular/theme';
 import { NbMomentDateModule } from '@nebular/moment';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  interactionPlugin
+]);
+
 import { MasterComponent } from './master.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LatestNewsComponent } from './latest-news/latest-news.component';
@@ -36,6 +45,8 @@ import { ProjectSessionComponent } from './project-session/project-session.compo
 import { ProjectMemberComponent } from './project-member/project-member.component';
 import { ProjectSettingsComponent } from './project-settings/project-settings.component';
 import { CalendarSettingsComponent } from './calendar-settings/calendar-settings.component';
+import { CalendarSettingsCreateComponent } from './calendar-settings/create/calendar-settings-create.component';
+import { CalendarSettingsModifyComponent } from './calendar-settings/modify/calendar-settings-modify.component';
 
 @NgModule({
   declarations: [
@@ -59,12 +70,12 @@ import { CalendarSettingsComponent } from './calendar-settings/calendar-settings
     ProjectMemberComponent,
     ProjectSettingsComponent,
     CalendarSettingsComponent,
+    CalendarSettingsCreateComponent,
+    CalendarSettingsModifyComponent,
   ],
   imports: [
     CommonModule,
     Ng2SmartTableModule,
-    MasterRoutingModule,
-    SharedModule,
     NbCardModule,
     NbThemeModule,
     NbLayoutModule,
@@ -75,6 +86,10 @@ import { CalendarSettingsComponent } from './calendar-settings/calendar-settings
     NbSelectModule,
     NbMomentDateModule,
     NbDateFnsDateModule,
+    NbRadioModule,
+    FullCalendarModule,
+    MasterRoutingModule,
+    SharedModule,
     FormsModule,
     ReactiveFormsModule
   ],

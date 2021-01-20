@@ -29,17 +29,16 @@ export class ProjectManagementComponent implements OnInit {
 
   // table Data
   settings = {
-    pager: { display: true }, // 設定分頁
-    mode: 'external', // 新增、編輯以跳窗開啟
-    hideSubHeader: true, // 不顯示新增資料欄位
-    actions: {
-      // 操作欄位
-      columnTitle: '', // 標題名稱
-      position: 'right', // 表格最後
-      add: false, // 不在表格內開放新增
+    pager: { display: true },     // 設定分頁
+    mode: 'external',             // 新增、編輯以跳窗開啟
+    hideSubHeader: true,          // 不顯示新增資料欄位
+    actions: {                    // 操作欄位
+      columnTitle: '',            // 標題名稱
+      position: 'right',          // 表格最後
+      add: false,                 // 不在表格內開放新增
     },
     attr: { class: 'table thead-light table-hover' }, // 表格添加class
-    noDataMessage: '查無資料', // no data found Message
+    noDataMessage: '查無資料',    // no data found Message
     edit: { editButtonContent: '<img src="./assets/img/icon-edit.svg">' },
     delete: { deleteButtonContent: '<img src="./assets/img/icon-delete.svg">' },
     columns: {
@@ -84,9 +83,7 @@ export class ProjectManagementComponent implements OnInit {
         type: 'Date',
         width: '105px',
         valuePrepareFunction: (created) => {
-          return created === ''
-            ? ''
-            : this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
+          return created === '' ? '' : this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
         },
       },
       endAt: {
@@ -94,9 +91,7 @@ export class ProjectManagementComponent implements OnInit {
         type: 'Date',
         width: '105px',
         valuePrepareFunction: (created) => {
-          return created === ''
-            ? ''
-            : this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
+          return created === '' ? '' : this.datePipe.transform(new Date(created), 'yyyy-MM-dd');
         },
       },
     },
@@ -136,7 +131,7 @@ export class ProjectManagementComponent implements OnInit {
     const snNo = event.data.sn;
     this.service.getData(snNo).subscribe((res: any) => {
       if (res.errorStatus) {
-        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
+        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
       } else {
         this.dialogService
           .open(ProjectManagementModifyComponent, {
@@ -166,7 +161,7 @@ export class ProjectManagementComponent implements OnInit {
     const snNo = event.data.sn;
     this.service.deleteData(snNo).subscribe((res: any) => {
       if (res.errorStatus) {
-        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
+        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
       } else {
         this.toastr.showToast('', 'top-right', '刪除成功', 'success');
         this.masterCommon.refreshTable(this.service, this.query, this.source);

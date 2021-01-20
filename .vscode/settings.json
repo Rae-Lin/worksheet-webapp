@@ -1,14 +1,16 @@
 {
     "cSpell.words": [
-        "Datepicker",
-        "Hant",
-        "Tabset",
-        "Toastr",
-        "Worktime",
-        "circlon",
-        "formcontrol",
-        "ngmodel",
-        "xxxl"
+      "Datepicker",
+      "Hant",
+      "Tabset",
+      "Toastr",
+      "Worktime",
+      "circlon",
+      "formcontrol",
+      "fullcalendar",
+      "ngmodel",
+      "projectgroup",
+      "xxxl"
     ],
     "editor.detectIndentation": false,
     "editor.tabSize": 2,

@@ -129,7 +129,7 @@ export class StaffMembersComponent implements OnInit {
     const idNo = event.data.id;
     this.service.deleteData(idNo).subscribe((res: any) => {
       if (res.errorStatus) {
-        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
+        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
       }else{
         this.toastr.showToast('', 'top-right', '刪除成功', 'success');
         this.masterCommon.refreshTable(this.service, this.query, this.source);
@@ -142,7 +142,7 @@ export class StaffMembersComponent implements OnInit {
     const idNo = event.data.id;
     this.service.getData(idNo).subscribe((res: any) => {
       if (res.errorStatus) {
-        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
+        this.toastr.showToast(res.errorMessage !== null ? res.errorMessage.message : '' , 'top-right', res.errorStatus , 'danger');
       } else {
         this.dialogService
           .open(StaffMembersModifyComponent, {

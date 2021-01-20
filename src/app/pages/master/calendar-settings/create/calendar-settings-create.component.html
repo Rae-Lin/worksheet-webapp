@@ -1,0 +1,29 @@
+<nb-card class="model-custom model-md">
+  <nb-card-header class="text-right">
+    <button type="button" class="btn btn-cancel" nbButton (click)="cancel()"><nb-icon icon="close-outline"></nb-icon></button>
+  </nb-card-header>
+  <nb-card-body>
+    <form #Form="ngForm">
+      <div class="model-col">
+        <p>{{ setDate }}</p>
+        <label class="subtitle" for="type">請勾選今日屬於<span class="quired">*</span>：</label>
+        <p class="ml-2">
+          <nb-radio-group [(ngModel)]="type" #Type="ngModel" required name="type">
+            <nb-radio [value]="0">休假日</nb-radio>
+            <nb-radio [value]="1">補班日</nb-radio>
+          </nb-radio-group>
+        </p>
+        <p *ngIf="Type.invalid && (Type.dirty || Type.touched)" class="text-danger">
+          <span *ngIf="Type.errors.required">此為必填欄位</span>
+        </p>
+      </div>
+      <div class="model-col">
+        <label class="subtitle" for="memo">備註</label>
+        <p><input type="text" id="memo" name="memo" [(ngModel)]="memo" class="form-control" placeholder="請輸入"></p>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button type="button" class="btn btn-primary btn-md" nbButton (click)="submit()" [disabled]="!Form.form.valid">確認</button>
+  </nb-card-footer>
+</nb-card>
