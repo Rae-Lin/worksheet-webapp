@@ -3,4 +3,64 @@
     display: inline-block !important;
     font-size: 1.5rem !important;
   }
+  .calendar-container {
+    a {
+      text-decoration: none;
+      font-size: 1.175rem;
+      font-weight: 600;
+    }
+    .fc {
+      .fc-toolbar-title {
+        vertical-align: middle;
+        margin-left: 5px;
+      }
+      .fc-prev-button,
+      .fc-next-button {
+        background-color: transparent;
+        border-color: transparent;
+        &:not(:disabled).fc-button-active,
+        &:not(:disabled):active,
+        &:hover {
+          background-color: transparent;
+          border-color: transparent;
+        }
+        &:focus {
+          box-shadow: none;
+        }
+      }
+      .fc-button .fc-icon {
+        color: #222b45;
+      }
+      .fc-daygrid-day-top {
+        flex-direction: unset;
+      }
+      .fc-daygrid-day-number {
+        color: #868e96;
+        padding: 8px;
+      }
+      .fc-col-header-cell-cushion {
+        padding: 20px 0;
+        color: #15212f;
+        font-size: 1.25rem;
+      }
+      .fc-day-sat, .fc-day-sun {
+        background-color: rgba(151, 100, 255, 0.15);
+        .fc-col-header-cell-cushion,
+        .fc-daygrid-day-number {
+          color: #6100ed;
+        }
+      }
+      .fc-bg-event {
+        opacity: unset;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        .fc-event-title {
+          font-size: 1rem;
+          font-style: normal;
+          font-weight: 600;
+        }
+      }
+    }
+  }
 }

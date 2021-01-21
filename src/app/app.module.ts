@@ -27,13 +27,7 @@ import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
 import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
-<<<<<<< HEAD
-
 import { TreeModule } from '@circlon/angular-tree-component';
-
-=======
-import { TreeModule } from '@circlon/angular-tree-component';
->>>>>>> 579643bb66a9c0c5fdd872fcd4c8f6d02e5ba7a6
 import zhHant from '@angular/common/locales/zh-Hant';
 import { NbMomentDateModule } from '@nebular/moment';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
