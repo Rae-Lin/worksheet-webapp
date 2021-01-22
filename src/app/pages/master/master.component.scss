@@ -1,4 +1,13 @@
 ::ng-deep {
+  .nb-theme-default nb-card.status-success nb-card-header{
+    background-color: #ededed;
+  }
+  ng2-smart-table {
+    span.onStatus {
+      color: rgb(48, 159, 48);
+      font-weight: 600;
+    }
+  }
   .search-container {
     input.search {
       width: 50%;
@@ -11,12 +20,5 @@
       display: inline-block;
       height: calc(1.5em + 0.75rem + 2px);
     }
-  }
-}
-
-::ng-deep ng2-smart-table {
-  span.onStatus {
-    color: rgb(48, 159, 48);
-    font-weight: 600;
   }
 }

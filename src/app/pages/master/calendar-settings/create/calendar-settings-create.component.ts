@@ -30,7 +30,6 @@ export class CalendarSettingsCreateComponent implements OnInit {
       type: this.type,
       memo: this.memo,
     };
-    console.log(this.setting);
     this.masterCommon.doCreate(this.service, this.dialogRef, this.setting);
   }
 
