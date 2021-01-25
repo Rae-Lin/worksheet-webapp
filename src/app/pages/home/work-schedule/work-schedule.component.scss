@@ -33,3 +33,16 @@
   *zoom:1;/* For IE7*/
   vertical-align:top;
 }
+
+.flex-box {
+  display:flex;
+  justify-content:space-between;
+  outline: 2px;
+}
+
+.use-flexbox{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:500px;
+}
