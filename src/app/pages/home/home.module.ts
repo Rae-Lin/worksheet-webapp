@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { NgSelectModule } from '@ng-select/ng-select';
+
 import {
   NbCalendarModule,
   NbSidebarModule,
@@ -13,12 +15,12 @@ import {
   NbDialogModule,
   NbIconModule,
   NbThemeModule,
-  NbSelectModule,
   NbAutocompleteModule,
   NbFormFieldModule,
   NbSearchModule,
   NbActionsModule,
   NbListModule,
+  NbSelectModule,
 } from '@nebular/theme';
 
 
@@ -39,7 +41,7 @@ import { WorkScheduleComponent } from './work-schedule/work-schedule.component';
 import { TreeModule } from '@circlon/angular-tree-component';
 
 @NgModule({
-  declarations: [HomeComponent, WorkScheduleComponent],
+  declarations: [HomeComponent, WorkScheduleComponent,],
   imports: [
     CommonModule,
     NbCardModule,
@@ -67,7 +69,7 @@ import { TreeModule } from '@circlon/angular-tree-component';
     FormsModule,
     ReactiveFormsModule,
     TreeModule,
-    
+    NgSelectModule,
   ],
   exports: [
     HomeComponent

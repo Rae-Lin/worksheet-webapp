@@ -1,15 +1,18 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, 
+         OnInit, 
+         Input, 
+         ViewChild, 
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { NbDialogRef, NbOptionComponent, NbOptionGroupComponent, NbSearchService, NbSelectComponent } from '@nebular/theme';
-import { Observable, of } from 'rxjs';
-
-import { FormControl } from '@angular/forms';
+import { NbDialogRef, } from '@nebular/theme';
+import { Observable, of, } from 'rxjs';
 
 import { ProjectGroup, 
          GroupItem,
          Project,
 } from '../models/work-schedule.model'
+
 import { TreeNode } from '@circlon/angular-tree-component/lib/defs/api';
 
 @Component({
@@ -22,178 +25,173 @@ export class WorkScheduleComponent implements OnInit {
 
   @Input() workDate: string;                          // 月曆 schedule 傳入的日期
 
-  @ViewChild('selectProjectGroup', { static: false }) selectProjectGroupComponent: NbSelectComponent;
-  @ViewChild('selectProject', { static: false }) selectProjectComponent: NbSelectComponent;
-
-
   constructor(public datepipe: DatePipe,
-              public dialogRef: NbDialogRef<WorkScheduleComponent>,
-              ) { }
+              public dialogRef: NbDialogRef<WorkScheduleComponent>,) { }
 
   titleWorkDate : string;
 
-  searchProjectGroupValue: string;                    // 專案群組 search value
-
+  searchProjectGroupValue: string;                    // 專案群組查詢 input
   projectGroups: ProjectGroup[];                      // 專案群組資料
   filteredGroups$: Observable<ProjectGroup[]>;        // 畫面顯示查詢後的專案群組資料
+  selectedProjectGroup = [];
   
-  searchProjectValue: string;                         // 專案 search value
-
+  searchProjectValue: string;                         // 專案資料查詢 input
   projectList: Project[];                             // 專案資料
   filteredProject$: Observable<Project[]>; 
+  selectedProject = [];
 
-//===========================================================================================================
-nodesTree = [
-  {
-    id: 1000,
-    name: '*需求檢討',
-    children: [
-      { 
-        id: 1001, 
-        name: '業務需求檢討、確認'
-      },
-      { id: 1002, 
-        name: '工時評估'
-      },
-      { id: 1003, 
-        name: '提案製作'
-      },
-      { id: 1004, 
-        name: '產品 Demo'
-      },
-      { id: 1005, 
-        name: '報價製作與協商'
-      },
-      { id: 1006, 
-        name: '合約簽訂'
-      }, ]
-  },
-  {
-    id: 2000,
-    name: '基本設計',
-    children: [
-      { 
-        id: 2001, 
-        name: '設計式樣作成及檢討'
-      },
-      { 
-        id: 2002, 
-        name: '式樣Review'
-      },
-      { 
-        id: 2003, 
-        name: '畫面基本設計書製作'
-      },
-      { 
-        id: 2004, 
-        name: 'BATCH 基本設計書製作'
-      }, ]
-  },
-  {
-    id: 3000,
-    name: '概要設計',
-    children: [
-      { 
-        id: 3001, 
-        name: '概要設計書作成及檢討'
-      },
-      { 
-        id: 3002, 
-        name: '設計書Review'
-      },
-      { 
-        id: 3003, 
-        name: '畫面基本設計書製作'
-      }, ]
-  },
-  {
-    id: 4000,
-    name: '詳細設計',
-    children: [
-      { 
-        id: 4001, 
-        name: '詳細設計-子項目一'
-      },
-      { 
-        id: 4002, 
-        name: '詳細設計-子項目二'
-      },
-      { 
-        id: 4003, 
-        name: '詳細設計-子項目三'
-      },
-      { 
-        id: 4004, 
-        name: '詳細設計-子項目四'
-      },
-      { 
-        id: 4005, 
-        name: '詳細設計-子項目五'
-      },
-      { 
-        id: 4006, 
-        name: '詳細設計-子項目六'
-      }, ]
-  },
-  {
-    id: 5000,
-    name: '系統開發',
-    children: [
-      { 
-        id: 5001, 
-        name: '系統開發-子項目一'
-      },
-      { 
-        id: 5002, 
-        name: '系統開發-子項目二'
-      },
-      { 
-        id: 5003, 
-        name: '系統開發-子項目三'
-      },
-      { 
-        id: 5004, 
-        name: '系統開發-子項目四'
-      },
-      { 
-        id: 5005, 
-        name: '系統開發-子項目五'
-      }, ]
-  },
-  {
-    id: 6000,
-    name: '整合測試',
-  },
-  {
-    id: 7000,
-    name: '系統建置',
-  },
-  {
-    id: 8000,
-    name: 'AT',
-  },
-  {
-    id: 9000,
-    name: '專案管理',
-  },
-  {
-    id: 10000,
-    name: '*系統導入*',
-  },
-  {
-    id: 11000,
-    name: '*會議/其他*',
-  },
-  {
-    id: 12000,
-    name: '結合測試',
-  },
-];
+  //===========================================================================================================
+  nodesTree = [
+    {
+      id: 1000,
+      name: '*需求檢討',
+      children: [
+        { 
+          id: 1001, 
+          name: '業務需求檢討、確認'
+        },
+        { id: 1002, 
+          name: '工時評估'
+        },
+        { id: 1003, 
+          name: '提案製作'
+        },
+        { id: 1004, 
+          name: '產品 Demo'
+        },
+        { id: 1005, 
+          name: '報價製作與協商'
+        },
+        { id: 1006, 
+          name: '合約簽訂'
+        }, ]
+    },
+    {
+      id: 2000,
+      name: '基本設計',
+      children: [
+        { 
+          id: 2001, 
+          name: '設計式樣作成及檢討'
+        },
+        { 
+          id: 2002, 
+          name: '式樣Review'
+        },
+        { 
+          id: 2003, 
+          name: '畫面基本設計書製作'
+        },
+        { 
+          id: 2004, 
+          name: 'BATCH 基本設計書製作'
+        }, ]
+    },
+    {
+      id: 3000,
+      name: '概要設計',
+      children: [
+        { 
+          id: 3001, 
+          name: '概要設計書作成及檢討'
+        },
+        { 
+          id: 3002, 
+          name: '設計書Review'
+        },
+        { 
+          id: 3003, 
+          name: '畫面基本設計書製作'
+        }, ]
+    },
+    {
+      id: 4000,
+      name: '詳細設計',
+      children: [
+        { 
+          id: 4001, 
+          name: '詳細設計-子項目一'
+        },
+        { 
+          id: 4002, 
+          name: '詳細設計-子項目二'
+        },
+        { 
+          id: 4003, 
+          name: '詳細設計-子項目三'
+        },
+        { 
+          id: 4004, 
+          name: '詳細設計-子項目四'
+        },
+        { 
+          id: 4005, 
+          name: '詳細設計-子項目五'
+        },
+        { 
+          id: 4006, 
+          name: '詳細設計-子項目六'
+        }, ]
+    },
+    {
+      id: 5000,
+      name: '系統開發',
+      children: [
+        { 
+          id: 5001, 
+          name: '系統開發-子項目一'
+        },
+        { 
+          id: 5002, 
+          name: '系統開發-子項目二'
+        },
+        { 
+          id: 5003, 
+          name: '系統開發-子項目三'
+        },
+        { 
+          id: 5004, 
+          name: '系統開發-子項目四'
+        },
+        { 
+          id: 5005, 
+          name: '系統開發-子項目五'
+        }, ]
+    },
+    {
+      id: 6000,
+      name: '整合測試',
+    },
+    {
+      id: 7000,
+      name: '系統建置',
+    },
+    {
+      id: 8000,
+      name: 'AT',
+    },
+    {
+      id: 9000,
+      name: '專案管理',
+    },
+    {
+      id: 10000,
+      name: '*系統導入*',
+    },
+    {
+      id: 11000,
+      name: '*會議/其他*',
+    },
+    {
+      id: 12000,
+      name: '結合測試',
+    },
+  ];
 
-optionsSetting = {
-  useVirtualScroll: true,
-  nodeHeight: 22
-}
+  optionsSetting = {
+    useVirtualScroll: true,
+    nodeHeight: 22
+  }
 //============================================================================================
 
   ngOnInit(): void {
@@ -230,7 +228,6 @@ optionsSetting = {
                     { Id: '040026', Name: '[040027] 開發專案一'}]
       }];
 
-    //this.selectedProjectGroup = '030012';
     this.filteredGroups$ = of(this.projectGroups);
 
     // 專案資料
@@ -260,39 +257,37 @@ optionsSetting = {
                      { Group: '040026', Id: '0008', Name: 'SET_OPENPOINT APP兌點 RWD 上架前後台' },
                      { Group: '040026', Id: '0009', Name: 'SETOP 超商OP兌點 商品預售系統(行動隨時取)' },
                      { Group: '040026', Id: '0011', Name: '兌點平台 線上支付+電子發票平台開發專案' }];
+
   }
 
   // 專案群組 搜尋 
-  onSearchProjectGroup(value: string) {
+  onSearchProjectGroup() {
 
     this.filteredGroups$ = of(this.projectGroups.map(group => {
       return {
         GroupTitle: group.GroupTitle,
-        GroupList: group.GroupList.filter(filter => filter.Name.toLowerCase().includes(value.toLowerCase()))
+        GroupList: group.GroupList.filter(filter => filter.Name.toLowerCase().includes(this.searchProjectGroupValue.toLowerCase()))
       }
     }).filter(group => group.GroupList.length));
-
-    this.selectProjectGroupComponent.show();
   }
 
   // 專案群組下拉選單改變
-  onProjectGroupSelectionChange(item: GroupItem) {
+  onProjectGroupSelectionChange() {
     this.searchProjectGroupValue = "";
-    this.filteredProject$ = of(this.projectList.filter(project => project.Group.includes(item.Id)));
+    this.filteredProject$ = of(this.projectList.filter(project => project.Group.includes(this.selectedProjectGroup.toString())));
     
   }
 
   // 專案 搜尋 
-  onSearchProject(value: string) {
-    this.filteredProject$ = of(this.projectList.filter(project => project.Name.includes(value)));
+  onSearchProject() {
 
-    this.selectProjectComponent.show();
+    this.filteredProject$ = of(this.projectList.filter(group => group.Group.includes(this.selectedProjectGroup.toString()))
+                                               .filter(project => project.Name.includes(this.searchProjectValue)));
   }
 
   // 專案下拉選單改變
-  onProjectSelectionChange(value: string) {
+  onProjectSelectionChange() {
     this.searchProjectValue = "";
-    
+    //alert(this.selectedProject.toString());
   }
-
 }

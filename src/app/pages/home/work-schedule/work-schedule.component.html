@@ -1,3 +1,5 @@
+
+
 <nb-card class="model-full">
   <nb-card-header fixed>
     <div class="flex-box">
@@ -8,43 +10,48 @@
 
   <nb-card-body>
     <div class="row">
+      <!-- 選取專案項目 -->
       <div class="col-md-5" style="padding: 0%;">
         <nb-layout>
           <nb-layout-column>
             <div class="row">
               <h6>專案群組</h6>
-              <nb-actions size="small"><nb-action icon="search" (click)="onSearchProjectGroup(inputProjectGroup.value)"></nb-action></nb-actions>                          
-              <input type="text" placeholder="輸入關鍵字" nbInput #inputProjectGroup [ngModel]="searchProjectGroupValue" />
-            </div>
-
-            <p></p>
-            <div class="row">
-              <nb-select #selectProjectGroup placeholder="選取專案群組" fullWidth shape="semi-round" 
-                        (selectedChange)="onProjectGroupSelectionChange($event)" >  
-                <nb-option-group *ngFor="let groupList of filteredGroups$ | async;" [title]="groupList.GroupTitle">
-                  <nb-option *ngFor="let item of groupList.GroupList" [value]="item" >
-                    {{ item.Name }} 
-                  </nb-option>
-                </nb-option-group>
-              </nb-select>
+              <ng-select [items]="filteredGroups$ | async"
+                        placeholder="選取專案群組"
+                        bindLabel="Name"
+                        bindValue="Id"
+                        groupBy="GroupList"
+                        style="width: 100%;"
+                        (change)="onProjectGroupSelectionChange()"
+                        [(ngModel)]="selectedProjectGroup">
+                <ng-template ng-header-tmp>
+                    <div class="row">
+                      <nb-actions size="small"><nb-action icon="search" (click)="onSearchProjectGroup()"></nb-action></nb-actions>                          
+                      <input type="text" placeholder="輸入關鍵字" nbInput [(ngModel)]='searchProjectGroupValue'/>
+                    </div>
+                </ng-template>
+                <ng-template ng-optgroup-tmp let-item="item">{{ item.GroupTitle }}</ng-template>
+                <ng-template ng-option-tmp let-item="item">{{ item.Name }}</ng-template>
+              </ng-select>
             </div>
             <br/>
             <div class="row">
               <h6>專案</h6>
-              <nb-actions size="small">
-                <nb-action icon="search" (click)="onSearchProject(inputProject.value)"></nb-action>                            
-              </nb-actions>
-              <input type="text" placeholder="輸入關鍵字" #inputProject [ngModel]="searchProjectValue"/>
-            </div>
-
-            <p></p>
-            <div class="row">
-                <nb-select #selectProject placeholder="選擇專案" fullWidth shape="semi-round"
-                        (selectedChange)="onProjectSelectionChange($event)">
-                    <nb-option *ngFor="let project of filteredProject$ | async;" [value]="project.Id">
-                        {{ project.Name }}
-                    </nb-option>
-                </nb-select>
+              <ng-select [items]="filteredProject$ | async"
+                        placeholder="選取專案"
+                        bindLabel="Name"
+                        bindValue="Id"
+                        style="width: 100%;"
+                        (change)="onProjectSelectionChange()"
+                        [(ngModel)]="selectedProject">
+                <ng-template ng-header-tmp>
+                    <div class="row">
+                      <nb-actions size="small"><nb-action icon="search" (click)="onSearchProject()"></nb-action></nb-actions>                          
+                      <input type="text" placeholder="輸入關鍵字" nbInput [(ngModel)]='searchProjectValue'/>
+                    </div>
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item">{{ item.Name }}</ng-template>
+              </ng-select>
             </div>
 
             <p></p>
@@ -58,14 +65,40 @@
         </nb-layout>
       </div>
       
+      <!-- 選取工作項目 button -->
       <div class="col-md-1 use-flexbox" style="padding: 0%;">
         <button nbButton class="btn btn-primary"><i class="nb-arrow-thin-right"></i></button>
       </div>
 
+      <!-- 工作項目清單 -->
       <div class="col-md-6" style="padding: 0%;" >
         <nb-layout>
           <nb-layout-column>
             <p>測試</p>
+
+            <!-- <button type="button" 
+              class="btn select-button btn-sm" 
+              (blur)="trySetTouched()"
+              (keydown.arrowDown)="show()"
+              (keydown.arrowUp)="show()" 
+              nbButton
+              shape="semi-round" 
+              #selectButton>選取專案群組
+
+              <nb-icon icon="chevron-down-outline" pack="nebular-essentials" aria-hidden="true"></nb-icon>
+            </button>
+
+            <nb-option-list *nbPortal>
+              <ng-content select="nb-option, nb-option-group"></ng-content>
+    <nb-option-group *ngFor="let groupList of filteredGroups$ | async;" [title]="groupList.GroupTitle">
+    <nb-option *ngFor="let item of groupList.GroupList" [value]="item" >
+      {{ item.Name }} 
+    </nb-option>
+  </nb-option-group> 
+            </nb-option-list> -->
+
+
+
           </nb-layout-column>
         </nb-layout>
       </div>
