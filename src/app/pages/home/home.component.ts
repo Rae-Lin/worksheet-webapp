@@ -113,9 +113,18 @@ export class HomeComponent implements OnInit {
       
   };
 
-  // 日期 Click Function
+  // 日期 Click 開啟 填寫工時 Dialog
   handleDateClick(arg) {
-    this.openDayWorkDialog(arg.dateStr);
+
+    let workdate: string = arg.dateStr;
+
+    const dialogRef = this.dialogService.open(WorkScheduleComponent, 
+                        { 
+                          context: { workDate : workdate },
+                          hasBackdrop: true,
+                          closeOnBackdropClick: false,
+                        });
+  
   }
 
   // 日程 Click Function 顯示右方日程資料
@@ -164,15 +173,5 @@ export class HomeComponent implements OnInit {
     var datePipe = new DatePipe("en-US");
     this.currentMonth =  datePipe.transform(calendarApi.getDate(), 'yyyy/MM');
 
-  }
-
-  // 日期 click 開啟 填寫工時 Dialog
-  openDayWorkDialog(workdate: string) {
-    this.dialogService.open(WorkScheduleComponent, 
-      { 
-        context: { workDate : workdate },
-        hasBackdrop: true,
-        closeOnBackdropClick: false,
-      });
   }
 }

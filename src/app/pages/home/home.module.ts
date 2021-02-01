@@ -5,22 +5,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import {
-  NbCalendarModule,
   NbSidebarModule,
   NbMenuModule,
   NbLayoutModule,
   NbTabsetModule,
   NbCardModule,
-  NbDatepickerModule,
   NbDialogModule,
   NbIconModule,
   NbThemeModule,
-  NbAutocompleteModule,
   NbFormFieldModule,
-  NbSearchModule,
+  NbAccordionModule,
   NbActionsModule,
-  NbListModule,
-  NbSelectModule,
 } from '@nebular/theme';
 
 
@@ -56,16 +51,11 @@ import { TreeModule } from '@circlon/angular-tree-component';
     NbCardModule,
     NbThemeModule,
     NbLayoutModule,
-    NbDatepickerModule,
     NbIconModule,
-    NbCalendarModule,
     NbDialogModule.forChild(),
-    NbSelectModule,
-    NbAutocompleteModule,
     NbFormFieldModule,
-    NbSearchModule,
+    NbAccordionModule,
     NbActionsModule,
-    NbListModule,
     FormsModule,
     ReactiveFormsModule,
     TreeModule,

@@ -40,10 +40,7 @@
   outline: 2px;
 }
 
-.use-flexbox{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:500px;
+.btn-arrow-forward {
+  padding: 0.25rem;
+  transition: all 0.3s;
 }
-

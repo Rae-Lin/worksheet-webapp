@@ -1,9 +1,10 @@
 import { Component, 
          OnInit, 
          Input, 
-         ViewChild, 
+         ViewChild,
+         ChangeDetectionStrategy, 
 } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, CommonModule } from '@angular/common';
 
 import { NbDialogRef, } from '@nebular/theme';
 import { Observable, of, } from 'rxjs';
@@ -13,12 +14,13 @@ import { ProjectGroup,
          Project,
 } from '../models/work-schedule.model'
 
-import { TreeNode } from '@circlon/angular-tree-component/lib/defs/api';
+import { TreeModel, TreeNode } from '@circlon/angular-tree-component';
 
 @Component({
   selector: 'app-work-schedule',
   templateUrl: './work-schedule.component.html',
-  styleUrls: ['./work-schedule.component.scss',]
+  styleUrls: ['./work-schedule.component.scss',],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class WorkScheduleComponent implements OnInit {
@@ -33,167 +35,66 @@ export class WorkScheduleComponent implements OnInit {
   searchProjectGroupValue: string;                    // 專案群組查詢 input
   projectGroups: ProjectGroup[];                      // 專案群組資料
   filteredGroups$: Observable<ProjectGroup[]>;        // 畫面顯示查詢後的專案群組資料
-  selectedProjectGroup = [];
+  selectedProjectGroup: string = "";
   
   searchProjectValue: string;                         // 專案資料查詢 input
   projectList: Project[];                             // 專案資料
   filteredProject$: Observable<Project[]>; 
-  selectedProject = [];
+  selectedProject: string = "";
 
-  //===========================================================================================================
-  nodesTree = [
-    {
-      id: 1000,
-      name: '*需求檢討',
-      children: [
-        { 
-          id: 1001, 
-          name: '業務需求檢討、確認'
-        },
-        { id: 1002, 
-          name: '工時評估'
-        },
-        { id: 1003, 
-          name: '提案製作'
-        },
-        { id: 1004, 
-          name: '產品 Demo'
-        },
-        { id: 1005, 
-          name: '報價製作與協商'
-        },
-        { id: 1006, 
-          name: '合約簽訂'
-        }, ]
-    },
-    {
-      id: 2000,
-      name: '基本設計',
-      children: [
-        { 
-          id: 2001, 
-          name: '設計式樣作成及檢討'
-        },
-        { 
-          id: 2002, 
-          name: '式樣Review'
-        },
-        { 
-          id: 2003, 
-          name: '畫面基本設計書製作'
-        },
-        { 
-          id: 2004, 
-          name: 'BATCH 基本設計書製作'
-        }, ]
-    },
-    {
-      id: 3000,
-      name: '概要設計',
-      children: [
-        { 
-          id: 3001, 
-          name: '概要設計書作成及檢討'
-        },
-        { 
-          id: 3002, 
-          name: '設計書Review'
-        },
-        { 
-          id: 3003, 
-          name: '畫面基本設計書製作'
-        }, ]
-    },
-    {
-      id: 4000,
-      name: '詳細設計',
-      children: [
-        { 
-          id: 4001, 
-          name: '詳細設計-子項目一'
-        },
-        { 
-          id: 4002, 
-          name: '詳細設計-子項目二'
-        },
-        { 
-          id: 4003, 
-          name: '詳細設計-子項目三'
-        },
-        { 
-          id: 4004, 
-          name: '詳細設計-子項目四'
-        },
-        { 
-          id: 4005, 
-          name: '詳細設計-子項目五'
-        },
-        { 
-          id: 4006, 
-          name: '詳細設計-子項目六'
-        }, ]
-    },
-    {
-      id: 5000,
-      name: '系統開發',
-      children: [
-        { 
-          id: 5001, 
-          name: '系統開發-子項目一'
-        },
-        { 
-          id: 5002, 
-          name: '系統開發-子項目二'
-        },
-        { 
-          id: 5003, 
-          name: '系統開發-子項目三'
-        },
-        { 
-          id: 5004, 
-          name: '系統開發-子項目四'
-        },
-        { 
-          id: 5005, 
-          name: '系統開發-子項目五'
-        }, ]
-    },
-    {
-      id: 6000,
-      name: '整合測試',
-    },
-    {
-      id: 7000,
-      name: '系統建置',
-    },
-    {
-      id: 8000,
-      name: 'AT',
-    },
-    {
-      id: 9000,
-      name: '專案管理',
-    },
-    {
-      id: 10000,
-      name: '*系統導入*',
-    },
-    {
-      id: 11000,
-      name: '*會議/其他*',
-    },
-    {
-      id: 12000,
-      name: '結合測試',
-    },
-  ];
+  //workEvents = [];
+  workEvents = [
+    { 
+      ProjrctGroup: '020084', 
+      ProjrctId: '0008', 
+      ProjrctName: 'SET_OPENPOINT APP兌點 RWD 上架前後台',
+      workItem: [{
+          WorkPhase: '基本設計',
+          WorkItem: '設計式樣作成及檢討',
+          WorkHour: 2,
+          WorkContent: '測試說明',
+          Pinning: 1
+        }, {
+          WorkPhase: '詳細設計',
+          WorkItem: '詳細設計-子項目',
+          WorkHour: 4,
+          WorkContent: '測試說明',
+          Pinning: 0
+        }]
+    }, {
+        ProjrctGroup: '020084', 
+        ProjrctId: '0004', 
+        ProjrctName: '康是美',
+        workItem: [{
+            WorkPhase: '整合測試',
+            WorkItem: '',
+            WorkHour: 2,
+            WorkContent: '測試說明',
+            Pinning: 0
+          }, {
+            WorkPhase: '*會議/其他*',
+            WorkItem: '朝會、參與公司活動',
+            WorkHour: 4,
+            WorkContent: '測試說明',
+            Pinning: 0
+          }]
+    }, {  
+  }];
 
-  optionsSetting = {
+  //==工作項目=========================================================================================================
+  isShowPinning: boolean = false; 
+  filteredWorkItem$: Observable<any[]>; 
+  btnShowPinningValue: string = "顯示已釘選";
+  iconShowPinningValue: string = "star";
+
+  
+  workItem: any[];
+  nodeTreeSetting = {
     useVirtualScroll: true,
+    useCheckbox: true,
     nodeHeight: 22
   }
 //============================================================================================
-
   ngOnInit(): void {
 
     // 標題
@@ -256,8 +157,79 @@ export class WorkScheduleComponent implements OnInit {
                      { Group: '040026', Id: '0001', Name: '共通' },
                      { Group: '040026', Id: '0008', Name: 'SET_OPENPOINT APP兌點 RWD 上架前後台' },
                      { Group: '040026', Id: '0009', Name: 'SETOP 超商OP兌點 商品預售系統(行動隨時取)' },
-                     { Group: '040026', Id: '0011', Name: '兌點平台 線上支付+電子發票平台開發專案' }];
+                         { Group: '040026', Id: '0011', Name: '兌點平台 線上支付+電子發票平台開發專案' }];
 
+
+    // 工作項目資料
+    this.workItem = [
+      {
+        id: 1000, name: '*需求檢討',
+        children: [
+          { id: 1001, name: '業務需求檢討、確認', pinning: 0 },
+          { id: 1002, name: '工時評估' , pinning: 0 },
+          { id: 1003, name: '提案製作', pinning: 1 },
+          { id: 1004, name: '產品 Demo', pinning: 0 },
+          { id: 1005, name: '報價製作與協商', pinning: 0 },
+          { id: 1006, name: '合約簽訂', pinning: 0 }, ]
+      }, {
+        id: 2000, name: '基本設計',
+        children: [
+          { id: 2001, name: '設計式樣作成及檢討', pinning: 0 },
+          { id: 2002, name: '式樣Review', pinning: 1 },
+          { id: 2003, name: '畫面基本設計書製作', pinning: 0 },
+          { id: 2004, name: 'BATCH 基本設計書製作', pinning: 0 }, ]
+      }, {
+        id: 3000, name: '概要設計',
+        children: [
+          { id: 3001, name: '概要設計書作成及檢討', pinning: 0 },
+          { id: 3002, name: '設計書Review', pinning: 0 },
+          { id: 3003, name: '畫面基本設計書製作', pinning: 0 }, ]
+      }, {
+        id: 4000, name: '詳細設計', 
+        children: [
+          { id: 4001, name: '詳細設計-子項目一', pinning: 0 },
+          { id: 4002, name: '詳細設計-子項目二', pinning: 0 },
+          { id: 4003, name: '詳細設計-子項目三', pinning: 0 },
+          { id: 4004, name: '詳細設計-子項目四', pinning: 0 },
+          { id: 4005, name: '詳細設計-子項目五', pinning: 0 },
+          { id: 4006, name: '詳細設計-子項目六', pinning: 0 }, ]
+      }, {
+        id: 5000, name: '系統開發',
+        children: [
+          { id: 5001, name: '系統開發-子項目一', pinning: 0 },
+          { id: 5002, name: '系統開發-子項目二', pinning: 0 },
+          { id: 5003, name: '系統開發-子項目三', pinning: 0 },
+          { id: 5004, name: '系統開發-子項目四', pinning: 0 },
+          { id: 5005, name: '系統開發-子項目五', pinning: 0}, ]
+      }, {
+        id: 6000, name: '整合測試', children: []
+      }, {
+        id: 7000, name: '系統建置',
+      }, { 
+        id: 8000, name: 'AT',
+        children: [
+          { id: 8001, name: 'AT-子項目一', pinning: 0 },
+          { id: 8002, name: 'AT-子項目二', pinning: 0 },
+          { id: 8003, name: 'AT-子項目三', pinning: 0 },
+          { id: 8004, name: 'AT-子項目四', pinning: 0 },
+          { id: 8005, name: 'AT-子項目五', pinning: 0 }, ]
+      }, {
+        id: 9000, name: '專案管理',
+        children: [
+          { id: 9001, name: '專案管理-子項目一', pinning: 0 },
+          { id: 9002, name: '專案管理-子項目二', pinning: 0 },
+          { id: 9003, name: '專案管理-子項目三', pinning: 0 },
+          { id: 9004, name: '專案管理-子項目四', pinning: 0 },
+          { id: 9005, name: '專案管理-子項目五', pinning: 0 }, ]
+      }, {
+        id: 10000, name: '*系統導入*',
+      }, {
+        id: 11000, name: '*會議/其他*',
+      }, {
+        id: 12000, name: '結合測試',
+      },
+    ];
+    this.filteredWorkItem$ = of(this.workItem);
   }
 
   // 專案群組 搜尋 
@@ -280,7 +252,6 @@ export class WorkScheduleComponent implements OnInit {
 
   // 專案 搜尋 
   onSearchProject() {
-
     this.filteredProject$ = of(this.projectList.filter(group => group.Group.includes(this.selectedProjectGroup.toString()))
                                                .filter(project => project.Name.includes(this.searchProjectValue)));
   }
@@ -288,6 +259,125 @@ export class WorkScheduleComponent implements OnInit {
   // 專案下拉選單改變
   onProjectSelectionChange() {
     this.searchProjectValue = "";
-    //alert(this.selectedProject.toString());
+
+    // this.selectedProject = [];
+    // this.selectedProject.push({ name: '(change)', value: $event });
+    // alert(this.selectedProjectValue + "==>" + this.selectedProject[0].name);
+  }
+
+  // 只顯示已釘選
+  onShowPinning()
+  {
+    if (!this.isShowPinning) {
+      this.isShowPinning = true;
+
+      this.btnShowPinningValue = "顯示全部";
+      this.iconShowPinningValue = "star-outline";
+
+      this.filteredWorkItem$ = of(this.workItem.map(item => {
+        return {
+          id: item.id,
+          name: item.name,
+          children: item.children?.filter(filter => filter.pinning > 0)
+        }
+      }).filter(item => item.children?.length));
+    }
+    else {
+      this.isShowPinning = false;
+
+      this.btnShowPinningValue = "顯示已釘選";
+      this.iconShowPinningValue = "star";
+      this.filteredWorkItem$ = of(this.workItem);
+    }
+  }
+
+
+  // 新增工作項目
+  onAddWorkEvent(workItem: TreeModel) {
+    
+    if ((this.selectedProjectGroup == null || this.selectedProjectGroup.length == 0) ||
+        (this.selectedProject == null || this.selectedProject.length == 0 )) {
+          alert("請先選取專案群組及專案");
+          return;
+    }
+
+    let isSelect: boolean = false;
+
+    let selectProjectName: string;
+    
+    this.filteredProject$.subscribe(data => {
+      selectProjectName = 
+        data.find(element => element.Group == this.selectedProjectGroup &&
+                             element.Id == this.selectedProject).Name;
+    });
+
+    Object.keys(workItem.selectedLeafNodeIds).forEach(x=>{
+
+      let node:TreeNode = workItem.getNodeById(x);
+
+      if (node.isSelected)
+      {
+        isSelect = true;
+
+        // alert("Selected==>" + node.data.id + ";;" + node.data.name + "\r\n"
+        //     + " Parent==>" + node.parent.data.id + ";;" + node.parent.data.name);
+
+        var hasDataIndex = this.workEvents.findIndex(data => data.ProjrctGroup == this.selectedProjectGroup &&
+                                                             data.ProjrctId == this.selectedProject)
+
+        if (hasDataIndex < 0) {
+          this.workEvents.push({
+            ProjrctGroup: this.selectedProjectGroup, 
+            ProjrctId: this.selectedProject, 
+            ProjrctName: selectProjectName,
+            workItem: [{
+               WorkPhase: node.parent.data.name,
+               WorkItem: node.data.name,
+               WorkHour: 0,
+               WorkContent: '',
+               Pinning: 0
+            }]
+          });
+        } 
+        else {
+          this.workEvents[hasDataIndex].workItem.push({
+            WorkPhase: node.parent.data.name,
+            WorkItem: node.data.name,
+            WorkHour: 0,
+            WorkContent: '',
+            Pinning: 0
+          });
+
+        }
+      }
+    }) 
+
+    if (!isSelect) {
+      alert("尚未選取工作項目，請選取後再執行!!");
+    }
+  }
+
+  // 釘選工作項目
+  onPinningWorkEvent(workEvent: any) {
+
+    if (workEvent.Pinning) {
+      workEvent.Pinning = 0;
+    }
+    else {
+      workEvent.Pinning = 1;
+    }
+  }
+
+  // 移除工作項目
+  onRemoveWorkEvent(projectGroup: string, projectId: string, workEvent: any, eventIdx: number) {
+    this.workEvents.find(data => data.ProjrctGroup == projectGroup &&
+                                 data.ProjrctId == projectId).workItem?.splice(eventIdx, 1);
+
+    if (this.workEvents.find(data => data.ProjrctGroup == projectGroup &&
+                                     data.ProjrctId == projectId).workItem?.length <= 0) {
+      // 如果沒有子項目，要移除專案
+      this.workEvents.splice(this.workEvents.findIndex(data => data.ProjrctGroup == projectGroup &&
+                                                               data.ProjrctId == projectId), 1);
+    }
   }
 }

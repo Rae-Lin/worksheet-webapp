@@ -1,106 +1,153 @@
-
-
 <nb-card class="model-full">
   <nb-card-header fixed>
     <div class="flex-box">
       <h2>{{ titleWorkDate }}</h2>
-      <button type="button" class="btn btn-primary btn-sm" nbButton (click)="dialogRef.close()">Close Dialog</button>
+      <button type="button" class="btn btn-cancel" nbButton (click)="dialogRef.close()"><nb-icon icon="close-outline"></nb-icon></button>
     </div>
   </nb-card-header>
 
   <nb-card-body>
-    <div class="row">
-      <!-- 選取專案項目 -->
-      <div class="col-md-5" style="padding: 0%;">
-        <nb-layout>
-          <nb-layout-column>
-            <div class="row">
-              <h6>專案群組</h6>
-              <ng-select [items]="filteredGroups$ | async"
-                        placeholder="選取專案群組"
-                        bindLabel="Name"
-                        bindValue="Id"
-                        groupBy="GroupList"
-                        style="width: 100%;"
-                        (change)="onProjectGroupSelectionChange()"
-                        [(ngModel)]="selectedProjectGroup">
-                <ng-template ng-header-tmp>
-                    <div class="row">
-                      <nb-actions size="small"><nb-action icon="search" (click)="onSearchProjectGroup()"></nb-action></nb-actions>                          
-                      <input type="text" placeholder="輸入關鍵字" nbInput [(ngModel)]='searchProjectGroupValue'/>
-                    </div>
-                </ng-template>
-                <ng-template ng-optgroup-tmp let-item="item">{{ item.GroupTitle }}</ng-template>
-                <ng-template ng-option-tmp let-item="item">{{ item.Name }}</ng-template>
-              </ng-select>
-            </div>
+    <div class="container" style="padding: 0px;">
+      <div class="row">
+        <!-- 選取專案項目 -->
+        <div layout="column" class="col-md-4" style="padding: 20px; background-color: #E0E0E0;" >
+          <div class="row">
+            <h6>專案群組</h6>
+            <ng-select [items]="filteredGroups$ | async"
+                      placeholder="選取專案群組"
+                      bindLabel="Name"
+                      bindValue="Id"
+                      groupBy="GroupList"
+                      [searchable]="false"
+                      style="width: 100%;"
+                      (change)="onProjectGroupSelectionChange()"
+                      [(ngModel)]="selectedProjectGroup">
+              <ng-template ng-header-tmp>
+                  <div class="row">
+                    <nb-actions size="tiny"><nb-action icon="search" (click)="onSearchProjectGroup()"></nb-action></nb-actions>                          
+                    <input type="text" placeholder="輸入關鍵字" nbInput [(ngModel)]='searchProjectGroupValue'/>
+                  </div>
+              </ng-template>
+              <ng-template ng-optgroup-tmp let-item="item">
+                <span class="ng-value-label" [title]="item.GroupTitle">{{ item.GroupTitle }}</span></ng-template>
+
+              <ng-template ng-option-tmp let-item="item" >
+                <span class="ng-value-label" [title]="item.Name">{{ item.Name }}</span></ng-template>
+            </ng-select>
+          </div>
+          <p></p>
+          <div class="row">
+            <h6>專案</h6>
+            <ng-select [items]="filteredProject$ | async"
+                      placeholder="選取專案"
+                      bindLabel="Name"
+                      bindValue="Id"
+                      [searchable]="false"
+                      style="width: 100%;"
+                      (change)="onProjectSelectionChange()"
+                      [(ngModel)]="selectedProject">
+              <ng-template ng-header-tmp>
+                  <div class="row">
+                    <nb-actions size="tiny"><nb-action icon="search" (click)="onSearchProject()"></nb-action></nb-actions>                          
+                    <input type="text" placeholder="輸入關鍵字" nbInput [(ngModel)]='searchProjectValue'/>
+                  </div>
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item">
+                <span class="ng-value-label" [title]="item.Name">{{ item.Name }}</span></ng-template>
+            </ng-select>
+          </div>
+          <br/>
+          
+          <div class="text-right">
+            <button type="button" class="btn btn-primary btn-sm" nbButton (click)="onShowPinning()">
+              <nb-icon icon="{{ iconShowPinningValue }}" ></nb-icon>{{ btnShowPinningValue }}</button>
+          </div>
+          <p></p>
+          <!-- 工作項目 Tree -->
+          <div style="height: 480px; background-color: white;">
+            <tree-root #treeWorkItem [nodes]="filteredWorkItem$ | async" [options]="nodeTreeSetting" class="reverse">
+<!-- 
+              <ng-template #treeNodeTemplate let-node let-index="index">
+                <span *ngIf="!!+node.data.pinning"><nb-icon icon="checkmark-outline"></nb-icon></span>
+                <span>{{ node.data.name }}</span>
+                
+              </ng-template> -->
+
+            </tree-root>
+          </div>
+        </div>
+        
+        <!-- 選取工作項目 button -->
+        <div layout="column" class="d-flex align-items-center" style="height:500px;">
+          <button nbButton class="btn btn-arrow-forward" (click)="onAddWorkEvent(treeWorkItem.treeModel)"><nb-icon icon="arrow-forward-outline"></nb-icon></button>
+        </div>
+
+        <div layout="column" class="col-md" style="padding: 10px; background-color: #E0E0E0;">
+          <!-- 工作項目清單 -->
+          <div class="list-group" *ngFor="let workEvents of workEvents">
+            <nb-accordion>
+              <nb-accordion-item>
+                <nb-accordion-item-header>
+                  <div class="row">
+                    <span style="color:blueviolet;">專案名稱</span>
+                    <span>{{ workEvents.ProjrctName  }}</span>
+                  </div>
+                </nb-accordion-item-header>
+                <!-- =============================================== -->
+                <nb-accordion-item-body>
+                  <div *ngFor="let workItem of workEvents.workItem;let recordIndex = index">
+                    <nb-card>
+                      <nb-card-body>
+                        <div class="row">
+                          <div class="col-md-2" style="padding-right: 0%;padding-left: 0;">
+                            <span style="color:blueviolet;">工作階段{{ recordIndex + 1 + " "}}</span>
+                          </div>
+                          <span>{{ workItem.WorkPhase }}</span>
+                          <div class="col-md-2" style="padding-right: 0%;padding-left: 0;">
+                            <span style="color:blueviolet;">工作項目 {{ recordIndex + 1 + " "}}</span>
+                          </div>
+                          <span>{{ workItem.WorkItem }}</span>
+
+                          <div class="col text-right">
+                            <span *ngIf="!!+workItem.Pinning; else noPinning ">
+                              <nb-actions size="small" >
+                                <nb-action icon="star" style="padding: 0%;" (click)="onPinningWorkEvent(workItem)"></nb-action>  
+                                <nb-action icon="trash-outline" style="padding: 0%;" (click)="onRemoveWorkEvent(workEvents.ProjrctGroup, workEvents.ProjrctId, workItem, recordIndex)"></nb-action></nb-actions>
+                            </span>
+                            
+                            <ng-template #noPinning>
+                              <nb-actions size="small" >
+                                <nb-action icon="star-outline" style="padding: 0%;" (click)="onPinningWorkEvent(workItem)"></nb-action>  
+                                <nb-action icon="trash-outline" style="padding: 0%;" (click)="onRemoveWorkEvent(workEvents.ProjrctGroup, workEvents.ProjrctId, workItem, recordIndex)"></nb-action></nb-actions>
+                            </ng-template>
+                          </div>
+                          
+                        </div>
+                        
+                        <div class="row">
+                          <div class="col-md-2" style="padding-right: 0px;padding-left: 0;">
+                            <span style="color:blueviolet;">工作時數</span>
+                          </div>
+                          <input type="text" nbInput status="basic" placeholder="工作時數" value="{{ workItem.WorkHour > 0 ? workItem.WorkHour : null }}">
+                        </div>
+                        
+                        <div class="row">
+                          <div class="col-md-2" style="padding-right: 0%;padding-left: 0;">
+                            <span style="color:blueviolet;">內容說明</span>
+                          </div>
+                          <textarea nbInput fullWidth placeholder="內容說明">{{ workItem.WorkContent }}</textarea>
+                        </div>
+                      </nb-card-body>
+                    </nb-card>
+                  </div>
+                </nb-accordion-item-body>
+              </nb-accordion-item>
+            </nb-accordion>    
+
             <br/>
-            <div class="row">
-              <h6>專案</h6>
-              <ng-select [items]="filteredProject$ | async"
-                        placeholder="選取專案"
-                        bindLabel="Name"
-                        bindValue="Id"
-                        style="width: 100%;"
-                        (change)="onProjectSelectionChange()"
-                        [(ngModel)]="selectedProject">
-                <ng-template ng-header-tmp>
-                    <div class="row">
-                      <nb-actions size="small"><nb-action icon="search" (click)="onSearchProject()"></nb-action></nb-actions>                          
-                      <input type="text" placeholder="輸入關鍵字" nbInput [(ngModel)]='searchProjectValue'/>
-                    </div>
-                </ng-template>
-                <ng-template ng-option-tmp let-item="item">{{ item.Name }}</ng-template>
-              </ng-select>
-            </div>
+          </div>
+        </div>
 
-            <p></p>
-            <div class="text-right">
-              <button type="button" class="btn btn-primary btn-sm" nbButton ><nb-icon icon="star"></nb-icon>只顯示已釘選</button>
-            </div>
-            <div style="height: 480px">
-              <tree-root [nodes]="nodesTree" [options]="optionsSetting"></tree-root>
-            </div>
-          </nb-layout-column>
-        </nb-layout>
-      </div>
-      
-      <!-- 選取工作項目 button -->
-      <div class="col-md-1 use-flexbox" style="padding: 0%;">
-        <button nbButton class="btn btn-primary"><i class="nb-arrow-thin-right"></i></button>
-      </div>
-
-      <!-- 工作項目清單 -->
-      <div class="col-md-6" style="padding: 0%;" >
-        <nb-layout>
-          <nb-layout-column>
-            <p>測試</p>
-
-            <!-- <button type="button" 
-              class="btn select-button btn-sm" 
-              (blur)="trySetTouched()"
-              (keydown.arrowDown)="show()"
-              (keydown.arrowUp)="show()" 
-              nbButton
-              shape="semi-round" 
-              #selectButton>選取專案群組
-
-              <nb-icon icon="chevron-down-outline" pack="nebular-essentials" aria-hidden="true"></nb-icon>
-            </button>
-
-            <nb-option-list *nbPortal>
-              <ng-content select="nb-option, nb-option-group"></ng-content>
-    <nb-option-group *ngFor="let groupList of filteredGroups$ | async;" [title]="groupList.GroupTitle">
-    <nb-option *ngFor="let item of groupList.GroupList" [value]="item" >
-      {{ item.Name }} 
-    </nb-option>
-  </nb-option-group> 
-            </nb-option-list> -->
-
-
-
-          </nb-layout-column>
-        </nb-layout>
       </div>
     </div>
   </nb-card-body>
