@@ -1,0 +1,31 @@
+::ng-deep {
+  .home-container a {
+    font-size: 0.95rem !important;
+  }
+  .home-container-workDetail {
+    a {
+      text-decoration: none !important;
+    }
+  }
+  .fc .fc-view-harness {
+    background-color: white !important;
+  }
+  .fc-daygrid-event {
+    border-radius: 15px !important;
+    padding: 2px 5px !important;
+  }
+  .fc-day-today {
+    background-color: #f3fdf8 !important;
+    .fc-daygrid-day-number {
+      color: #00c470 !important;
+      border-radius: 50% !important;
+      background-color: #bbfcdc !important;
+      display: inline-block;
+      width: 26px;
+      height: 26px;
+      margin: 5px;
+      line-height: 27px;
+      padding: 0 6.5px !important;
+    }
+  }
+}

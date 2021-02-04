@@ -145,7 +145,7 @@ export class CalendarSettingsComponent implements OnInit {
     const calendarApi = this.fullcalendarComponent.getApi();    // Get the Calendar API to allow unselection
     const checkEvents = calendarApi.getEvents();    // Get all Events
 
-    checkEvents.forEach(function (event) {     // Loop through them
+    checkEvents.forEach(function(event): any {     // Loop through them
       // If it's not a background element, check whether the new element contains the existing, or vice versa.
       if (
         event.display === 'background'

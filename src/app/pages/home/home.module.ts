@@ -22,10 +22,10 @@ import {
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
 
-import { FullCalendarModule } from '@fullcalendar/angular'; 
-import dayGridPlugin from '@fullcalendar/daygrid'; 
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-FullCalendarModule.registerPlugins([ 
+FullCalendarModule.registerPlugins([
   dayGridPlugin,
   interactionPlugin
 ]);
@@ -36,7 +36,7 @@ import { WorkScheduleComponent } from './work-schedule/work-schedule.component';
 import { TreeModule } from '@circlon/angular-tree-component';
 
 @NgModule({
-  declarations: [HomeComponent, WorkScheduleComponent,],
+  declarations: [HomeComponent, WorkScheduleComponent],
   imports: [
     CommonModule,
     NbCardModule,
